@@ -71,7 +71,21 @@ cd verilog
 iverilog -o sim.vvp mixcolumns_89gates.v mixcolumns_89gates_tb.v && vvp sim.vvp
 ```
 
-Expected: `PASS: all 32 basis vectors correct`.
+Expected: `PASS: all 32 basis vectors correct`. All three circuits were confirmed
+this way with Icarus Verilog 12.0. The testbench drives each unit input `e_i` and
+compares the output word against **column `i`** of the MixColumns matrix (output
+bit `j` is set iff input `i` feeds output `j`) — note this is the column, not the
+row `T[j]`, because the matrix is not symmetric.
+
+No root? You can fetch and run `iverilog` without installing system-wide:
+
+```
+apt-get download iverilog                 # downloads the .deb, no sudo needed
+dpkg -x iverilog_*.deb ivl                # extracts into ./ivl
+B=$(dirname $(find ivl -name ivlpp))
+ivl/usr/bin/iverilog -B "$B" -o sim.vvp mixcolumns_89gates.v mixcolumns_89gates_tb.v
+ivl/usr/bin/vvp -M "$B" sim.vvp
+```
 
 ## `bounds.json`
 
