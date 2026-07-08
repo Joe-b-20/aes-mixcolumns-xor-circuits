@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use these circuits, please cite this repository."
+title: "Small 2-input XOR circuits for AES MixColumns (89 gates; 98 gates at depth 3; 91 gates at depth 6)"
+authors:
+  - family-names: Bachir
+    given-names: Joe
+version: "1.0.0"
+date-released: 2026-07-08
+keywords:
+  - AES
+  - MixColumns
+  - XOR circuit
+  - shortest linear program
+  - GF(2)
+license: MIT

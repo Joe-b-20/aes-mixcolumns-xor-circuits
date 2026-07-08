@@ -1,0 +1,60 @@
+{
+  "spec": "AES MixColumns (forward), a 32x32 GF(2) linear map. Column matrix [[2,3,1,1],[1,2,3,1],[1,1,2,3],[3,1,1,2]] over GF(2^8) with reduction polynomial 0x11b.",
+  "note": "Regenerate with scripts/gen_publish.ts. All SHA-256 are over the exact byte strings written here.",
+  "circuits": [
+    {
+      "id": "mixcolumns_89gates",
+      "inputCount": 32,
+      "gateCount": 89,
+      "depth": 10,
+      "outputCount": 32,
+      "outputConvention": "output j (j in 0..31) is MixColumns output bit j; bit j = bit (j mod 8) of state byte (j div 8), least-significant-bit-first within each byte. It is produced at internal signal index outputSignals[j].",
+      "sha256_canonical_gates": "73aa8c40e88cbfe406b35a8628fd4d74e78a62755a9f902a33d5f21f10be34c6",
+      "sha256_circuit_json": "2ab3695c3d8410dab9b2d1121dda6c42d1080084f73eba649dbc711f4fce0a9f",
+      "verified": {
+        "allOutputsCorrect": true,
+        "everyGateIs2InputXOR": true,
+        "everyParentIndexSmaller": true,
+        "measuredDepth": 10,
+        "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
+      },
+      "claim": "Fewest 2-input XOR gates we are aware of for AES MixColumns, unconstrained depth (improves on the 91-gate figure of Yuan et al. and the 92-gate figure of Maximov)."
+    },
+    {
+      "id": "mixcolumns_98gates_depth3",
+      "inputCount": 32,
+      "gateCount": 98,
+      "depth": 3,
+      "outputCount": 32,
+      "outputConvention": "output j (j in 0..31) is MixColumns output bit j; bit j = bit (j mod 8) of state byte (j div 8), least-significant-bit-first within each byte. It is produced at internal signal index outputSignals[j].",
+      "sha256_canonical_gates": "6326c8956e058db486da558246512fa4a809fc8aeddac5e370d19a34fdba1214",
+      "sha256_circuit_json": "da2a1bcbe0b988aaca158587b791c97f77193d886bf8bd3ee417ee231b5b014f",
+      "verified": {
+        "allOutputsCorrect": true,
+        "everyGateIs2InputXOR": true,
+        "everyParentIndexSmaller": true,
+        "measuredDepth": 3,
+        "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
+      },
+      "claim": "Fewest 2-input XOR gates we are aware of for AES MixColumns at circuit depth 3 (improves on the 99-gate depth-3 figure of Shi, Feng and Xu, ToSC 2023)."
+    },
+    {
+      "id": "mixcolumns_91gates_depth6",
+      "inputCount": 32,
+      "gateCount": 91,
+      "depth": 6,
+      "outputCount": 32,
+      "outputConvention": "output j (j in 0..31) is MixColumns output bit j; bit j = bit (j mod 8) of state byte (j div 8), least-significant-bit-first within each byte. It is produced at internal signal index outputSignals[j].",
+      "sha256_canonical_gates": "5cc2f57df9c2f2ddac9e74cd6591090ca16a8ce498d49391aaf0ec483929cde9",
+      "sha256_circuit_json": "9f9e933eb566779364bf800fec107831568f36db4aba7d3997d05e147a593a6e",
+      "verified": {
+        "allOutputsCorrect": true,
+        "everyGateIs2InputXOR": true,
+        "everyParentIndexSmaller": true,
+        "measuredDepth": 6,
+        "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
+      },
+      "claim": "A 91-gate depth-6 circuit: a distinct gate/depth trade-off point that matches the 91-gate count of Yuan et al. at two fewer depth levels, and improves on the depth-6 92-gate circuit of Maximov by one gate."
+    }
+  ]
+}
