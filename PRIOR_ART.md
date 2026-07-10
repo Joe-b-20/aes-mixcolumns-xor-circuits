@@ -21,8 +21,7 @@ of in-place instructions `x[i] <- x[i] XOR x[j]` on 32 registers initialized
 with the inputs, such that at the end every output resides in a register.
 
 > **Proposition.** Every s-XOR program with `k` instructions yields a circuit
-> of exactly `k` free-standing 2-input XOR gates computing the same map, with
-> the same depth or less.
+> of exactly `k` free-standing 2-input XOR gates computing the same map.
 >
 > *Proof sketch (SSA unrolling).* Maintain a map `cur` from register index to
 > signal name, initialized `cur[i] = input_i`. For each instruction
@@ -122,8 +121,8 @@ direction:
 
 - **44 gates at depth 3** (Pehlivanoğlu–Demir, PeerJ CS 2024): composed of
   5 XOR2 + 7 XOR3 + 32 XOR4 gates — a multi-input gate model.
-- **270.4 GE at depth 3** (HILL: Li, Wei, Li, Guo, ToSC 2026(1), DOI:
-  [10.46586/tosc.v2026.i1](https://tosc.iacr.org/index.php/ToSC/article/view/12794)):
+- **270.4 GE at depth 3**
+  ([HILL, ToSC 2026(1)](https://tosc.iacr.org/index.php/ToSC/article/view/12794)):
   gate-equivalent area under a weighted mixed 2/3-input "h-XOR" metric.
 - **105–107 CNOTs at depth 10** (Zhang et al., IEEE TC 2024 — 105, the
   record; Shi–Feng, ASIACRYPT 2024, ePrint
