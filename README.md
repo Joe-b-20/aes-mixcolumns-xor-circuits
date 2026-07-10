@@ -154,6 +154,7 @@ audit/       clean-room verifier and its generated audit reports
 verilog/     one netlist + one testbench per circuit
 tests/       regression tests for shipped and malformed artifacts
 PAPER.md     short write-up with conservative claims and caveats
+paper/       LaTeX source of the ePrint note (appendices generated from circuits/)
 ~~~
 
 ## References
