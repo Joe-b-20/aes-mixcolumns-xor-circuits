@@ -1,5 +1,7 @@
 # Small XOR circuits for AES MixColumns
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21299092.svg)](https://doi.org/10.5281/zenodo.21299092)
+
 This repository contains three explicit **2-input XOR circuits** for the AES
 **MixColumns** linear transformation, together with self-contained verifiers.
 Every circuit is a static, machine-checkable artifact. Nothing here depends on
@@ -177,4 +179,5 @@ PAPER.md     short write-up with conservative claims and caveats
 ## License / citation
 
 Released under MIT for archival reuse. If you use a circuit, please cite the
-accompanying note (`PAPER.md`) and this repository.
+accompanying note (`PAPER.md`) and this repository via the archived DOI:
+<https://doi.org/10.5281/zenodo.21299092> (see `CITATION.cff`).
