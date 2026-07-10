@@ -6,6 +6,7 @@ authors:
     given-names: Joe
 version: "1.0.0"
 date-released: 2026-07-10
+repository-code: "https://github.com/Joe-b-20/aes-mixcolumns-xor-circuits"
 keywords:
   - AES
   - MixColumns
