@@ -87,6 +87,15 @@ class VerificationTests(unittest.TestCase):
         artifact["depth"] += 1
         self.assert_rejected(artifact, "wrong depth")
 
+    def test_listings_match_artifacts(self) -> None:
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "scripts" / "generate_listings.py"), "--check"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
+
     def test_rejects_permuted_outputs(self) -> None:
         artifact = copy.deepcopy(self.base_circuit)
         artifact["outputSignals"][0], artifact["outputSignals"][1] = artifact["outputSignals"][1], artifact["outputSignals"][0]

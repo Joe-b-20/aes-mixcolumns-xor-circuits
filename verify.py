@@ -106,13 +106,17 @@ def verify_circuit(path, spec, bounds_by_id):
     measured_depth = max(depth) if depth else 0
 
     # 2. correctness: declared outputs equal the spec masks (linear-map complete check)
-    outs = data["outputSignals"]
-    if len(outs) != 32:
-        problems.append("outputSignals must list 32 entries")
+    outs = data.get("outputSignals")
+    if not isinstance(outs, list) or len(outs) != 32:
+        problems.append("outputSignals must be a list of 32 entries")
     else:
         for j in range(32):
-            if sig[outs[j]] != spec[j]:
-                problems.append(f"output {j}: signal {outs[j]} = {sig[outs[j]]:#010x}, expected {spec[j]:#010x}")
+            s = outs[j]
+            if not isinstance(s, int) or not (0 <= s < len(sig)):
+                problems.append(f"output {j}: invalid signal index {s!r}")
+                continue
+            if sig[s] != spec[j]:
+                problems.append(f"output {j}: signal {s} = {sig[s]:#010x}, expected {spec[j]:#010x}")
 
     # 3. metadata consistency
     if data["gateCount"] != len(gates):

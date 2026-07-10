@@ -1,11 +1,17 @@
 # Small XOR circuits for AES MixColumns
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21299092.svg)](https://doi.org/10.5281/zenodo.21299092)
+[![verify](https://github.com/Joe-b-20/aes-mixcolumns-xor-circuits/actions/workflows/verify.yml/badge.svg)](https://github.com/Joe-b-20/aes-mixcolumns-xor-circuits/actions/workflows/verify.yml)
 
-This repository contains three explicit **2-input XOR circuits** for the AES
-**MixColumns** linear transformation, together with self-contained verifiers.
-Every circuit is a static, machine-checkable artifact. Nothing here depends on
-how the circuits were found.
+**This repository provides a verified 89-gate 2-input XOR circuit for AES
+MixColumns — two gates below the smallest published count we are aware of
+(91) — together with a 98-gate circuit at the minimum possible depth 3 and a
+91-gate circuit at depth 6.**
+
+All three circuits ship with self-contained verifiers. Every circuit is a
+static, machine-checkable artifact. Nothing here depends on how the circuits
+were found. A source-by-source audit of the comparison claims is in
+[`PRIOR_ART.md`](PRIOR_ART.md).
 
 ## The circuits
 
@@ -25,6 +31,10 @@ model used here, and the 99-gate depth-3 point is from Shi, Feng, and Xu (ToSC
 2023). Yuan et al. (ToSC 2024) also report 91 XORs in an `s-XOR` /
 quantum-depth framing. See **Claims and scope** below for the careful wording.
 
+Each circuit is also provided as a human-readable plain-text listing in
+`listings/` (`s32 = s15 ^ s23`, one gate per line, generated from the JSON —
+see `scripts/generate_listings.py`).
+
 A depth note: the minimum depth of AES MixColumns in this model is 3, a known
 fact stated e.g. by Shi, Feng, and Xu. It follows from the standard bound that
 an output depending on `w` inputs needs depth at least `⌈log₂ w⌉`, and
@@ -38,7 +48,8 @@ depth itself.
 - **Signals** are indexed from 0. Signals 0..31 are the 32 input bits.
 - Gate `k` produces signal `32 + k`, whose value is
   `signal[gates[k][0]] XOR signal[gates[k][1]]`. Both parent indices are
-  strictly smaller than the gate index, so the circuit is a DAG in list order.
+  strictly smaller than the produced signal index `32 + k`, so the circuit is
+  a DAG in list order.
 - **Depth** of a signal = longest path in gates from any input; inputs have
   depth 0. Circuit depth = maximum over all gates.
 - **Outputs**: `outputSignals[j]` names the signal carrying MixColumns output
@@ -138,13 +149,15 @@ We state results conservatively.
    from-scratch verifier is included.
 4. **Reproducibility of circuits vs. search.** The circuits in this folder are
    fully reproducible: anyone can re-run `verify.py` and confirm them forever.
-   The discovery method is described elsewhere and is a separate, still
-   developing line of work; none of the claims here depend on it.
+   The discovery method is deliberately out of scope here; it is a separate,
+   still-developing line of work, and none of the claims here depend on it.
 
 ## Contents
 
 ~~~
 circuits/    three circuit JSON files
+listings/    the same circuits as human-readable plain text (generated)
+PRIOR_ART.md source-by-source audit of every comparison claim
 bounds.json  annotated summary + integrity metadata
 verify.py    lightweight repository verifier
 verify_all.py runs the repository verifier, clean-room verifier, and optional Verilog wrapper

@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-07-10T05:06:28.012407+00:00",
+  "generated_utc": "2026-07-10T18:21:42.885244+00:00",
   "reference_convention": {
     "word_layout": "bits 0..31 are bits 0..7 of bytes s0..s3 in little-endian byte order",
     "bit_order_within_byte": "least-significant-bit first",
