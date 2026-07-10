@@ -12,7 +12,8 @@ in circuits/ it checks:
      the 32 AES MixColumns output bits (checked as a GF(2) linear map, which is
      complete: agreement on the 32 basis inputs proves agreement on all 2^32);
   3. the reported gateCount and depth match what the gate list actually is;
-  4. the SHA-256 in bounds.json matches the circuit file on disk.
+  4. the SHA-256 fields in bounds.json match both the circuit file on disk and
+     the documented canonical gate encoding.
 
 Usage:
     python3 verify.py
@@ -72,6 +73,11 @@ def mixcolumns_target_masks():
     return masks
 
 
+def canonical_gate_hash(gates):
+    canon = json.dumps({"inputCount": 32, "gates": gates}, separators=(",", ":"))
+    return hashlib.sha256(canon.encode("utf-8")).hexdigest()
+
+
 def verify_circuit(path, spec, bounds_by_id):
     with open(path, "rb") as f:
         raw = f.read()
@@ -114,7 +120,8 @@ def verify_circuit(path, spec, bounds_by_id):
     if data["depth"] != measured_depth:
         problems.append(f"depth {data['depth']} != measured {measured_depth}")
 
-    # 4. SHA-256 in bounds.json matches this file
+    # 4. SHA-256 fields in bounds.json match this file and the documented
+    #    canonical-gate encoding.
     b = bounds_by_id.get(cid)
     if b is None:
         problems.append("no matching entry in bounds.json")
@@ -122,6 +129,9 @@ def verify_circuit(path, spec, bounds_by_id):
         sha = hashlib.sha256(raw).hexdigest()
         if b.get("sha256_circuit_json") != sha:
             problems.append("SHA-256 in bounds.json does not match circuits/ file on disk")
+        canonical_sha = canonical_gate_hash(gates)
+        if b.get("sha256_canonical_gates") != canonical_sha:
+            problems.append("canonical gate SHA-256 in bounds.json does not match the documented inputCount+gates encoding")
 
     return cid, len(gates), measured_depth, problems
 
@@ -154,7 +164,7 @@ def main():
             for p in problems[:6]:
                 print(f"        - {p}")
         else:
-            print(f"[ OK ] {cid}: {ng} gates, depth {dep} — all 32 outputs correct, SHA matches")
+            print(f"[ OK ] {cid}: {ng} gates, depth {dep} — all 32 outputs correct, SHA fields match")
     print()
     print("ALL CIRCUITS VERIFIED." if all_ok else "ONE OR MORE CIRCUITS FAILED.")
     sys.exit(0 if all_ok else 1)
