@@ -12,9 +12,9 @@ count we are aware of is 91, by Lin, Xiang, Zeng, and Zhang (CT-RSA 2021),
 stated in the s-XOR model, whose programs translate instruction-for-gate into
 2-input XOR circuits; the classic baseline stated directly in the 2-input-XOR
 model is the 92-gate, depth-6 circuit of Maximov. The 89-gate circuit improves
-on both. At depth 3, the 98-gate circuit improves on the 99-gate result of
-Shi, Feng, and Xu (ToSC 2023), and depth 3 is the minimum possible depth for
-this map. The 91-gate circuit matches the smallest published count while
+on both. At depth 3 — the known minimum depth for this map — the 98-gate
+circuit improves on the 99-gate result of Shi, Feng, and Xu (ToSC 2023). The
+91-gate circuit matches the smallest published count while
 achieving depth 6, one gate fewer than Maximov's depth-6 circuit. All three
 circuits are provided as machine-checkable artifacts with a pure-Python
 verifier that rebuilds the MixColumns specification from scratch. We make no
@@ -40,13 +40,15 @@ the 32 unit-input vectors is a complete correctness check.
 | `mixcolumns_98gates_depth3` | 98 | 3 | 99 (Shi, Feng, Xu, ToSC 2023) — depth 3 |
 | `mixcolumns_91gates_depth6` | 91 | 6 | 92 at depth 6 (Maximov); ties the 91 count of Lin et al. |
 
-Two points are worth isolating. First, depth 3 is optimal: every MixColumns
-output depends on at least 5 input bits, a depth-d circuit of 2-input gates
-depends on at most 2^d inputs, so depth 2 is impossible, and the 98-gate
-circuit attains depth 3. Second, the 91-gate depth-6 circuit matches the
-smallest published gate count while using one gate fewer than Maximov's
-depth-6 circuit; we include it as an explicit shallow trade-off point between
-the 89-gate result and the depth-3 98-gate result.
+Two points are worth isolating. First, depth 3 is the known minimum depth for
+AES MixColumns (stated e.g. by Shi, Feng, and Xu; it follows from the standard
+bound that an output depending on w inputs needs depth at least ⌈log₂ w⌉, and
+MixColumns has outputs of weight 7). The contribution of the second circuit is
+therefore the gate count at that depth, not the depth itself. Second, the
+91-gate depth-6 circuit matches the smallest published gate count while using
+one gate fewer than Maximov's depth-6 circuit; we include it as an explicit
+shallow trade-off point between the 89-gate result and the depth-3 98-gate
+result.
 
 Each circuit is verified by two shipped software paths: (a) `verify.py` against a
 from-scratch GF(2^8) MixColumns; (b) `audit/cleanroom_verify.py` against a

@@ -36,7 +36,7 @@
         "measuredDepth": 3,
         "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
       },
-      "claim": "Uses fewer 2-input XOR gates than the 99-gate depth-3 AES MixColumns point reported by Shi, Feng, and Xu (ToSC 2023). Depth 3 is the minimum possible depth for this map (every output depends on more than 4 inputs); we do not make an optimality claim on the gate count."
+      "claim": "Uses fewer 2-input XOR gates than the 99-gate depth-3 AES MixColumns point reported by Shi, Feng, and Xu (ToSC 2023). Depth 3 is the known minimum depth for this map (an output depending on w inputs needs depth at least ceil(log2(w)), and MixColumns has outputs of weight 7); we do not make an optimality claim on the gate count."
     },
     {
       "id": "mixcolumns_91gates_depth6",

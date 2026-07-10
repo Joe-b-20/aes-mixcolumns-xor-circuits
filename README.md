@@ -10,7 +10,7 @@ how the circuits were found.
 | File | Gates | Depth | Note |
 |---|---|---|---|
 | `circuits/mixcolumns_89gates.json` | **89** | 10 | Improves on the smallest published counts we are aware of: 91 (Lin, Xiang, Zeng, and Zhang, CT-RSA 2021) and 92 (Maximov). |
-| `circuits/mixcolumns_98gates_depth3.json` | **98** | 3 | Improves on the 99-gate depth-3 point of Shi, Feng, and Xu. Depth 3 is optimal (see below). |
+| `circuits/mixcolumns_98gates_depth3.json` | **98** | 3 | Improves on the 99-gate depth-3 point of Shi, Feng, and Xu. Depth 3 is the known minimum depth (see below). |
 | `circuits/mixcolumns_91gates_depth6.json` | 91 | **6** | Matches the smallest published count (91) at depth 6; one gate fewer than Maximov's depth-6 92-gate circuit. |
 
 The published comparison points, source-checked: the smallest XOR count we are
@@ -23,10 +23,12 @@ model used here, and the 99-gate depth-3 point is from Shi, Feng, and Xu (ToSC
 2023). Yuan et al. (ToSC 2024) also report 91 XORs in an `s-XOR` /
 quantum-depth framing. See **Claims and scope** below for the careful wording.
 
-A depth note: every MixColumns output bit depends on at least 5 input bits, and
-a depth-`d` circuit of 2-input gates can depend on at most `2^d` inputs, so
-depth 2 is impossible. The depth-3 circuit above therefore achieves the minimum
-possible depth in this model.
+A depth note: the minimum depth of AES MixColumns in this model is 3, a known
+fact stated e.g. by Shi, Feng, and Xu. It follows from the standard bound that
+an output depending on `w` inputs needs depth at least `⌈log₂ w⌉`, and
+MixColumns has outputs depending on 7 inputs. The depth-3 circuit above attains
+this known minimum; its contribution is the gate count at that depth, not the
+depth itself.
 
 ## The exact model
 
