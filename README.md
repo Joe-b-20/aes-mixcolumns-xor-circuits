@@ -3,33 +3,46 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21299092.svg)](https://doi.org/10.5281/zenodo.21299092)
 [![verify](https://github.com/Joe-b-20/aes-mixcolumns-xor-circuits/actions/workflows/verify.yml/badge.svg)](https://github.com/Joe-b-20/aes-mixcolumns-xor-circuits/actions/workflows/verify.yml)
 
-**This repository provides a verified 89-gate 2-input XOR circuit for AES
-MixColumns — two gates below the smallest published count we are aware of
-(91) — together with a 98-gate circuit at the minimum possible depth 3 and a
-91-gate circuit at depth 6.**
+**This repository provides verified 2-input XOR circuits for AES MixColumns
+that improve the entire published depth–count Pareto frontier: 97 gates at the
+minimum possible depth 3, 92 gates at depth 4, and 89 gates at depth 5 — the
+smallest count we are aware of at any depth, two below the smallest published
+count (91).**
 
-All three circuits ship with self-contained verifiers. Every circuit is a
-static, machine-checkable artifact. Nothing here depends on how the circuits
-were found. A source-by-source audit of the comparison claims is in
+All circuits ship with self-contained verifiers. Every circuit is a static,
+machine-checkable artifact. Nothing here depends on how the circuits were
+found. A source-by-source audit of the comparison claims is in
 [`PRIOR_ART.md`](PRIOR_ART.md).
 
 ## The circuits
 
-| File | Gates | Depth | Note |
+| File | Gates | Depth | Published best at that depth |
 |---|---|---|---|
-| `circuits/mixcolumns_89gates.json` | **89** | 10 | Improves on the smallest published counts we are aware of: 91 (Lin, Xiang, Zeng, and Zhang, CT-RSA 2021) and 92 (Maximov). |
-| `circuits/mixcolumns_98gates_depth3.json` | **98** | 3 | Improves on the 99-gate depth-3 point of Shi, Feng, and Xu. Depth 3 is the known minimum depth (see below). |
-| `circuits/mixcolumns_91gates_depth6.json` | 91 | **6** | Matches the smallest published count (91) at depth 6; one gate fewer than Maximov's depth-6 92-gate circuit. |
+| `circuits/mixcolumns_97gates_depth3.json` | 97 | **3** | 99 (Shi, Feng, and Xu, ToSC 2023) — depth 3 is the known minimum depth (see below) |
+| `circuits/mixcolumns_92gates_depth4.json` | 92 | **4** | 97 (Osvik and Canright, ePrint 2024/1076, App. G) |
+| `circuits/mixcolumns_89gates_depth5.json` | **89** | **5** | 94 (Osvik and Canright, ePrint 2024/1076, App. F); smallest published count at *any* depth is 91 (Lin et al., CT-RSA 2021) |
 
-The published comparison points, source-checked: the smallest XOR count we are
-aware of is **91**, by Lin, Xiang, Zeng, and Zhang (CT-RSA 2021), stated in the
-`s-XOR` (in-place) model. Because a `k`-instruction s-XOR program translates
-instruction-for-gate into a `k`-gate 2-input XOR circuit, we use 91 — not just
-Maximov's explicit 92-gate circuit — as the count to beat. Maximov's 92-gate,
-depth-6 circuit remains the classic baseline stated directly in the 2-input-XOR
-model used here, and the 99-gate depth-3 point is from Shi, Feng, and Xu (ToSC
-2023). Yuan et al. (ToSC 2024) also report 91 XORs in an `s-XOR` /
-quantum-depth framing. See **Claims and scope** below for the careful wording.
+Earlier circuits from this project, kept for the archival record (each is now
+dominated by a circuit above):
+
+| File | Gates | Depth | Superseded by |
+|---|---|---|---|
+| `circuits/mixcolumns_98gates_depth3.json` | 98 | 3 | 97 @ depth 3 |
+| `circuits/mixcolumns_91gates_depth6.json` | 91 | 6 | 89 @ depth 5 |
+| `circuits/mixcolumns_89gates.json` | 89 | 10 | 89 @ depth 5 |
+
+The published comparison points, source-checked (details and exact quotes in
+`PRIOR_ART.md`): the published depth–count Pareto frontier for AES MixColumns
+in comparable models is **99 @ depth 3** (Shi, Feng, and Xu, ToSC 2023),
+**97 @ depth 4** and **94 @ depth 5** (Osvik and Canright, ePrint 2024/1076),
+**92 @ depth 6** (Maximov, ePrint 2019/833; also Xiang et al., ToSC 2020,
+s-XOR), and **91 @ depth 7** (Lin, Xiang, Zeng, and Zhang, CT-RSA 2021,
+s-XOR). Because a `k`-instruction s-XOR program translates
+instruction-for-gate into a `k`-gate 2-input XOR circuit, we treat s-XOR
+counts as comparable. Yuan et al. (ToSC 2024) also report 91 XORs in an
+`s-XOR` / quantum-depth framing. The circuits above improve the frontier at
+every depth from 3 to 5 and dominate the deeper points. See **Claims and
+scope** below for the careful wording.
 
 Each circuit is also provided as a human-readable plain-text listing in
 `listings/` (`s32 = s15 ^ s23`, one gate per line, generated from the JSON —
@@ -38,7 +51,7 @@ see `scripts/generate_listings.py`).
 A depth note: the minimum depth of AES MixColumns in this model is 3, a known
 fact stated e.g. by Shi, Feng, and Xu. It follows from the standard bound that
 an output depending on `w` inputs needs depth at least `⌈log₂ w⌉`, and
-MixColumns has outputs depending on 7 inputs. The depth-3 circuit above attains
+MixColumns has outputs depending on 7 inputs. The 97-gate circuit attains
 this known minimum; its contribution is the gate count at that depth, not the
 depth itself.
 
@@ -134,15 +147,18 @@ We state results conservatively.
 1. **Fewest we are aware of, not optimal.** We do **not** prove these gate
    counts are minimal. Minimality of XOR-circuit size, the Shortest Linear
    Program problem, is NP-hard and unproven for this matrix at the sizes here.
-2. **Source-checked baselines.** The smallest previously published XOR count
-   we are aware of is 91, by Lin, Xiang, Zeng, and Zhang (CT-RSA 2021), stated
-   in the `s-XOR` (in-place) model. Every `k`-instruction s-XOR program yields
-   a `k`-gate 2-input XOR circuit, so we compare against 91 rather than only
-   against Maximov's explicit 92-gate 2-input-XOR circuit. The depth-3
-   baseline is the 99-gate result of Shi, Feng, and Xu (ToSC 2023). Yuan et
-   al. (ToSC 2024) likewise report 91 XORs in an `s-XOR` / quantum-depth
-   framing. Gate counts and depths are invariant under input/output bit
-   relabeling, so these comparisons do not depend on convention choices.
+2. **Source-checked baselines.** The published depth–count frontier we compare
+   against: 99 @ depth 3 (Shi, Feng, and Xu, ToSC 2023); 97 @ depth 4 and 94 @
+   depth 5 (Osvik and Canright, ePrint 2024/1076, Appendices G and F); 92 @
+   depth 6 (Maximov, ePrint 2019/833); 91 @ depth 7 (Lin, Xiang, Zeng, and
+   Zhang, CT-RSA 2021, stated in the `s-XOR` in-place model — every
+   `k`-instruction s-XOR program yields a `k`-gate 2-input XOR circuit, so we
+   treat it as comparable). Yuan et al. (ToSC 2024) likewise report 91 XORs in
+   an `s-XOR` / quantum-depth framing. Results in other cost models
+   (multi-input XOR gates, gate-equivalent area, quantum CNOT circuits) are
+   not comparable and are not claimed against; see `PRIOR_ART.md`. Gate counts
+   and depths are invariant under input/output bit relabeling, so these
+   comparisons do not depend on convention choices.
 3. **Convention.** All counts are for the exact 2-input-XOR model and the
    exact MixColumns convention defined above. A hidden convention mismatch is
    the most common way such a comparison goes wrong, which is why the
@@ -177,10 +193,16 @@ paper/       LaTeX source of the ePrint note (appendices generated from circuits
   <https://doi.org/10.6028/NIST.FIPS.197-upd1>
 - Alexander Maximov, AES MixColumn with 92 XOR Gates, IACR ePrint 2019/833.
   <https://eprint.iacr.org/2019/833.pdf>
+- Dag Arne Osvik and David Canright, A More Compact AES, and More, IACR
+  ePrint 2024/1076. <https://eprint.iacr.org/2024/1076>
 - Da Lin, Zejun Xiang, Xiangyong Zeng, and Shasha Zhang, A Framework to
   Optimize Implementations of Matrices, Topics in Cryptology – CT-RSA 2021,
   LNCS 12704, Springer, 2021. DOI:
   <https://doi.org/10.1007/978-3-030-75539-3_25>
+- Zejun Xiang, Xiangyong Zeng, Da Lin, Zhenzhen Bao, and Shasha Zhang,
+  Optimizing Implementations of Linear Layers, IACR Transactions on Symmetric
+  Cryptology, 2020(2):120-145. DOI:
+  <https://doi.org/10.13154/tosc.v2020.i2.120-145>
 - Haotian Shi, Xiutao Feng, and Shengyuan Xu, A Framework with Improved
   Heuristics to Optimize Low-Latency Implementations of Linear Layers, IACR
   Transactions on Symmetric Cryptology, 2023(4):489-510. DOI:

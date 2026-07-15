@@ -55,6 +55,60 @@
         "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
       },
       "claim": "Matches the smallest published XOR count for AES MixColumns (91, Lin et al., CT-RSA 2021) while achieving depth 6, one gate fewer than Maximov's depth-6 92-gate circuit; we do not make an optimality claim."
+    },
+    {
+      "id": "mixcolumns_97gates_depth3",
+      "inputCount": 32,
+      "gateCount": 97,
+      "depth": 3,
+      "outputCount": 32,
+      "outputConvention": "output j (j in 0..31) is MixColumns output bit j; bit j = bit (j mod 8) of state byte (j div 8), least-significant-bit-first within each byte. It is produced at internal signal index outputSignals[j].",
+      "sha256_canonical_gates": "e4c4e678c4b7c22d889c6e060b43859c111b82b953d6d9b43c49c079c0545b56",
+      "sha256_circuit_json": "c1a5899f682e87222bfa84d833233ac874e8d47819e3336d0e85760d14be9f5d",
+      "verified": {
+        "allOutputsCorrect": true,
+        "everyGateIs2InputXOR": true,
+        "everyParentIndexSmaller": true,
+        "measuredDepth": 3,
+        "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
+      },
+      "claim": "Uses two fewer 2-input XOR gates at depth 3 than the 99-gate depth-3 record of Shi, Feng, and Xu (ToSC 2023). Depth 3 is the known minimum depth for this map; we do not make an optimality claim on the gate count."
+    },
+    {
+      "id": "mixcolumns_92gates_depth4",
+      "inputCount": 32,
+      "gateCount": 92,
+      "depth": 4,
+      "outputCount": 32,
+      "outputConvention": "output j (j in 0..31) is MixColumns output bit j; bit j = bit (j mod 8) of state byte (j div 8), least-significant-bit-first within each byte. It is produced at internal signal index outputSignals[j].",
+      "sha256_canonical_gates": "e79bfccf5322fe8933242b47b53e94e73163615c70d5c45c9721e27ac86fd97d",
+      "sha256_circuit_json": "5174fab91f81084d274fa9278b5f8a98f3cd4b580e38d05f8ab9a384404f0067",
+      "verified": {
+        "allOutputsCorrect": true,
+        "everyGateIs2InputXOR": true,
+        "everyParentIndexSmaller": true,
+        "measuredDepth": 4,
+        "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
+      },
+      "claim": "Uses five fewer 2-input XOR gates than the only published depth-4 AES MixColumns circuit we are aware of (97 gates: Osvik and Canright, ePrint 2024/1076, Appendix G); we do not make an optimality claim."
+    },
+    {
+      "id": "mixcolumns_89gates_depth5",
+      "inputCount": 32,
+      "gateCount": 89,
+      "depth": 5,
+      "outputCount": 32,
+      "outputConvention": "output j (j in 0..31) is MixColumns output bit j; bit j = bit (j mod 8) of state byte (j div 8), least-significant-bit-first within each byte. It is produced at internal signal index outputSignals[j].",
+      "sha256_canonical_gates": "c3b972af282d25e8313a510f5cf840472401c6268bd28cda889593fc3379f064",
+      "sha256_circuit_json": "9a79842111c6954ca6955db5cb602d7667f843aac8e52bdef86db3568bdcc972",
+      "verified": {
+        "allOutputsCorrect": true,
+        "everyGateIs2InputXOR": true,
+        "everyParentIndexSmaller": true,
+        "measuredDepth": 5,
+        "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
+      },
+      "claim": "The smallest 2-input XOR count we are aware of at any depth (89), here at depth 5: five fewer gates than the published depth-5 point (94, Osvik and Canright, ePrint 2024/1076, Appendix F) and two fewer than the smallest published count in any comparable model (91, Lin et al., CT-RSA 2021, s-XOR); we do not make an optimality claim."
     }
   ]
 }

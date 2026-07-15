@@ -5,9 +5,11 @@ repository without re-deriving the literature. It states, for each baseline:
 the exact source, the exact reported figure, the cost model, and why it is or
 is not comparable.
 
-**Literature-search cutoff: 2026-07-10.** If you know of a published
-implementation of AES MixColumns with fewer than 91 two-input XOR gates (or
-fewer than 99 at depth 3) that predates this repository, please open an issue.
+**Literature-search cutoff: 2026-07-15.** If you know of a published
+implementation of AES MixColumns in a comparable model with fewer than 91
+two-input XOR gates at any depth, fewer than 99 at depth 3, fewer than 97 at
+depth 4, or fewer than 94 at depth 5, that predates this repository, please
+open an issue.
 
 ## The cost model, and which published numbers are comparable
 
@@ -43,75 +45,99 @@ Gate counts and depths in either comparable model are invariant under
 input/output bit relabeling, so convention differences (bit order, byte order)
 do not affect any comparison below.
 
-## Claim 1: 89 gates improves on the smallest published count (91)
+## The published depth–count frontier
 
-| Source | Reported figure | Model | Where stated |
+Every published (depth, count) point we found for AES MixColumns in the
+comparable models, with the Pareto frontier in bold:
+
+| Depth | Count | Source | Model |
 |---|---|---|---|
-| Lin, Xiang, Zeng, Zhang, *A Framework to Optimize Implementations of Matrices*, CT-RSA 2021, LNCS 12704. DOI: [10.1007/978-3-030-75539-3_25](https://doi.org/10.1007/978-3-030-75539-3_25) | **91 XORs** — "we find an implementation of AES MixColumns using only 91 Xors, which is currently the shortest implementation to the best of our knowledge" | s-XOR (comparable by the Proposition) | Abstract; result tables in the paper |
-| Maximov, *AES MixColumn with 92 XOR gates*, IACR ePrint [2019/833](https://eprint.iacr.org/2019/833) | **92 XOR gates, depth 6** — "a short linear program for AES MixColumn with 92 XOR gates and depth 6" | g-XOR (this model) | Abstract; full listing in the note |
-| Xiang, Zeng, Lin, Bao, Zhang, ToSC 2020(2). DOI: [10.13154/tosc.v2020.i2.120-145](https://doi.org/10.13154/tosc.v2020.i2.120-145) | 92 s-XOR | s-XOR | Paper (ties Maximov's count) |
-| Yuan, Wu, Shi, Zhang, Zhang, ToSC 2024(2). DOI: [10.46586/tosc.v2024.i2.322-347](https://doi.org/10.46586/tosc.v2024.i2.322-347) | 91 XOR (s-XOR metric; in-place quantum framing, depth 13) | s-XOR | Abstract ("two implementations with 91 XOR counts") |
-| Kranz, Leander, Stoffelen, Wiemer, ToSC 2017(4) | 97 XOR | g-XOR | Historical progression point |
+| 3 | 105 | [LSL+19], as tabulated in SFX23 Table 3 | 2-input XOR |
+| 3 | 103 | [BFI21]; Liu et al., ToSC 2022(1) [LWF+22] | 2-input XOR |
+| 3 | 102 | [LZW23] (ePrint 2023/174) | 2-input XOR |
+| 3 | **99** | Shi, Feng, Xu, ToSC 2023(4). DOI: [10.46586/tosc.v2023.i4.489-510](https://doi.org/10.46586/tosc.v2023.i4.489-510) | 2-input XOR |
+| 4 | **97** | Osvik, Canright, ePrint [2024/1076](https://eprint.iacr.org/2024/1076), Appendix G | 2-input XOR |
+| 5 | **94** | Osvik, Canright, ePrint [2024/1076](https://eprint.iacr.org/2024/1076), Appendix F | 2-input XOR |
+| 6 | 94 | [TP20], as tabulated in SFX23 Table 3 | 2-input XOR |
+| 6 | **92** | Maximov, ePrint [2019/833](https://eprint.iacr.org/2019/833); also Xiang, Zeng, Lin, Bao, Zhang, ToSC 2020(2). DOI: [10.13154/tosc.v2020.i2.120-145](https://doi.org/10.13154/tosc.v2020.i2.120-145) | 2-input XOR / s-XOR |
+| 7 | **91** | Lin, Xiang, Zeng, Zhang, CT-RSA 2021, LNCS 12704. DOI: [10.1007/978-3-030-75539-3_25](https://doi.org/10.1007/978-3-030-75539-3_25); tied by Yuan et al., ToSC 2024(2). DOI: [10.46586/tosc.v2024.i2.322-347](https://doi.org/10.46586/tosc.v2024.i2.322-347) | s-XOR |
+| 8 | 97 | [KLSW17] (Kranz, Leander, Stoffelen, Wiemer, ToSC 2017(4)) | see note |
 
-Independent tabulations agreeing that 91 is the published minimum as of the
-cutoff:
+Published frontier: **(3, 99), (4, 97), (5, 94), (6, 92), (7, 91)**. The
+circuits in this repository — 97 @ 3, 92 @ 4, 89 @ 5 — improve the first three
+points by 2, 5, and 5 gates respectively, and 89 @ 5 dominates the remaining
+two. Note: Lin et al.'s 91 (and depending on reading, KLSW17's 97) are stated
+in the s-XOR model; the depth-3 lineage and Osvik–Canright are free
+straight-line 2-input XOR programs. Osvik–Canright is an ePrint preprint (as
+is Maximov); both include full circuit listings.
 
-- Shi, Feng, Xu, ToSC 2023(4), Table 3 ("XOR/depth costs of AES MixColumns"):
-  minimum listed entry is **91 / depth 7 [LXZZ21]**; also lists 92/6 [Max19],
-  92/6 [XZL+20], 94/6 [TP20].
-- Pehlivanoğlu, Demir, PeerJ Computer Science 2024
-  (DOI: [10.7717/peerj-cs.1820](https://doi.org/10.7717/peerj-cs.1820)),
-  Table 5: 2-input-XOR-only rows are 95, 94, 92, 92, **91** (Lin et al.).
-- Xu, Sun, ToSC 2026(2) (also arXiv:2511.18226), Table 4: AES row lists
-  **91\*** (LXZZ21 and YWS+24, starred as state of the art), 92, and their own
-  classical result 105.
-- NIST CSRC Circuit Complexity project,
-  [List of circuits](https://csrc.nist.gov/projects/circuit-complexity/list-of-circuits)
-  (checked 2026-07-10): the AES MixColumns entry (shared with Square and Mugi)
-  is Maximov's circuit, file `Square-AES-Mugi--XOR=92--maximov.circ.txt`
-  (92 XOR, depth 6).
-
-**Conclusion:** the smallest published comparable count as of the cutoff is
-**91**; the 89-gate circuit in `circuits/mixcolumns_89gates.json` uses two
-fewer. We do not claim optimality.
-
-## Claim 2: 98 gates at depth 3 improves on the published depth-3 record (99)
+## Claim 1: 97 gates at depth 3 improves the published depth-3 record (99)
 
 Depth-3 lineage in the 2-input XOR model, as documented by Shi, Feng, and Xu
-(ToSC 2023(4), pp. 489–510, DOI:
-[10.46586/tosc.v2023.i4.489-510](https://doi.org/10.46586/tosc.v2023.i4.489-510)):
-
-| Year | Count @ depth 3 | Source (as cited in SFX23) |
-|---|---|---|
-| 2019 | 105 | [LSL+19] |
-| 2021–2022 | 103 | [BFI21]; Liu et al., ToSC 2022(1) [LWF+22] |
-| 2023 | 102 | [LZW23] |
-| 2023 | **99** | Shi, Feng, Xu — "we find an implementation of AES MixColumns of depth 3 with 99 XOR gates, which represents a substantial reduction of 3 XOR gates compared to the existing record of 102 XOR gates" |
-
-No later comparable-model depth-3 result below 99 was found as of the cutoff
-(the only later depth-3 work found, HILL in ToSC 2026(1), reports GE-area
-figures in a mixed 2/3-input model — see below).
+(ToSC 2023(4), pp. 489–510): 105 [LSL+19] → 103 [BFI21], [LWF+22] → 102
+[LZW23] → **99** [SFX23] ("we find an implementation of AES MixColumns of
+depth 3 with 99 XOR gates, which represents a substantial reduction of 3 XOR
+gates compared to the existing record of 102 XOR gates"). No later
+comparable-model depth-3 result below 99 was found as of the cutoff; the only
+later depth-3 works found (HILL, ToSC 2026(1); Pehlivanoğlu–Demir, PeerJ CS
+2024) use mixed multi-input gate models — see below.
 
 Depth 3 is the known minimum depth for this map (stated e.g. in SFX23: an
 output depending on `w` inputs needs depth at least `ceil(log2 w)`, and
 MixColumns has outputs of weight 7), so the depth cannot be reduced further;
 only the count at depth 3 can.
 
-**Conclusion:** the published depth-3 record is 99; the 98-gate circuit in
-`circuits/mixcolumns_98gates_depth3.json` uses one fewer at the same
+**Conclusion:** the published depth-3 record is 99; the 97-gate circuit in
+`circuits/mixcolumns_97gates_depth3.json` uses two fewer at the same
 (minimum) depth.
 
-## Claim 3: 91 gates at depth 6 matches the smallest published count at lower depth
+## Claim 2: 92 gates at depth 4 improves the published depth-4 point (97)
 
-- Smallest published count: 91 (Lin et al., see Claim 1), listed at **depth 7**
-  in both SFX23 Table 3 and PeerJ CS 2024 Table 5 (secondary tabulations of
-  the primary result); Yuan et al.'s 91 is at in-place depth 13.
-- Smallest published count **at depth 6**: 92 (Maximov, ePrint 2019/833; also
-  92/6 [XZL+20] and 94/6 [TP20] per SFX23 Table 3).
+The only published depth-4 AES MixColumns circuit in a comparable model we
+found is Osvik and Canright's **97 XORs at depth 4** (ePrint 2024/1076,
+Appendix G; full straight-line listing in the paper, positioned by the authors
+as "slightly larger but less deep (faster) than the 92-XOR depth 6 result of
+Maximov"). We verified that no depth-4 point hides in the broader
+low-latency literature: SFX23's Table 3 has entries only at depths 3, 6, 7,
+and 8 (its depth-4 rows in Table 5 concern a different involutory matrix, not
+AES); LZW23's full body contains no depth-4 AES entry; LWF+22 reports only
+103 @ depth 3 for AES.
 
-**Conclusion:** the 91-gate depth-6 circuit in
-`circuits/mixcolumns_91gates_depth6.json` ties the smallest published count
-while using one gate fewer than any published depth-6 circuit.
+**Conclusion:** the 92-gate circuit in
+`circuits/mixcolumns_92gates_depth4.json` uses five fewer gates than the
+published depth-4 point.
+
+## Claim 3: 89 gates at depth 5 — smallest count we are aware of, at depth 5
+
+- The only published depth-5 point in a comparable model: **94 XORs at depth
+  5** (Osvik and Canright, ePrint 2024/1076, Appendix F).
+- The smallest published count at **any** depth in a comparable model: **91**
+  (Lin et al., CT-RSA 2021, s-XOR, listed at depth 7 in SFX23 Table 3 and
+  PeerJ CS 2024 Table 5; "an implementation of AES MixColumns using only 91
+  Xors, which is currently the shortest implementation to the best of our
+  knowledge"). Yuan et al. (ToSC 2024(2)) tie 91 in s-XOR (in-place depth 13).
+  Every comparison table checked — SFX23 Table 3, PeerJ CS 2024 Table 5
+  (DOI: [10.7717/peerj-cs.1820](https://doi.org/10.7717/peerj-cs.1820)),
+  HILL Table 13 (ToSC 2026(1)), Xu–Sun Table 4 (ToSC 2026(2)) — bottoms out
+  at 91; no published 89- or 90-XOR circuit exists in a comparable model as
+  of the cutoff.
+- The NIST CSRC Circuit Complexity project's
+  [List of circuits](https://csrc.nist.gov/projects/circuit-complexity/list-of-circuits)
+  (checked 2026-07-10) lists Maximov's 92 XOR / depth 6 as its AES MixColumns
+  entry.
+
+**Conclusion:** the 89-gate circuit in
+`circuits/mixcolumns_89gates_depth5.json` uses five fewer gates than the
+published depth-5 point and two fewer than the smallest published count at
+any depth, and it Pareto-dominates every published point.
+
+## Earlier claims from this project (v1, superseded)
+
+The repository's original three circuits (89 @ depth 10, 98 @ depth 3, 91 @
+depth 6) were records against the then-published frontier when released
+(2026-07-10) and remain in `circuits/` for the archival record; each is now
+dominated by one of the circuits above. Their original claim statements are
+preserved in `bounds.json`.
 
 ## Non-comparable results
 
@@ -121,21 +147,27 @@ direction:
 
 - **44 gates at depth 3** (Pehlivanoğlu–Demir, PeerJ CS 2024): composed of
   5 XOR2 + 7 XOR3 + 32 XOR4 gates — a multi-input gate model.
-- **270.4 GE at depth 3**
+- **79 "XOR operations" at depth 3**
   ([HILL, ToSC 2026(1)](https://tosc.iacr.org/index.php/ToSC/article/view/12794)):
-  gate-equivalent area under a weighted mixed 2/3-input "h-XOR" metric.
+  a mixed XOR2/XOR3 count under the paper's weighted "h-XOR" metric (its
+  Table 9 circuit contains 3-input gates); decomposed to 2-input gates it
+  exceeds the pure-XOR2 records. The same paper's 270.4 GE figure is
+  technology-mapped area.
 - **105–107 CNOTs at depth 10** (Zhang et al., IEEE TC 2024 — 105, the
   record; Shi–Feng, ASIACRYPT 2024, ePrint
   [2024/381](https://eprint.iacr.org/2024/381) — 107; Xu–Sun, ToSC 2026(2) —
   105–107): in-place quantum CNOT circuits, a different resource model (and
-  numerically above 91 in any case).
+  numerically above 91 in any case). Xu–Sun's classical result is 105 XORs,
+  above the records here.
 
 ## How this audit was compiled
 
-Two multi-source literature sweeps (2026-07-10) over IACR ePrint, ToSC/FSE,
-CHES/TCHES, CT-RSA, Springer, arXiv, PeerJ, and the NIST Circuit Complexity
-list, cross-checking every comparison table found against the primary papers.
-Negative claims ("nothing below 91") rest on those tables and targeted
-searches, not exhaustive enumeration; the strongest independent corroboration
-is that every 2024–2026 paper checked — each with a direct incentive to cite
-any smaller result — bottoms out at 91.
+Three multi-source literature sweeps (2026-07-10 and 2026-07-15) over IACR
+ePrint, ToSC/FSE, CHES/TCHES, CT-RSA, Springer, arXiv, PeerJ, and the NIST
+Circuit Complexity list, cross-checking every comparison table found against
+the primary papers, including full-text sweeps of the papers where a hidden
+depth-4/5 point could plausibly live (LZW23, LWF+22, HILL, Xu–Sun,
+Osvik–Canright). Negative claims ("nothing below X") rest on those tables and
+targeted searches, not exhaustive enumeration; the strongest independent
+corroboration is that every 2024–2026 paper checked — each with a direct
+incentive to cite any smaller result — bottoms out at 91 XORs and 99 @ depth 3.
