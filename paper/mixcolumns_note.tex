@@ -1,4 +1,4 @@
-% Smaller XOR circuits for AES MixColumns -- short note for the IACR ePrint Archive.
+% Smaller and shallower XOR circuits for AES MixColumns -- revised note for the IACR ePrint Archive.
 % Build: python3 generate_appendix.py && tectonic mixcolumns_note.tex
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=2.7cm]{geometry}
@@ -8,8 +8,8 @@
 \usepackage[hidelinks]{hyperref}
 \urlstyle{tt}
 
-\title{Smaller XOR Circuits for AES MixColumns:\\
-89 Gates; 98 Gates at Depth 3; 91 Gates at Depth 6}
+\title{Smaller and Shallower XOR Circuits for AES MixColumns:\\
+97 Gates at Depth 3; 92 at Depth 4; 89 at Depth 5}
 \author{Joe Bachir\\[2pt]
 Independent researcher\\[2pt]
 \texttt{joebachir20@gmail.com}}
@@ -19,29 +19,30 @@ Independent researcher\\[2pt]
 \maketitle
 
 \begin{abstract}
-We report three explicit implementations of the AES MixColumns linear
-transformation as circuits of 2-input XOR gates over $\mathrm{GF}(2)$: an
-\textbf{89-gate} circuit of depth 10; a \textbf{98-gate} circuit of depth 3;
-and a \textbf{91-gate} circuit of depth 6. The smallest previously published
-XOR count we are aware of is 91, by Lin, Xiang, Zeng, and Zhang (CT-RSA 2021),
-stated in the s-XOR model, whose programs translate instruction-for-gate into
-2-input XOR circuits; the classic baseline stated directly in the 2-input-XOR
-model is the 92-gate, depth-6 circuit of Maximov (ePrint 2019/833). The
-89-gate circuit improves on both. At depth 3 --- the known minimum depth for
-this map --- the 98-gate circuit improves on the 99-gate result of Shi, Feng,
-and Xu (ToSC 2023). The 91-gate circuit matches the smallest published count
-while achieving depth 6. All three circuits are given in full in the
-appendices and are published as machine-checkable artifacts with self-contained
-verifiers that rebuild the MixColumns specification from scratch. We make no
-optimality claim on gate counts.
+We present three implementations of the AES MixColumns linear transformation
+as circuits of 2-input XOR gates over $\mathrm{GF}(2)$ that improve the entire
+published depth--count Pareto frontier: a \textbf{97-gate} circuit at depth
+\textbf{3} (the known minimum depth), improving the 99-gate record of Shi,
+Feng, and Xu (ToSC 2023); a \textbf{92-gate} circuit at depth \textbf{4},
+improving the 97-gate point of Osvik and Canright (ePrint 2024/1076); and an
+\textbf{89-gate} circuit at depth \textbf{5} --- the smallest XOR count we are
+aware of at any depth --- improving Osvik and Canright's 94-gate depth-5 point
+by five gates and the smallest published count in any comparable model (91,
+Lin, Xiang, Zeng, and Zhang, CT-RSA 2021, s-XOR) by two. The circuits were
+found by a stochastic local search over a value-set formulation of the
+shortest-linear-program problem, built around moves that are individually
+neutral or worse but globally productive; the method is fully specified, and
+both it and the circuits are published as machine-checkable artifacts with
+dependency-free Python verifiers and reproducers. We make no optimality claim
+on gate counts.
 \end{abstract}
 
 \section{Model and specification}
 
 A circuit is an ordered list of 2-input XOR gates. Signals $s_0,\dots,s_{31}$
 are the input bits; gate $k$ produces signal $s_{32+k} = s_a \oplus s_b$ with
-$a,b$ both strictly smaller than $32+k$. Depth counts gates on the longest
-input-to-signal path, with inputs at depth 0.
+$a,b$ both strictly smaller than $32+k$. Cost is the number of gates; depth
+counts gates on the longest input-to-output path, with inputs at depth 0.
 
 The bit/byte convention is: the AES state column is four bytes
 $a_0,a_1,a_2,a_3$; bit index $i \in \{0,\dots,31\}$ denotes bit $(i \bmod 8)$
@@ -58,40 +59,95 @@ agreement on the 32 unit-input vectors is a complete correctness check. Gate
 counts and depths are invariant under input/output bit relabeling, so the
 comparisons below do not depend on convention choices.
 
+The s-XOR (in-place) cost model is comparable to this one: an s-XOR program is
+a sequence of instructions $x_i \leftarrow x_i \oplus x_j$, and unrolling the
+overwritten registers (SSA-style) turns a $k$-instruction program into exactly
+$k$ free-standing 2-input XOR gates. Published s-XOR counts therefore bound
+the published state of the art in our model. Results in other cost models ---
+multi-input XOR gates, technology-mapped gate-equivalent area, in-place
+quantum CNOT circuits --- are not comparable and are not claimed against.
+
 \section{Results}
 
 \begin{table}[h]
 \centering
-\begin{tabular}{lccl}
+\begin{tabular}{ccccl}
 \toprule
-Circuit & Gates & Depth & Published comparison figure \\
+Depth & Published best & Model & This work & Improvement \\
 \midrule
-\texttt{mixcolumns\_89gates}        & \textbf{89} & 10 & 91~\cite{LXZZ21} (s-XOR); 92~\cite{Max19} \\
-\texttt{mixcolumns\_98gates\_depth3} & \textbf{98} & 3  & 99 at depth 3~\cite{SFX23} \\
-\texttt{mixcolumns\_91gates\_depth6} & 91 & \textbf{6} & 92 at depth 6~\cite{Max19}; ties 91~\cite{LXZZ21} \\
+3 & 99~\cite{SFX23} & XOR2 & \textbf{97} & $-2$ (depth 3 is the minimum depth) \\
+4 & 97~\cite{OC24} & XOR2 & \textbf{92} & $-5$ \\
+5 & 94~\cite{OC24} & XOR2 & \textbf{89} & $-5$; smallest count at any depth \\
+6 & 92~\cite{Max19,XZLBZ20} & XOR2 / s-XOR & --- & dominated by 89 @ 5 \\
+7 & 91~\cite{LXZZ21,YWSZZ24} & s-XOR & --- & dominated by 89 @ 5 \\
 \bottomrule
 \end{tabular}
-\caption{The three circuits (full listings in Appendices~\ref{app:mixcolumns_89gates}--\ref{app:mixcolumns_91gates_depth6}).}
+\caption{The published depth--count Pareto frontier for AES MixColumns in
+comparable models, and this work. Depth-3 lineage: 105 $\rightarrow$ 103
+$\rightarrow$ 102 $\rightarrow$ 99 (see~\cite{SFX23}, Table 3). Full circuit
+listings are in Appendices~\ref{app:mixcolumns_97gates_depth3}--\ref{app:mixcolumns_89gates_depth5}.}
 \end{table}
 
-The smallest previously published XOR count we are aware of is 91, by Lin,
-Xiang, Zeng, and Zhang~\cite{LXZZ21}, stated in the s-XOR (in-place) model.
-Every $k$-instruction s-XOR program yields a $k$-gate 2-input XOR circuit
-(each in-place instruction $x_i \leftarrow x_i \oplus x_j$ is one 2-input XOR
-gate), so we compare against 91 rather than only against Maximov's explicit
-92-gate circuit~\cite{Max19}. Yuan et al.~\cite{YWSZZ24} likewise report 91
-XORs in an s-XOR / quantum-depth framing.
+Depth 3 is the known minimum depth for AES MixColumns (stated e.g.\
+in~\cite{SFX23}: an output depending on $w$ inputs needs depth at least
+$\lceil \log_2 w \rceil$, and MixColumns has outputs of weight 7), so the
+97-gate circuit's contribution is the count at that depth. The 89-gate
+depth-5 circuit Pareto-dominates every published point: fewer gates than the
+smallest published count at any depth, at lower depth than every published
+circuit of fewer than 94 gates.
 
-Two remarks. First, depth 3 is the known minimum depth for AES MixColumns
-(stated e.g.\ in~\cite{SFX23}; an output depending on $w$ inputs needs depth
-at least $\lceil \log_2 w \rceil$, and MixColumns has outputs of weight~7).
-The contribution of the depth-3 circuit is therefore the gate count at that
-depth, not the depth itself. Second, the 91-gate depth-6 circuit matches the
-smallest published gate count while using one gate fewer than Maximov's
-depth-6 circuit; we include it as an explicit shallow trade-off point between
-the 89-gate circuit and the depth-3 circuit.
+\section{Method}
 
-\section{Verification}
+The circuits were found by stochastic local search over a \emph{value-set}
+formulation of the shortest-linear-program problem: a circuit is represented
+as a set of $\mathrm{GF}(2)$ masks over the 32 inputs, valid iff every mask is
+the XOR of two already-available masks (realizability) and all 32 output
+masks are present; the gate count is the set size.
+
+The starting observation is that in the published record circuits every gate
+is locally efficient --- the signature of greedy construction --- which
+suggests such circuits sit at local optima, and that smaller circuits are
+separated from them by locally \emph{suboptimal} intermediate steps. The
+search is therefore built around moves that are individually neutral or worse
+but globally productive:
+
+\begin{itemize}
+\item \textbf{remove-1}: drop a non-output mask if the set remains realizable;
+\item \textbf{neutral swap (plateau walk)}: remove one mask and add one repair
+  mask that restores realizability --- size unchanged --- walking the plateau
+  of equal-size circuits until some mask becomes jointly redundant;
+\item \textbf{remove-2-add-1 (hub move)}: the compound move that nets $-1$
+  when single removals are exhausted;
+\item \textbf{destroy-and-rebuild}: remove $k$ masks and greedily
+  re-synthesize from a pool of candidate masks, accepting rebuilds that are
+  no larger, or slightly larger with fixed probability (the uphill steps);
+\item \textbf{depth-aware reconstruction}: a fixpoint computation of each
+  mask's minimum build depth over the set, used to reject depth-cap
+  violations and to emit gate lists in depth order.
+\end{itemize}
+
+The depth-3 circuit comes from a from-scratch constructor in the same spirit:
+each output is modeled as $A \oplus B$ where $A,B$ partition its bits into
+depth-$\le 2$ parts shared across outputs and refcount-costed, optimized by
+simulated annealing with greedy descent and iterated local search; depth
+$\le 3$ holds by construction. Deeper records come from a ladder: the
+depth-3 circuit seeds a depth-4 search, whose best seeds depth 5, and so on,
+with workers accepting candidates that have fewer gates \emph{or equal gates
+at strictly lower depth} (a Pareto tie-break; the 89-gate circuit moved from
+depth 6 to depth 5 through exactly this rule). Every candidate is verified
+against MixColumns rebuilt from $\mathrm{GF}(2^8)$ before it is accepted
+(verify-before-claim).
+
+Implementation and execution of the search campaigns used LLM coding agents
+as programming tools, directed by the author; the moves and acceptance rules
+above were designed by the author. The method as published is fully specified
+and reproducible with the accompanying dependency-free Python code, with no
+AI system in the loop: the from-scratch 97-gate depth-3 circuit reproduces in
+minutes on a single core, and the method repository documents the full
+lineage of every record, from scratch to 89 gates, with the exact code, logs,
+and every intermediate verified circuit of the runs that produced them.
+
+\section{Verification and artifacts}
 \label{sec:verification}
 
 The circuits are static, machine-checkable artifacts, published with
@@ -100,31 +156,21 @@ verifiers at
 \url{https://github.com/Joe-b-20/aes-mixcolumns-xor-circuits}
 \end{center}
 and archived permanently at DOI
-\href{https://doi.org/10.5281/zenodo.21299092}{10.5281/zenodo.21299092}.
-Each circuit is verified by two separately implemented, dependency-free Python
-paths and one hardware path:
-
-\begin{enumerate}
-\item \texttt{verify.py} rebuilds the $32 \times 32$ $\mathrm{GF}(2)$ target
-  map from the $\mathrm{GF}(2^8)$ definition above --- the verifier
-  \emph{is} the specification, so there is no hidden convention to mismatch
-  --- and checks structure (every gate a 2-input XOR of earlier signals),
-  all 32 output masks, the declared gate count and depth, and the SHA-256
-  integrity metadata.
-\item \texttt{audit/cleanroom\_verify.py}, a separately written clean-room
-  verifier, rechecks everything against an independent byte-level reference,
-  runs $10^5$ deterministic random trials per circuit, verifies there are no
-  dead gates or duplicate intermediate values, and demonstrates that mutated
-  or convention-mismatched artifacts are rejected (14 adversarial cases).
-\item Verilog netlists and testbenches for all three circuits pass under
-  Icarus Verilog, checking all 32 basis vectors in simulation; a continuous
-  integration workflow runs every path on each commit.
-\end{enumerate}
-
-For integrity, each appendix states the circuit's canonical SHA-256, computed
-over the UTF-8 bytes of the compact JSON string
-\texttt{\{"inputCount":32,"gates":[...]\}}; the repository's
-\texttt{bounds.json} carries the same values, and both verifiers recheck them.
+\href{https://doi.org/10.5281/zenodo.21299092}{10.5281/zenodo.21299092}; the
+method, pipeline, and run evidence are published at
+\begin{center}
+\url{https://github.com/Joe-b-20/slp-plateau-search}
+\end{center}
+Each circuit is verified by two separately implemented, dependency-free
+Python paths --- \texttt{verify.py}, which rebuilds the $32 \times 32$
+$\mathrm{GF}(2)$ target map from the $\mathrm{GF}(2^8)$ definition (the
+verifier \emph{is} the specification), and a clean-room verifier with
+deterministic random trials and adversarial rejection tests --- plus Verilog
+testbenches under Icarus Verilog, all run by continuous integration. Each
+appendix states its circuit's canonical SHA-256, computed over the UTF-8
+bytes of the compact JSON string
+\texttt{\{"inputCount":32,"gates":[...]\}} and pinned in the repository's
+integrity metadata.
 
 \section{Scope and claims}
 
@@ -134,13 +180,13 @@ over the UTF-8 bytes of the compact JSON string
   minimal. We claim only that they are the smallest we have found or seen
   published as of July 2026.
 \item \textbf{Comparisons.} All counts are for the exact model and convention
-  of Section~1; the baselines~\cite{Max19,LXZZ21,SFX23,YWSZZ24} were
-  source-checked. Results in other cost models (multi-input XOR gates,
-  gate-equivalent area, technology-mapped netlists, in-place quantum CNOT
-  circuits) are not comparable and are not claimed against.
-\item \textbf{Method.} The search technique used to find these circuits is
-  deferred to separate, ongoing work; none of the claims here depend on it.
-  The artifacts are self-contained and permanently verifiable.
+  of Section~1; the baselines~\cite{SFX23,OC24,Max19,XZLBZ20,LXZZ21,YWSZZ24}
+  were source-checked, and a source-by-source audit (with the non-comparable
+  cost models explicitly listed) is maintained in the artifact repository's
+  \texttt{PRIOR\_ART.md}.
+\item \textbf{Earlier results.} This note supersedes the project's earlier
+  circuits (89 gates at depth 10; 98 at depth 3; 91 at depth 6), which remain
+  in the artifact repository for the archival record.
 \end{itemize}
 
 \begin{thebibliography}{9}
@@ -151,24 +197,36 @@ National Institute of Standards and Technology,
 NIST FIPS 197-upd1, May 2023.
 \url{https://doi.org/10.6028/NIST.FIPS.197-upd1}
 
-\bibitem{Max19}
-A.~Maximov,
-\emph{AES MixColumn with 92 XOR gates},
-IACR Cryptology ePrint Archive, Report 2019/833, 2019.
-\url{https://eprint.iacr.org/2019/833}
-
-\bibitem{LXZZ21}
-D.~Lin, Z.~Xiang, X.~Zeng, and S.~Zhang,
-\emph{A Framework to Optimize Implementations of Matrices},
-Topics in Cryptology -- CT-RSA 2021, LNCS 12704, Springer, 2021.
-\url{https://doi.org/10.1007/978-3-030-75539-3_25}
-
 \bibitem{SFX23}
 H.~Shi, X.~Feng, and S.~Xu,
 \emph{A Framework with Improved Heuristics to Optimize Low-Latency
 Implementations of Linear Layers},
 IACR Transactions on Symmetric Cryptology, 2023(4):489--510, 2023.
 \url{https://doi.org/10.46586/tosc.v2023.i4.489-510}
+
+\bibitem{OC24}
+D.~A.~Osvik and D.~Canright,
+\emph{A More Compact AES, and More},
+IACR Cryptology ePrint Archive, Report 2024/1076, 2024.
+\url{https://eprint.iacr.org/2024/1076}
+
+\bibitem{Max19}
+A.~Maximov,
+\emph{AES MixColumn with 92 XOR gates},
+IACR Cryptology ePrint Archive, Report 2019/833, 2019.
+\url{https://eprint.iacr.org/2019/833}
+
+\bibitem{XZLBZ20}
+Z.~Xiang, X.~Zeng, D.~Lin, Z.~Bao, and S.~Zhang,
+\emph{Optimizing Implementations of Linear Layers},
+IACR Transactions on Symmetric Cryptology, 2020(2):120--145, 2020.
+\url{https://doi.org/10.13154/tosc.v2020.i2.120-145}
+
+\bibitem{LXZZ21}
+D.~Lin, Z.~Xiang, X.~Zeng, and S.~Zhang,
+\emph{A Framework to Optimize Implementations of Matrices},
+Topics in Cryptology -- CT-RSA 2021, LNCS 12704, Springer, 2021.
+\url{https://doi.org/10.1007/978-3-030-75539-3_25}
 
 \bibitem{YWSZZ24}
 Y.~Yuan, W.~Wu, T.~Shi, L.~Zhang, and Y.~Zhang,

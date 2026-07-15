@@ -14,9 +14,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ORDER = [
-    "mixcolumns_89gates",
-    "mixcolumns_98gates_depth3",
-    "mixcolumns_91gates_depth6",
+    "mixcolumns_97gates_depth3",
+    "mixcolumns_92gates_depth4",
+    "mixcolumns_89gates_depth5",
 ]
 
 
