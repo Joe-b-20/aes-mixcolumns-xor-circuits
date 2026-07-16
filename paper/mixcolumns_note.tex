@@ -126,6 +126,29 @@ but globally productive:
   violations and to emit gate lists in depth order.
 \end{itemize}
 
+The core loop, for the seedable engines, is:
+
+\begin{quote}\small\ttfamily
+S := value-set of a starting circuit (or of the naive per-output XOR trees)\\
+best := S\\
+repeat:\\
+\hspace*{1.5em}with probability p\_hub: remove two non-output masks from S\\
+\hspace*{1.5em}otherwise: \hspace*{4.05em}remove one non-output mask from S\\
+\hspace*{1.5em}if S is no longer realizable:\\
+\hspace*{3em}search (bounded, randomized) for one repair mask w with\\
+\hspace*{3em}\hspace*{1.5em}S $\cup$ \{w\} realizable; if none, undo and continue\\
+\hspace*{1.5em}S := trim(S) \hspace*{1em}// drop masks the 32 outputs no longer need\\
+\hspace*{1.5em}if depth-capped and min-build-depth(S) > cap: undo and continue\\
+\hspace*{1.5em}if |S| < |best|, or |S| = |best| at strictly lower depth:\\
+\hspace*{3em}verify against the GF($2^8$) specification; if correct, best := S
+\end{quote}
+
+\noindent With the published reproducer this loop, in dependency-free
+single-core Python, cuts the published 92-gate circuit of~\cite{XZLBZ20} to 91
+gates in seconds and a 90-gate seed to 89 in about two minutes; the
+from-scratch depth-3 constructor below reaches 97 gates in one to three
+minutes.
+
 The depth-3 circuit comes from a from-scratch constructor in the same spirit:
 each output is modeled as $A \oplus B$ where $A,B$ partition its bits into
 depth-$\le 2$ parts shared across outputs and refcount-costed, optimized by
@@ -161,16 +184,24 @@ method, pipeline, and run evidence are published at
 \begin{center}
 \url{https://github.com/Joe-b-20/slp-plateau-search}
 \end{center}
-Each circuit is verified by two separately implemented, dependency-free
-Python paths --- \texttt{verify.py}, which rebuilds the $32 \times 32$
-$\mathrm{GF}(2)$ target map from the $\mathrm{GF}(2^8)$ definition (the
-verifier \emph{is} the specification), and a clean-room verifier with
-deterministic random trials and adversarial rejection tests --- plus Verilog
-testbenches under Icarus Verilog, all run by continuous integration. Each
-appendix states its circuit's canonical SHA-256, computed over the UTF-8
-bytes of the compact JSON string
-\texttt{\{"inputCount":32,"gates":[...]\}} and pinned in the repository's
-integrity metadata.
+Every claim in this note is decidable from the note alone, with nothing
+external trusted: the appendices list every gate of every circuit, Section~1
+defines the target map, and because MixColumns is linear, replaying a listing
+on the 32 unit-input vectors and comparing against the matrix derived from
+Eq.~5.6 of~\cite{FIPS197} is a complete correctness check --- roughly thirty
+lines of code in any language. Gate counts and depths are read directly off
+the listings.
+
+The published artifacts automate this. Each circuit is verified by two
+separately implemented, dependency-free Python paths ---
+\texttt{verify.py}, which rebuilds the $32 \times 32$ $\mathrm{GF}(2)$ target
+map from the $\mathrm{GF}(2^8)$ definition (the verifier \emph{is} the
+specification), and a clean-room verifier with deterministic random trials
+and adversarial rejection tests --- plus Verilog testbenches under Icarus
+Verilog, all run by continuous integration. Each appendix states its
+circuit's canonical SHA-256, computed over the UTF-8 bytes of the compact
+JSON string \texttt{\{"inputCount":32,"gates":[...]\}} and pinned in the
+repository's integrity metadata.
 
 \section{Scope and claims}
 
