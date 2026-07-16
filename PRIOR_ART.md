@@ -3,7 +3,9 @@
 This file lets a skeptical reader audit every comparison made in this
 repository without re-deriving the literature. It states, for each baseline:
 the exact source, the exact reported figure, the cost model, and why it is or
-is not comparable.
+is not comparable. (For the provenance of *our* circuits — the search method,
+the untouched run archives, and per-record reproduction — see the companion
+repository [`slp-plateau-search`](https://github.com/Joe-b-20/slp-plateau-search).)
 
 **Literature-search cutoff: 2026-07-15.** If you know of a published
 implementation of AES MixColumns in a comparable model with fewer than 91

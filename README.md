@@ -128,7 +128,7 @@ run with Icarus Verilog:
 
 ~~~
 cd verilog
-iverilog -o sim.vvp mixcolumns_89gates.v mixcolumns_89gates_tb.v && vvp sim.vvp
+iverilog -o sim.vvp mixcolumns_89gates_depth5.v mixcolumns_89gates_depth5_tb.v && vvp sim.vvp
 ~~~
 
 Expected output includes `PASS: all 32 basis vectors correct`. The testbench
@@ -182,8 +182,9 @@ We state results conservatively.
 ## Contents
 
 ~~~
-circuits/    three circuit JSON files
+circuits/    six circuit JSON files (the three current records + three superseded v1 circuits)
 listings/    the same circuits as human-readable plain text (generated)
+docs/        generated figures (the depth-count frontier chart)
 PRIOR_ART.md source-by-source audit of every comparison claim
 bounds.json  annotated summary + integrity metadata
 verify.py    lightweight repository verifier
