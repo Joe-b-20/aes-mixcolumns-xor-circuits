@@ -6,6 +6,7 @@
 \usepackage{booktabs}
 \usepackage{multicol}
 \usepackage{tikz}
+\usetikzlibrary{positioning}
 \usepackage[hidelinks]{hyperref}
 \urlstyle{tt}
 
@@ -198,13 +199,54 @@ The depth-3 circuit comes from a from-scratch constructor in the same spirit:
 each output is modeled as $A \oplus B$ where $A,B$ partition its bits into
 depth-$\le 2$ parts shared across outputs and refcount-costed, optimized by
 simulated annealing with greedy descent and iterated local search; depth
-$\le 3$ holds by construction. Deeper records come from a ladder: the
-depth-3 circuit seeds a depth-4 search, whose best seeds depth 5, and so on,
-with workers accepting candidates that have fewer gates \emph{or equal gates
-at strictly lower depth} (a Pareto tie-break; the 89-gate circuit moved from
-depth 6 to depth 5 through exactly this rule). Every candidate is verified
-against MixColumns rebuilt from $\mathrm{GF}(2^8)$ before it is accepted
-(verify-before-claim).
+$\le 3$ holds by construction. Deeper records come from a ladder of parallel
+workers: the depth-3 circuit seeds a depth-4 search, whose best seeds depth
+5, and so on, while a coordinator continuously re-offers every worker the
+best circuit feasible at its depth cap. Workers accept candidates that have
+fewer gates \emph{or equal gates at strictly lower depth} (a Pareto
+tie-break; the 89-gate circuit moved from depth 6 to depth 5 through exactly
+this rule). Every candidate is verified against MixColumns rebuilt from
+$\mathrm{GF}(2^8)$ before it is accepted (verify-before-claim).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw=black!60, rounded corners=2pt, inner sep=3.5pt,
+              font=\scriptsize\ttfamily, minimum height=5.5mm},
+  rec/.style={box, fill=blue!60!black, text=white, font=\scriptsize\bfseries\ttfamily},
+  lbl/.style={font=\tiny, black!55},
+  x=1.42cm]
+\node[box] (n0) at (0,0) {scratch};
+\node[rec] (n1) at (1,0) {97@3};
+\node[box] (n2) at (2,0) {96@4};
+\node[box] (n3) at (3,0) {95@5};
+\node[box] (n4) at (4,0) {94@4};
+\node[box] (n5) at (5,0) {93@7};
+\node[box] (n6) at (6,0) {92@7};
+\node[box] (n7) at (7,0) {92@7};
+\node[box] (n8) at (8,0) {89@6};
+\node[rec] (n9) at (9,0) {89@5};
+\foreach \i/\j in {n0/n1,n1/n2,n2/n3,n3/n4,n4/n5,n5/n6,n6/n7,n7/n8,n8/n9}
+  \draw[-stealth, black!60] (\i) -- (\j);
+\foreach \i/\t in {n1/d3,n2/d4,n3/d5,n4/d6,n5/d7,n6/d8,n7/d9,n8/d10}
+  \node[lbl, below=2pt of \i] {\t};
+\draw[black!40] (-0.35,0.55) -- (8.35,0.55)
+  node[midway, above, font=\tiny, black!55]
+  {one ladder run, 2026-07-13 (11.0 h from scratch to 89 gates)};
+\draw[black!40] (8.65,0.55) -- (9.4,0.55)
+  node[midway, above, font=\tiny, black!55] {+10 min};
+\end{tikzpicture}
+\caption{The fully logged lineage of the 89-gate depth-5 circuit
+(gates@depth per ladder rung): from scratch to 89 gates in one run, then one
+Pareto-tie-break reroute to depth 5. Every arrow is a seeded search step with
+a timestamped log line and a verified intermediate circuit in the method
+repository's run archives.}
+\end{figure}
+
+The records are replicable with the published configurations: the from-scratch
+97 at depth 3 in about one to three minutes on a single core; the 89 at depth
+5 in about ten to fifteen minutes from the shipped 89-at-depth-6 seed; and the
+full from-scratch ladder in hours.
 
 Implementation and execution of the search campaigns used LLM coding agents
 as programming tools, directed by the author; the moves and acceptance rules
