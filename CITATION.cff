@@ -5,7 +5,7 @@ authors:
   - family-names: Bachir
     given-names: Joe
 version: "2.0.0"
-date-released: 2026-07-15
+date-released: 2026-07-16
 repository-code: "https://github.com/Joe-b-20/aes-mixcolumns-xor-circuits"
 doi: 10.5281/zenodo.21299092
 identifiers:
