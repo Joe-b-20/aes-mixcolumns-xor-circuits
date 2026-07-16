@@ -1,5 +1,5 @@
 // AES MixColumns, 89 two-input XOR gates, depth 10. Auto-generated; do not edit.
-module mixcolumns_89gates(input [31:0] x, output [31:0] y);
+module mixcolumns_89gates_depth10(input [31:0] x, output [31:0] y);
   wire [120:0] s;
   assign s[31:0] = x;
   assign s[32] = s[15] ^ s[23];

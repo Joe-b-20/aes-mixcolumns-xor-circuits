@@ -596,7 +596,7 @@ def main() -> int:
     for path in sorted(CIRCUIT_DIR.glob('*.json')):
         circuits.append(analyze_circuit(path, target_masks, bounds))
 
-    example = json.loads((CIRCUIT_DIR / 'mixcolumns_89gates.json').read_text(encoding='utf-8'))
+    example = json.loads((CIRCUIT_DIR / 'mixcolumns_89gates_depth10.json').read_text(encoding='utf-8'))
     tests = adversarial_tests(example, target_masks)
 
     report = {

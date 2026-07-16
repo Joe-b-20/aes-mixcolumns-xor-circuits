@@ -11,7 +11,7 @@ from pathlib import Path
 import audit.cleanroom_verify as cv
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE_CIRCUIT_PATH = ROOT / "circuits" / "mixcolumns_89gates.json"
+BASE_CIRCUIT_PATH = ROOT / "circuits" / "mixcolumns_89gates_depth10.json"
 
 
 class VerificationTests(unittest.TestCase):

@@ -1,5 +1,5 @@
 {
- "id": "mixcolumns_89gates",
+ "id": "mixcolumns_89gates_depth10",
  "model": "2-input XOR circuit over GF(2). Signals 0..31 are the 32 input bits. Gate k (k>=0) produces signal 32+k = signal[gates[k][0]] XOR signal[gates[k][1]]. Both parents have strictly smaller index.",
  "inputCount": 32,
  "gateCount": 89,

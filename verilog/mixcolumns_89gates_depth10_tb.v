@@ -1,9 +1,9 @@
 // Exhaustive linear test: for each unit input e_i, check y equals column i
 // of the MixColumns matrix (output bit j set iff input i feeds output j).
-module mixcolumns_89gates_tb;
+module mixcolumns_89gates_depth10_tb;
   reg [31:0] x; wire [31:0] y; integer i, fails;
   reg [31:0] col [0:31];
-  mixcolumns_89gates dut(.x(x), .y(y));
+  mixcolumns_89gates_depth10 dut(.x(x), .y(y));
   initial begin
     fails = 0;
     col[0] = 32'h03010102;

@@ -1,5 +1,5 @@
-# mixcolumns_89gates: AES MixColumns, 89 two-input XOR gates, depth 10.
-# Generated from circuits/mixcolumns_89gates.json by scripts/generate_listings.py; do not edit.
+# mixcolumns_89gates_depth10: AES MixColumns, 89 two-input XOR gates, depth 10.
+# Generated from circuits/mixcolumns_89gates_depth10.json by scripts/generate_listings.py; do not edit.
 # Convention: s0..s31 are the input bits; bit i is bit (i mod 8) of state byte
 # (i div 8), least-significant-bit first. y0..y31 are the MixColumns output bits
 # under the same numbering (NIST FIPS 197-upd1, Sec. 5.1.3, Eq. 5.6, poly 0x11b).

@@ -10,9 +10,16 @@ smallest count we are aware of at any depth, two below the smallest published
 count (91).**
 
 All circuits ship with self-contained verifiers. Every circuit is a static,
-machine-checkable artifact. Nothing here depends on how the circuits were
+machine-checkable artifact, and nothing here depends on how the circuits were
 found. A source-by-source audit of the comparison claims is in
 [`PRIOR_ART.md`](PRIOR_ART.md).
+
+**The search method that produced these circuits is public** — a value-set
+shortest-linear-program local search with plateau and hub moves — in its own
+repository, [`slp-plateau-search`](https://github.com/Joe-b-20/slp-plateau-search):
+the method write-up, the search pipeline, the untouched archives of the runs
+that produced each record, and a single-command pure-Python reproduction of
+the from-scratch depth-3 record.
 
 ## The circuits
 
@@ -29,7 +36,9 @@ dominated by a circuit above):
 |---|---|---|---|
 | `circuits/mixcolumns_98gates_depth3.json` | 98 | 3 | 97 @ depth 3 |
 | `circuits/mixcolumns_91gates_depth6.json` | 91 | 6 | 89 @ depth 5 |
-| `circuits/mixcolumns_89gates.json` | 89 | 10 | 89 @ depth 5 |
+| `circuits/mixcolumns_89gates_depth10.json` | 89 | 10 | 89 @ depth 5 |
+
+![The published depth–count Pareto frontier for AES MixColumns vs this work](docs/frontier.svg)
 
 The published comparison points, source-checked (details and exact quotes in
 `PRIOR_ART.md`): the published depth–count Pareto frontier for AES MixColumns
@@ -163,10 +172,12 @@ We state results conservatively.
    exact MixColumns convention defined above. A hidden convention mismatch is
    the most common way such a comparison goes wrong, which is why the
    from-scratch verifier is included.
-4. **Reproducibility of circuits vs. search.** The circuits in this folder are
-   fully reproducible: anyone can re-run `verify.py` and confirm them forever.
-   The discovery method is deliberately out of scope here; it is a separate,
-   still-developing line of work, and none of the claims here depend on it.
+4. **Circuits vs. search.** The circuits in this folder are fully verifiable:
+   anyone can re-run `verify.py` and confirm them forever, and none of the
+   claims here depend on how they were found. The search method is published
+   separately in
+   [`slp-plateau-search`](https://github.com/Joe-b-20/slp-plateau-search),
+   with the run evidence and reproduction instructions for each record.
 
 ## Contents
 

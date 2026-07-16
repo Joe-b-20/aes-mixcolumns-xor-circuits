@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
 \usepackage{multicol}
+\usepackage{tikz}
 \usepackage[hidelinks]{hyperref}
 \urlstyle{tt}
 
@@ -87,6 +88,50 @@ comparable models, and this work. Depth-3 lineage: 105 $\rightarrow$ 103
 $\rightarrow$ 102 $\rightarrow$ 99 (see~\cite{SFX23}, Table 3). Full circuit
 listings are in Appendices~\ref{app:mixcolumns_97gates_depth3}--\ref{app:mixcolumns_89gates_depth5}.}
 \end{table}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[x=1.35cm, y=0.30cm]
+% frame and grid (depth 3..10 on x, gates 88..100 on y; plotted as d-3, g-88)
+\foreach \g in {88,90,...,100} {
+  \draw[black!12] (0,\g-88) -- (7,\g-88);
+  \node[left, black!60, font=\scriptsize] at (0,\g-88) {\g};
+}
+\foreach \d in {3,...,10} {
+  \node[below, black!60, font=\scriptsize] at (\d-3,-0.8) {\d};
+}
+\draw[black!50] (0,0) rectangle (7,12);
+\node[below, font=\scriptsize] at (3.5,-2.2) {circuit depth};
+\node[rotate=90, font=\scriptsize] at (-0.85,6) {2-input XOR gates};
+% published frontier (dashed gray)
+\draw[black!55, dashed, thick]
+  (0,11) -- (1,9) -- (2,6) -- (3,4) -- (4,3);
+\foreach \x/\y/\l in {0/11/99, 1/9/97, 2/6/94, 3/4/92, 4/3/91} {
+  \fill[black!55] (\x,\y) circle (2.2pt);
+  \node[above right=-1pt, black!55, font=\scriptsize] at (\x,\y) {\l};
+}
+% superseded v1 points (light x)
+\foreach \x/\y in {0/10, 3/3, 7/1} {
+  \draw[black!30, thick] (\x-0.09,\y-0.4) -- (\x+0.09,\y+0.4)
+                         (\x-0.09,\y+0.4) -- (\x+0.09,\y-0.4);
+}
+% this work (solid)
+\draw[blue!60!black, very thick] (0,9) -- (1,4) -- (2,1);
+\foreach \x/\y/\l in {0/9/97, 1/4/92, 2/1/89} {
+  \fill[blue!60!black] (\x,\y) circle (2.6pt);
+  \node[below right=-1pt, blue!60!black, font=\scriptsize\bfseries] at (\x,\y) {\l};
+}
+% legend
+\draw[black!55, dashed, thick] (4.4,11.4) -- (4.9,11.4);
+\node[right, font=\scriptsize] at (4.95,11.4) {published frontier};
+\fill[blue!60!black] (4.65,10.4) circle (2.4pt);
+\node[right, font=\scriptsize] at (4.95,10.4) {this work};
+\draw[black!30, thick] (4.57,9.1) -- (4.73,9.7) (4.57,9.7) -- (4.73,9.1);
+\node[right, font=\scriptsize] at (4.95,9.4) {this project, superseded};
+\end{tikzpicture}
+\caption{The published depth--count Pareto frontier for AES MixColumns in
+comparable models (dashed) and this work (solid).}
+\end{figure}
 
 Depth 3 is the known minimum depth for AES MixColumns (stated e.g.\
 in~\cite{SFX23}: an output depending on $w$ inputs needs depth at least

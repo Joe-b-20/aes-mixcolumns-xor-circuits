@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-07-15T17:46:14.766330+00:00",
+  "generated_utc": "2026-07-16T16:14:36.212492+00:00",
   "reference_convention": {
     "word_layout": "bits 0..31 are bits 0..7 of bytes s0..s3 in little-endian byte order",
     "bit_order_within_byte": "least-significant-bit first",
@@ -46,8 +46,8 @@
   },
   "circuits": [
     {
-      "id": "mixcolumns_89gates",
-      "file": "circuits/mixcolumns_89gates.json",
+      "id": "mixcolumns_89gates_depth10",
+      "file": "circuits/mixcolumns_89gates_depth10.json",
       "model": "2-input XOR circuit over GF(2). Signals 0..31 are the 32 input bits. Gate k (k>=0) produces signal 32+k = signal[gates[k][0]] XOR signal[gates[k][1]]. Both parents have strictly smaller index.",
       "outputConvention": "output j (j in 0..31) is MixColumns output bit j; bit j = bit (j mod 8) of state byte (j div 8), least-significant-bit-first within each byte. It is produced at internal signal index outputSignals[j].",
       "gateCount_declared": 89,
@@ -251,8 +251,8 @@
       "total_canceled_basis_terms": 56,
       "total_canceled_input_occurrences": 112,
       "hash_checks": {
-        "sha256_circuit_json_in_bounds": "2ab3695c3d8410dab9b2d1121dda6c42d1080084f73eba649dbc711f4fce0a9f",
-        "sha256_circuit_json_actual": "2ab3695c3d8410dab9b2d1121dda6c42d1080084f73eba649dbc711f4fce0a9f",
+        "sha256_circuit_json_in_bounds": "d85a45e0870b6a4c8e644dec54185450d0b3b0f9c93b3a7d9f242b644a834595",
+        "sha256_circuit_json_actual": "d85a45e0870b6a4c8e644dec54185450d0b3b0f9c93b3a7d9f242b644a834595",
         "sha256_circuit_json_matches": true,
         "sha256_canonical_gates_in_bounds": "73aa8c40e88cbfe406b35a8628fd4d74e78a62755a9f902a33d5f21f10be34c6",
         "canonical_hash_candidates": {

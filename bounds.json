@@ -3,14 +3,14 @@
   "note": "sha256_circuit_json is over the exact circuit JSON file bytes as written. sha256_canonical_gates is SHA-256 over the exact UTF-8 bytes of the compact JSON string {\"inputCount\":32,\"gates\":[...]} with keys in that order; reproduce it with scripts/reproduce_canonical_hashes.py.",
   "circuits": [
     {
-      "id": "mixcolumns_89gates",
+      "id": "mixcolumns_89gates_depth10",
       "inputCount": 32,
       "gateCount": 89,
       "depth": 10,
       "outputCount": 32,
       "outputConvention": "output j (j in 0..31) is MixColumns output bit j; bit j = bit (j mod 8) of state byte (j div 8), least-significant-bit-first within each byte. It is produced at internal signal index outputSignals[j].",
       "sha256_canonical_gates": "73aa8c40e88cbfe406b35a8628fd4d74e78a62755a9f902a33d5f21f10be34c6",
-      "sha256_circuit_json": "2ab3695c3d8410dab9b2d1121dda6c42d1080084f73eba649dbc711f4fce0a9f",
+      "sha256_circuit_json": "d85a45e0870b6a4c8e644dec54185450d0b3b0f9c93b3a7d9f242b644a834595",
       "verified": {
         "allOutputsCorrect": true,
         "everyGateIs2InputXOR": true,

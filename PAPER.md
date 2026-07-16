@@ -77,8 +77,12 @@ simulation path when Icarus Verilog is available.
   `verify.py`. A different bit order or a transposed matrix is a different
   problem; re-derive the targets under your convention before comparing.
 - **Circuits vs. method.** The artifacts here are self-contained and
-  permanently reproducible. The discovery method is a separate, ongoing line
-  of work and is deliberately out of scope for this note.
+  permanently verifiable, and none of the claims depend on how the circuits
+  were found. The search method (a value-set shortest-linear-program local
+  search with plateau and hub moves) is published, with run evidence and
+  reproduction instructions, at
+  <https://github.com/Joe-b-20/slp-plateau-search>; see also Section 3 of the
+  accompanying note (`paper/`).
 
 ## 4. Reproduce
 
