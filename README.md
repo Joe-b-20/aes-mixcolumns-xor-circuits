@@ -38,6 +38,14 @@ dominated by a circuit above):
 | `circuits/mixcolumns_91gates_depth6.json` | 91 | 6 | 89 @ depth 5 |
 | `circuits/mixcolumns_89gates_depth10.json` | 89 | 10 | 89 @ depth 5 |
 
+The v1 circuits were found by earlier, more primitive versions of the same
+search, whose exact code state was not preserved; what is and is not
+reconstructable about their provenance is documented honestly in the method
+repository
+([METHODS.md, "Provenance of the earlier (v1) circuits"](https://github.com/Joe-b-20/slp-plateau-search/blob/main/METHODS.md)).
+No current claim depends on them — they remain here as verified artifacts,
+and correctness is machine-checkable regardless of provenance.
+
 ![The published depth–count Pareto frontier for AES MixColumns vs this work](docs/frontier.svg)
 
 The published comparison points, source-checked (details and exact quotes in
