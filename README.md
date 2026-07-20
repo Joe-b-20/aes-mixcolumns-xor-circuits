@@ -235,5 +235,6 @@ paper/       LaTeX source of the ePrint note (appendices generated from circuits
 ## License / citation
 
 Released under MIT for archival reuse. If you use a circuit, please cite the
-accompanying note (`PAPER.md`) and this repository via the archived DOI:
-<https://doi.org/10.5281/zenodo.21299092> (see `CITATION.cff`).
+accompanying note ([`paper/mixcolumns_note.pdf`](paper/mixcolumns_note.pdf);
+`PAPER.md` is the short markdown version) and this repository via the
+archived DOI: <https://doi.org/10.5281/zenodo.21299092> (see `CITATION.cff`).
