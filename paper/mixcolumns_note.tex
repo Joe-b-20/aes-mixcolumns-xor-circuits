@@ -22,21 +22,23 @@ Independent researcher\\[2pt]
 
 \begin{abstract}
 We present three implementations of the AES MixColumns linear transformation
-as circuits of 2-input XOR gates over $\mathrm{GF}(2)$ that improve the entire
-published depth--count Pareto frontier: a \textbf{97-gate} circuit at depth
-\textbf{3} (the known minimum depth), improving the 99-gate record of Shi,
-Feng, and Xu (ToSC 2023); a \textbf{92-gate} circuit at depth \textbf{4},
-improving the 97-gate point of Osvik and Canright (ePrint 2024/1076); and an
-\textbf{89-gate} circuit at depth \textbf{5} --- the smallest XOR count we are
-aware of at any depth --- improving Osvik and Canright's 94-gate depth-5 point
-by five gates and the smallest published count in any comparable model (91,
-Lin, Xiang, Zeng, and Zhang, CT-RSA 2021, s-XOR) by two. The circuits were
-found by a stochastic local search over a value-set formulation of the
-shortest-linear-program problem, built around moves that are individually
-neutral or worse but globally productive; the method is fully specified, and
-both it and the circuits are published as machine-checkable artifacts with
-dependency-free Python verifiers and reproducers. We make no optimality claim
-on gate counts.
+as circuits of 2-input XOR gates over $\mathrm{GF}(2)$ that improve the
+published depth--count Pareto frontier at every depth from 3 to 5: a
+\textbf{97-gate} circuit at depth \textbf{3} (the known minimum depth),
+improving the 99-gate record of Shi, Feng, and Xu (ToSC 2023); a
+\textbf{92-gate} circuit at depth \textbf{4}, improving the 97-gate point of
+Osvik and Canright (ePrint 2024/1076); and an \textbf{89-gate} circuit at
+depth \textbf{5}, improving Osvik and Canright's 94-gate depth-5 point by
+five gates and shallower than any published circuit of fewer than 94 gates.
+At unconstrained depth the published count floor is 89 (Sun, Yang, and Li,
+ePrint 2025/1493) and, since July 2026, 88 at depth 7 (Jean, ePrint
+2026/1481); neither point dominates the circuits here, which remain on the
+frontier. The circuits were found by a stochastic local search over a
+value-set formulation of the shortest-linear-program problem, built around
+moves that are individually neutral or worse but globally productive; the
+method is fully specified, and both it and the circuits are published as
+machine-checkable artifacts with dependency-free Python verifiers and
+reproducers. We make no optimality claim on gate counts.
 \end{abstract}
 
 \section{Model and specification}
@@ -75,72 +77,78 @@ quantum CNOT circuits --- are not comparable and are not claimed against.
 \centering
 \begin{tabular}{ccccl}
 \toprule
-Depth & Published best & Model & This work & Improvement \\
+Depth & Published best & Model & This work & Relation \\
 \midrule
 3 & 99~\cite{SFX23} & XOR2 & \textbf{97} & $-2$ (depth 3 is the minimum depth) \\
 4 & 97~\cite{OC24} & XOR2 & \textbf{92} & $-5$ \\
-5 & 94~\cite{OC24} & XOR2 & \textbf{89} & $-5$; smallest count at any depth \\
+5 & 94~\cite{OC24} & XOR2 & \textbf{89} & $-5$ \\
 6 & 92~\cite{Max19,XZLBZ20} & XOR2 / s-XOR & --- & dominated by 89 @ 5 \\
-7 & 91~\cite{LXZZ21,YWSZZ24} & s-XOR & --- & dominated by 89 @ 5 \\
+7 & 88~\cite{Jean26} & XOR2 & --- & fewer gates, greater depth than 89 @ 5: incomparable \\
+n/s & 89~\cite{SYL25} & g-XOR & --- & depth not stated \\
 \bottomrule
 \end{tabular}
-\caption{The published depth--count Pareto frontier for AES MixColumns in
-comparable models, and this work. Depth-3 lineage: 105 $\rightarrow$ 103
-$\rightarrow$ 102 $\rightarrow$ 99 (see~\cite{SFX23}, Table 3). Full circuit
-listings are in Appendices~\ref{app:mixcolumns_97gates_depth3}--\ref{app:mixcolumns_89gates_depth5}.}
+\caption{The published depth--count landscape for AES MixColumns in
+comparable models, and this work. Jean's 88 @ depth 7~\cite{Jean26}
+supersedes the earlier 91 of~\cite{LXZZ21,YWSZZ24} at that depth. Depth-3
+lineage: 105 $\rightarrow$ 103 $\rightarrow$ 102 $\rightarrow$ 99
+(see~\cite{SFX23}, Table 3). Full circuit listings are in
+Appendices~\ref{app:mixcolumns_97gates_depth3}--\ref{app:mixcolumns_89gates_depth5}.}
 \end{table}
 
 \begin{figure}[h]
 \centering
-\begin{tikzpicture}[x=1.35cm, y=0.30cm]
-% frame and grid (depth 3..10 on x, gates 88..100 on y; plotted as d-3, g-88)
-\foreach \g in {88,90,...,100} {
-  \draw[black!12] (0,\g-88) -- (7,\g-88);
-  \node[left, black!60, font=\scriptsize] at (0,\g-88) {\g};
+\begin{tikzpicture}[x=1.35cm, y=0.28cm]
+% frame and grid (depth 3..10 on x, gates 86..100 on y; plotted as d-3, g-86)
+\foreach \g in {86,88,...,100} {
+  \draw[black!12] (0,\g-86) -- (7,\g-86);
+  \node[left, black!60, font=\scriptsize] at (0,\g-86) {\g};
 }
 \foreach \d in {3,...,10} {
   \node[below, black!60, font=\scriptsize] at (\d-3,-0.8) {\d};
 }
-\draw[black!50] (0,0) rectangle (7,12);
+\draw[black!50] (0,0) rectangle (7,14);
 \node[below, font=\scriptsize] at (3.5,-2.2) {circuit depth};
-\node[rotate=90, font=\scriptsize] at (-0.85,6) {2-input XOR gates};
-% published frontier (dashed gray)
+\node[rotate=90, font=\scriptsize] at (-0.85,7) {2-input XOR gates};
+% published frontier (dashed gray), incl. Jean 88 @ 7
 \draw[black!55, dashed, thick]
-  (0,11) -- (1,9) -- (2,6) -- (3,4) -- (4,3);
-\foreach \x/\y/\l in {0/11/99, 1/9/97, 2/6/94, 3/4/92, 4/3/91} {
+  (0,13) -- (1,11) -- (2,8) -- (3,6) -- (4,2);
+\foreach \x/\y/\l in {0/13/99, 1/11/97, 2/8/94, 3/6/92, 4/2/88} {
   \fill[black!55] (\x,\y) circle (2.2pt);
   \node[above right=-1pt, black!55, font=\scriptsize] at (\x,\y) {\l};
 }
-% superseded v1 points (light x)
-\foreach \x/\y in {0/10, 3/3, 7/1} {
+% superseded points: this project's v1 (light x) and the superseded 91 @ 7
+\foreach \x/\y in {0/12, 3/5, 7/3, 4/5} {
   \draw[black!30, thick] (\x-0.09,\y-0.4) -- (\x+0.09,\y+0.4)
                          (\x-0.09,\y+0.4) -- (\x+0.09,\y-0.4);
 }
 % this work (solid)
-\draw[blue!60!black, very thick] (0,9) -- (1,4) -- (2,1);
-\foreach \x/\y/\l in {0/9/97, 1/4/92, 2/1/89} {
+\draw[blue!60!black, very thick] (0,11) -- (1,6) -- (2,3);
+\foreach \x/\y/\l in {0/11/97, 1/6/92, 2/3/89} {
   \fill[blue!60!black] (\x,\y) circle (2.6pt);
   \node[below right=-1pt, blue!60!black, font=\scriptsize\bfseries] at (\x,\y) {\l};
 }
 % legend
-\draw[black!55, dashed, thick] (4.4,11.4) -- (4.9,11.4);
-\node[right, font=\scriptsize] at (4.95,11.4) {published frontier};
-\fill[blue!60!black] (4.65,10.4) circle (2.4pt);
-\node[right, font=\scriptsize] at (4.95,10.4) {this work};
-\draw[black!30, thick] (4.57,9.1) -- (4.73,9.7) (4.57,9.7) -- (4.73,9.1);
-\node[right, font=\scriptsize] at (4.95,9.4) {this project, superseded};
+\draw[black!55, dashed, thick] (4.4,13.4) -- (4.9,13.4);
+\node[right, font=\scriptsize] at (4.95,13.4) {published frontier};
+\fill[blue!60!black] (4.65,12.4) circle (2.4pt);
+\node[right, font=\scriptsize] at (4.95,12.4) {this work};
+\draw[black!30, thick] (4.57,11.1) -- (4.73,11.7) (4.57,11.7) -- (4.73,11.1);
+\node[right, font=\scriptsize] at (4.95,11.4) {superseded points};
 \end{tikzpicture}
 \caption{The published depth--count Pareto frontier for AES MixColumns in
-comparable models (dashed) and this work (solid).}
+comparable models (dashed, including Jean's 88 at depth 7~\cite{Jean26}) and
+this work (solid). Crosses mark superseded points (this project's v1
+circuits and the 91 @ depth 7 of~\cite{LXZZ21}); the 89 of~\cite{SYL25} has
+no stated depth and is not plotted.}
 \end{figure}
 
 Depth 3 is the known minimum depth for AES MixColumns (stated e.g.\
 in~\cite{SFX23}: an output depending on $w$ inputs needs depth at least
 $\lceil \log_2 w \rceil$, and MixColumns has outputs of weight 7), so the
 97-gate circuit's contribution is the count at that depth. The 89-gate
-depth-5 circuit Pareto-dominates every published point: fewer gates than the
-smallest published count at any depth, at lower depth than every published
-circuit of fewer than 94 gates.
+depth-5 circuit is shallower than any published circuit of fewer than 94
+gates; the published sub-89 point --- Jean's 88~\cite{Jean26} --- sits at
+depth 7, so neither dominates the other and both are on the frontier.
 
 \section{Method}
 
@@ -298,10 +306,12 @@ repository's integrity metadata.
   minimal. We claim only that they are the smallest we have found or seen
   published as of July 2026.
 \item \textbf{Comparisons.} All counts are for the exact model and convention
-  of Section~1; the baselines~\cite{SFX23,OC24,Max19,XZLBZ20,LXZZ21,YWSZZ24}
+  of Section~1; the
+  baselines~\cite{SFX23,OC24,Max19,XZLBZ20,LXZZ21,YWSZZ24,SYL25,Jean26}
   were source-checked, and a source-by-source audit (with the non-comparable
-  cost models explicitly listed) is maintained in the artifact repository's
-  \texttt{PRIOR\_ART.md}.
+  cost models explicitly listed, and a dated Corrections section) is
+  maintained in the artifact repository's \texttt{PRIOR\_ART.md}. We claim
+  the smallest counts at depths 3, 4, and 5, not at unconstrained depth.
 \item \textbf{Earlier results.} This note supersedes the project's earlier
   circuits (89 gates at depth 10; 98 at depth 3; 91 at depth 6), which remain
   in the artifact repository for the archival record.
@@ -351,6 +361,19 @@ Y.~Yuan, W.~Wu, T.~Shi, L.~Zhang, and Y.~Zhang,
 \emph{A Framework to Improve the Implementations of Linear Layers},
 IACR Transactions on Symmetric Cryptology, 2024(2):322--347, 2024.
 \url{https://doi.org/10.46586/tosc.v2024.i2.322-347}
+
+\bibitem{SYL25}
+Y.~Sun, R.~Yang, and T.~Li,
+\emph{Revisit the Boyar-Peralta Algorithm to Solve the Shortest Linear
+Program Problem},
+IACR Cryptology ePrint Archive, Report 2025/1493, 2025.
+\url{https://eprint.iacr.org/2025/1493}
+
+\bibitem{Jean26}
+J.~Jean,
+\emph{88-XOR Implementation of the AES MixColumns Matrix},
+IACR Cryptology ePrint Archive, Report 2026/1481, 2026.
+\url{https://eprint.iacr.org/2026/1481}
 
 \end{thebibliography}
 

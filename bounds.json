@@ -108,7 +108,7 @@
         "measuredDepth": 5,
         "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
       },
-      "claim": "The smallest 2-input XOR count we are aware of at any depth (89), here at depth 5: five fewer gates than the published depth-5 point (94, Osvik and Canright, ePrint 2024/1076, Appendix F) and two fewer than the smallest published count in any comparable model (91, Lin et al., CT-RSA 2021, s-XOR); we do not make an optimality claim."
+      "claim": "The smallest 2-input XOR count we are aware of at depth <= 5: five fewer gates than the published depth-5 point (94, Osvik and Canright, ePrint 2024/1076, Appendix F). Published smaller counts exist only at greater or unstated depth (88 at depth 7: Jean, ePrint 2026/1481; 89, depth not stated: Sun-Yang-Li, ePrint 2025/1493), so this circuit remains on the published depth-count Pareto frontier; we do not make an optimality claim. See PRIOR_ART.md Corrections."
     }
   ]
 }

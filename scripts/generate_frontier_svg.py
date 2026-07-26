@@ -6,12 +6,12 @@ single source (sources for every point: PRIOR_ART.md)."""
 from pathlib import Path
 
 PUBLISHED = [(3, 99, "SFX23"), (4, 97, "OC24"), (5, 94, "OC24"),
-             (6, 92, "Max19"), (7, 91, "LXZZ21")]
+             (6, 92, "Max19"), (7, 88, "Jean26")]
 OURS = [(3, 97, ""), (4, 92, ""), (5, 89, "")]
 SUPERSEDED = [(3, 98, ""), (6, 91, ""), (10, 89, "")]   # this project's v1 points
 
 X0, Y0, W, H = 70, 30, 560, 300                          # plot box
-DMIN, DMAX, GMIN, GMAX = 3, 10, 88, 100
+DMIN, DMAX, GMIN, GMAX = 3, 10, 86, 100
 
 def sx(d): return X0 + (d - DMIN) * (W / (DMAX - DMIN))
 def sy(g): return Y0 + (GMAX - g) * (H / (GMAX - GMIN))

@@ -6,17 +6,19 @@
 
 We report three explicit implementations of the AES MixColumns linear
 transformation as circuits of 2-input XOR gates over GF(2) that improve the
-entire published depth–count Pareto frontier: (i) a **97-gate** circuit at
-depth **3**, the known minimum depth, improving the 99-gate record of Shi,
-Feng, and Xu (ToSC 2023); (ii) a **92-gate** circuit at depth **4**, improving
-the 97-gate depth-4 point of Osvik and Canright (ePrint 2024/1076); and (iii)
-an **89-gate** circuit at depth **5** — the smallest XOR count we are aware of
-at any depth — improving Osvik and Canright's 94-gate depth-5 point by five
-gates and the smallest published count in any comparable model (91, Lin,
-Xiang, Zeng, and Zhang, CT-RSA 2021, s-XOR) by two. All circuits are provided
-as machine-checkable artifacts with a pure-Python verifier that rebuilds the
-MixColumns specification from scratch. We make no optimality claim on gate
-counts.
+published depth–count Pareto frontier at every depth from 3 to 5: (i) a
+**97-gate** circuit at depth **3**, the known minimum depth, improving the
+99-gate record of Shi, Feng, and Xu (ToSC 2023); (ii) a **92-gate** circuit
+at depth **4**, improving the 97-gate depth-4 point of Osvik and Canright
+(ePrint 2024/1076); and (iii) an **89-gate** circuit at depth **5**,
+improving Osvik and Canright's 94-gate depth-5 point by five gates and
+shallower than any published circuit of fewer than 94 gates. At
+unconstrained depth the published count floor is 89 (Sun, Yang, and Li,
+ePrint 2025/1493) and, since July 2026, 88 at depth 7 (Jean, ePrint
+2026/1481); neither point dominates the circuits here, which remain on the
+frontier. All circuits are provided as machine-checkable artifacts with a
+pure-Python verifier that rebuilds the MixColumns specification from
+scratch. We make no optimality claim on gate counts.
 
 ## 1. Model and specification
 
@@ -36,7 +38,7 @@ the 32 unit-input vectors is a complete correctness check.
 |---|---|---|---|
 | `mixcolumns_97gates_depth3` | 97 | 3 | 99 (Shi, Feng, Xu, ToSC 2023) |
 | `mixcolumns_92gates_depth4` | 92 | 4 | 97 (Osvik, Canright, ePrint 2024/1076, App. G) |
-| `mixcolumns_89gates_depth5` | 89 | 5 | 94 (Osvik, Canright, ePrint 2024/1076, App. F); smallest published count at any depth: 91 (Lin et al., CT-RSA 2021, s-XOR) |
+| `mixcolumns_89gates_depth5` | 89 | 5 | 94 (Osvik, Canright, ePrint 2024/1076, App. F). Unconstrained depth: 89 (Sun–Yang–Li, ePrint 2025/1493, depth n/s); 88 @ depth 7 (Jean, ePrint 2026/1481) |
 
 The project's earlier circuits (89 @ depth 10, 98 @ depth 3, 91 @ depth 6)
 remain in the repository for the archival record; each is dominated by a
@@ -47,9 +49,9 @@ AES MixColumns (stated e.g. by Shi, Feng, and Xu; it follows from the standard
 bound that an output depending on w inputs needs depth at least ⌈log₂ w⌉, and
 MixColumns has outputs of weight 7). The contribution of the 97-gate circuit
 is therefore the gate count at that depth, not the depth itself. Second, the
-89-gate depth-5 circuit Pareto-dominates every published point: it has fewer
-gates than the smallest published count at any depth (91) and lower depth than
-every published circuit of fewer than 94 gates.
+89-gate depth-5 circuit is shallower than any published circuit of fewer than
+94 gates; the published sub-89 point (88, Jean, ePrint 2026/1481) sits at
+depth 7, so neither dominates the other and both are on the frontier.
 
 Each circuit is verified by two shipped software paths: (a) `verify.py` against a
 from-scratch GF(2^8) MixColumns; (b) `audit/cleanroom_verify.py` against a
@@ -65,14 +67,16 @@ simulation path when Icarus Verilog is available.
 - **Source-checked baselines.** The published depth–count frontier we compare
   against: 99 @ depth 3 (Shi, Feng, and Xu, ToSC 2023); 97 @ depth 4 and 94 @
   depth 5 (Osvik and Canright, ePrint 2024/1076, Appendices G and F); 92 @
-  depth 6 (Maximov); and 91 @ depth 7 (Lin, Xiang, Zeng, and Zhang, CT-RSA
-  2021, s-XOR — a k-instruction s-XOR program translates directly into a
-  k-gate 2-input XOR circuit, so we treat it as comparable). Yuan et al.
-  (ToSC 2024) likewise report 91 XORs in an s-XOR / quantum-depth framing.
-  Results in other cost models (multi-input XOR gates, gate-equivalent area,
-  quantum CNOT) are not comparable and are not claimed against; see
-  `PRIOR_ART.md`. Gate counts and depths are invariant under bit relabeling,
-  so these comparisons do not depend on convention choices.
+  depth 6 (Maximov); and, at unconstrained depth, 89 (Sun–Yang–Li, ePrint
+  2025/1493, depth not stated) and 88 @ depth 7 (Jean, ePrint 2026/1481).
+  Earlier s-XOR baselines (91: Lin et al., CT-RSA 2021; Yuan et al., ToSC
+  2024) are comparable because a k-instruction s-XOR program translates
+  directly into a k-gate 2-input XOR circuit. We claim the smallest counts
+  at depths 3, 4, and 5 — not at unconstrained depth. Results in other cost
+  models (multi-input XOR gates, gate-equivalent area, quantum CNOT) are not
+  comparable and are not claimed against; see `PRIOR_ART.md`, including its
+  Corrections section. Gate counts and depths are invariant under bit
+  relabeling, so these comparisons do not depend on convention choices.
 - **One convention.** All counts hold for the single executable convention in
   `verify.py`. A different bit order or a transposed matrix is a different
   problem; re-derive the targets under your convention before comparing.
@@ -109,6 +113,11 @@ For canonical-hash metadata reproduction, also run
   <https://eprint.iacr.org/2019/833.pdf>
 - Dag Arne Osvik and David Canright, *A More Compact AES, and More*, IACR
   ePrint 2024/1076. <https://eprint.iacr.org/2024/1076>
+- Yao Sun, Runhe Yang, and Ting Li, *Revisit the Boyar-Peralta Algorithm to
+  Solve the Shortest Linear Program Problem*, IACR ePrint 2025/1493.
+  <https://eprint.iacr.org/2025/1493>
+- Jérémy Jean, *88-XOR Implementation of the AES MixColumns Matrix*, IACR
+  ePrint 2026/1481. <https://eprint.iacr.org/2026/1481>
 - Da Lin, Zejun Xiang, Xiangyong Zeng, and Shasha Zhang, *A Framework to
   Optimize Implementations of Matrices*, Topics in Cryptology – CT-RSA 2021,
   LNCS 12704, Springer, 2021. DOI:
