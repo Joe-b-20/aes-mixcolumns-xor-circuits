@@ -7,9 +7,10 @@
 that improve the published depth–count Pareto frontier at every depth from 3
 to 5: 97 gates at the minimum possible depth 3, 92 gates at depth 4, and 89
 gates at depth 5 — five fewer than the published depth-5 point, and shallower
-than any published circuit of fewer than 94 gates.** (At unconstrained depth,
-the published count floor is 88 at depth 7 — Jean, ePrint 2026/1481; see
-`PRIOR_ART.md`, including its Corrections section.)
+than any published circuit of fewer than 94 gates whose depth is stated.**
+(At unconstrained depth, the published count floor is 88 at depth 7 — Jean,
+ePrint 2026/1481 — plus an 89 at unstated depth, Sun–Yang–Li, ePrint
+2025/1493; see `PRIOR_ART.md`, including its Corrections section.)
 
 All circuits ship with self-contained verifiers. Every circuit is a static,
 machine-checkable artifact, and nothing here depends on how the circuits were
@@ -56,8 +57,8 @@ Pareto frontier for AES MixColumns in comparable models is **99 @ depth 3**
 (Shi, Feng, and Xu, ToSC 2023), **97 @ depth 4** and **94 @ depth 5** (Osvik
 and Canright, ePrint 2024/1076), **92 @ depth 6** (Maximov, ePrint 2019/833;
 also Xiang et al., ToSC 2020, s-XOR), and **88 @ depth 7** (Jean, ePrint
-2026/1481, which supersedes the 91 of Lin et al., CT-RSA 2021 and the 89 of
-Sun–Yang–Li, ePrint 2025/1493, at that depth). Because a `k`-instruction
+2026/1481, which supersedes Lin et al.'s 91 at that depth and, as the count
+floor, Sun–Yang–Li's 89 of ePrint 2025/1493). Because a `k`-instruction
 s-XOR program translates instruction-for-gate into a `k`-gate 2-input XOR
 circuit, we treat s-XOR counts as comparable. The circuits above improve the
 frontier at depths 3, 4, and 5 and remain on it alongside Jean's 88 @ depth

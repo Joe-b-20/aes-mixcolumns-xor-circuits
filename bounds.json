@@ -18,7 +18,7 @@
         "measuredDepth": 10,
         "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
       },
-      "claim": "Uses fewer 2-input XOR gates than the smallest published counts we are aware of for AES MixColumns: 91 XORs (Lin, Xiang, Zeng, and Zhang, CT-RSA 2021, s-XOR model, which translates instruction-for-gate into 2-input XOR circuits) and Maximov's explicit 92-gate circuit; we do not make an optimality claim."
+      "claim": "Historical claim as of 2026-07-10, superseded (see PRIOR_ART.md Corrections; this circuit is dominated by mixcolumns_89gates_depth5): used fewer 2-input XOR gates than the then-smallest published counts (91 XORs, Lin et al., CT-RSA 2021, s-XOR; 92, Maximov); no optimality claim."
     },
     {
       "id": "mixcolumns_98gates_depth3",
@@ -54,7 +54,7 @@
         "measuredDepth": 6,
         "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
       },
-      "claim": "Matches the smallest published XOR count for AES MixColumns (91, Lin et al., CT-RSA 2021) while achieving depth 6, one gate fewer than Maximov's depth-6 92-gate circuit; we do not make an optimality claim."
+      "claim": "Historical claim as of 2026-07-10, superseded (see PRIOR_ART.md Corrections; this circuit is dominated by mixcolumns_89gates_depth5): matched the then-smallest published XOR count (91, Lin et al., CT-RSA 2021) at depth 6, one gate fewer than Maximov's depth-6 92; no optimality claim."
     },
     {
       "id": "mixcolumns_97gates_depth3",

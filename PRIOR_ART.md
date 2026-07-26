@@ -185,8 +185,8 @@ direction:
   record; Shi–Feng, ASIACRYPT 2024, ePrint
   [2024/381](https://eprint.iacr.org/2024/381) — 107; Xu–Sun, ToSC 2026(2) —
   105–107): in-place quantum CNOT circuits, a different resource model (and
-  numerically above 91 in any case). Xu–Sun's classical result is 105 XORs,
-  above the records here.
+  numerically above all the counts discussed here in any case). Xu–Sun's
+  classical result is 105 XORs, above the records here.
 
 ## How this audit was compiled
 
@@ -195,7 +195,10 @@ ePrint, ToSC/FSE, CHES/TCHES, CT-RSA, Springer, arXiv, PeerJ, and the NIST
 Circuit Complexity list, cross-checking every comparison table found against
 the primary papers, including full-text sweeps of the papers where a hidden
 depth-4/5 point could plausibly live (LZW23, LWF+22, HILL, Xu–Sun,
-Osvik–Canright). Negative claims ("nothing below X") rest on those tables and
-targeted searches, not exhaustive enumeration; the strongest independent
-corroboration is that every 2024–2026 paper checked — each with a direct
-incentive to cite any smaller result — bottoms out at 91 XORs and 99 @ depth 3.
+Osvik–Canright); plus the 2026-07-23 update recorded in the Corrections
+section. Negative claims ("nothing below X") rest on tables and targeted
+searches, not exhaustive enumeration — and the July sweeps are themselves a
+demonstrated failure mode: they corroborated a 91-XOR floor against every
+2024–2026 comparison table, yet ePrint 2025/1493 (89 g-XOR, posted 2025-08)
+was missed by those tables and by us alike. Treat every negative claim here
+as best-effort with a date, not as proof of absence.

@@ -29,11 +29,11 @@ improving the 99-gate record of Shi, Feng, and Xu (ToSC 2023); a
 \textbf{92-gate} circuit at depth \textbf{4}, improving the 97-gate point of
 Osvik and Canright (ePrint 2024/1076); and an \textbf{89-gate} circuit at
 depth \textbf{5}, improving Osvik and Canright's 94-gate depth-5 point by
-five gates and shallower than any published circuit of fewer than 94 gates.
-At unconstrained depth the published count floor is 89 (Sun, Yang, and Li,
-ePrint 2025/1493) and, since July 2026, 88 at depth 7 (Jean, ePrint
-2026/1481); neither point dominates the circuits here, which remain on the
-frontier. The circuits were found by a stochastic local search over a
+five gates and shallower than any published circuit of fewer than 94 gates
+whose depth is stated. At unconstrained depth the published count floor is
+89 (Sun, Yang, and Li, ePrint 2025/1493, depth not stated) and, since July
+2026, 88 at depth 7 (Jean, ePrint 2026/1481); Jean's point does not dominate
+the circuits here, which remain on the frontier. The circuits were found by a stochastic local search over a
 value-set formulation of the shortest-linear-program problem, built around
 moves that are individually neutral or worse but globally productive; the
 method is fully specified, and both it and the circuits are published as
@@ -83,7 +83,7 @@ Depth & Published best & Model & This work & Relation \\
 4 & 97~\cite{OC24} & XOR2 & \textbf{92} & $-5$ \\
 5 & 94~\cite{OC24} & XOR2 & \textbf{89} & $-5$ \\
 6 & 92~\cite{Max19,XZLBZ20} & XOR2 / s-XOR & --- & dominated by 89 @ 5 \\
-7 & 88~\cite{Jean26} & XOR2 & --- & fewer gates, greater depth than 89 @ 5: incomparable \\
+7 & 88~\cite{Jean26} & XOR2 & --- & incomparable with 89 @ 5 (deeper) \\
 n/s & 89~\cite{SYL25} & g-XOR & --- & depth not stated \\
 \bottomrule
 \end{tabular}
@@ -147,8 +147,9 @@ in~\cite{SFX23}: an output depending on $w$ inputs needs depth at least
 $\lceil \log_2 w \rceil$, and MixColumns has outputs of weight 7), so the
 97-gate circuit's contribution is the count at that depth. The 89-gate
 depth-5 circuit is shallower than any published circuit of fewer than 94
-gates; the published sub-89 point --- Jean's 88~\cite{Jean26} --- sits at
-depth 7, so neither dominates the other and both are on the frontier.
+gates whose depth is stated; the published sub-89 point --- Jean's
+88~\cite{Jean26} --- sits at depth 7, so neither dominates the other and
+both are on the frontier (the 89 of~\cite{SYL25} states no depth).
 
 \section{Method}
 
@@ -277,7 +278,7 @@ and archived permanently at DOI
 \href{https://doi.org/10.5281/zenodo.21299092}{10.5281/zenodo.21299092}; the
 method, pipeline, and run evidence are published at
 \begin{center}
-\url{https://github.com/Joe-b-20/slp-plateau-search}
+\url{https://github.com/Joe-b-20/slp-plateau-search}.
 \end{center}
 Every claim in this note is decidable from the note alone, with nothing
 external trusted: the appendices list every gate of every circuit, Section~1

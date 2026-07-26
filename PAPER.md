@@ -12,11 +12,11 @@ published depth–count Pareto frontier at every depth from 3 to 5: (i) a
 at depth **4**, improving the 97-gate depth-4 point of Osvik and Canright
 (ePrint 2024/1076); and (iii) an **89-gate** circuit at depth **5**,
 improving Osvik and Canright's 94-gate depth-5 point by five gates and
-shallower than any published circuit of fewer than 94 gates. At
-unconstrained depth the published count floor is 89 (Sun, Yang, and Li,
-ePrint 2025/1493) and, since July 2026, 88 at depth 7 (Jean, ePrint
-2026/1481); neither point dominates the circuits here, which remain on the
-frontier. All circuits are provided as machine-checkable artifacts with a
+shallower than any published circuit of fewer than 94 gates whose depth is
+stated. At unconstrained depth the published count floor is 89 (Sun, Yang,
+and Li, ePrint 2025/1493, depth not stated) and, since July 2026, 88 at
+depth 7 (Jean, ePrint 2026/1481); Jean's point does not dominate the
+circuits here, which remain on the frontier. All circuits are provided as machine-checkable artifacts with a
 pure-Python verifier that rebuilds the MixColumns specification from
 scratch. We make no optimality claim on gate counts.
 
@@ -49,9 +49,10 @@ AES MixColumns (stated e.g. by Shi, Feng, and Xu; it follows from the standard
 bound that an output depending on w inputs needs depth at least ⌈log₂ w⌉, and
 MixColumns has outputs of weight 7). The contribution of the 97-gate circuit
 is therefore the gate count at that depth, not the depth itself. Second, the
-89-gate depth-5 circuit is shallower than any published circuit of fewer than
-94 gates; the published sub-89 point (88, Jean, ePrint 2026/1481) sits at
-depth 7, so neither dominates the other and both are on the frontier.
+89-gate depth-5 circuit is shallower than any published circuit of fewer
+than 94 gates whose depth is stated; the published sub-89 point (88, Jean,
+ePrint 2026/1481) sits at depth 7, so neither dominates the other and both
+are on the frontier (Sun–Yang–Li's 89 states no depth).
 
 Each circuit is verified by two shipped software paths: (a) `verify.py` against a
 from-scratch GF(2^8) MixColumns; (b) `audit/cleanroom_verify.py` against a
