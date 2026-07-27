@@ -40,9 +40,11 @@ A passing run prints one line per circuit and ends in `ALL CIRCUITS VERIFIED.`
 installed, `python3 verify_all.py --with-verilog` adds the hardware path
 (`verify_verilog.py` on its own runs the testbenches only).
 
-The clean-room run rewrites `audit/recomputed_metrics.json` and
-`audit/MATHEMATICAL_VERIFICATION.md` from what it measured; both are always
-generated, never hand-written.
+`audit/recomputed_metrics.json` and `audit/MATHEMATICAL_VERIFICATION.md` are
+always generated, never hand-written: by default the clean-room run recomputes
+them, compares against the tracked copies, reports match or mismatch and writes
+nothing (so verifying leaves the tree clean); `python3
+audit/cleanroom_verify.py --update-artifacts` is what regenerates them.
 
 ### Hardware (Verilog)
 

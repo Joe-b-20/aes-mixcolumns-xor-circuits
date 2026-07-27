@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import copy
 import hashlib
 import json
@@ -521,8 +522,7 @@ def adversarial_tests(example_circuit: dict, target_masks: list[int]) -> list[di
     return tests
 
 
-def write_markdown(report: dict) -> None:
-    path = AUDIT_DIR / 'MATHEMATICAL_VERIFICATION.md'
+def render_markdown(report: dict) -> str:
     lines = []
     lines.append('# Mathematical Verification')
     lines.append('')
@@ -578,10 +578,72 @@ def write_markdown(report: dict) -> None:
     lines.append('')
     for item in report['tool_availability']:
         lines.append('- ' + item)
-    path.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+    return '\n'.join(lines) + '\n'
+
+
+# Keys that legitimately differ between two correct runs: the wall-clock stamp,
+# and whether Icarus Verilog happened to be installed. Everything else is a
+# deterministic function of circuits/ + bounds.json and must match exactly.
+VOLATILE_KEYS = ('generated_utc', 'tool_availability')
+
+
+def _stable(report: dict) -> dict:
+    return {k: v for k, v in report.items() if k not in VOLATILE_KEYS}
+
+
+def _strip_tool_section(markdown: str) -> str:
+    return markdown.split('## Tool availability', 1)[0]
+
+
+def compare_artifacts(report: dict) -> tuple[bool, list[str]]:
+    """Compare the freshly computed report against the tracked audit files
+    without touching them. Returns (all_match, report lines)."""
+    lines = []
+    ok = True
+
+    json_path = AUDIT_DIR / 'recomputed_metrics.json'
+    if not json_path.exists():
+        lines.append('audit/recomputed_metrics.json: MISSING')
+        ok = False
+    else:
+        tracked = _stable(json.loads(json_path.read_text(encoding='utf-8')))
+        fresh = _stable(report)
+        if tracked == fresh:
+            lines.append('audit/recomputed_metrics.json: MATCH (generated_utc and tool_availability excluded as run/environment dependent)')
+        else:
+            differing = sorted(k for k in set(tracked) | set(fresh) if tracked.get(k) != fresh.get(k))
+            lines.append('audit/recomputed_metrics.json: MISMATCH in ' + ', '.join(differing))
+            ok = False
+
+    md_path = AUDIT_DIR / 'MATHEMATICAL_VERIFICATION.md'
+    if not md_path.exists():
+        lines.append('audit/MATHEMATICAL_VERIFICATION.md: MISSING')
+        ok = False
+    elif _strip_tool_section(md_path.read_text(encoding='utf-8')) == _strip_tool_section(render_markdown(report)):
+        lines.append('audit/MATHEMATICAL_VERIFICATION.md: MATCH (Tool availability section excluded as environment dependent)')
+    else:
+        lines.append('audit/MATHEMATICAL_VERIFICATION.md: MISMATCH')
+        ok = False
+
+    return ok, lines
+
+
+def write_markdown(report: dict) -> None:
+    (AUDIT_DIR / 'MATHEMATICAL_VERIFICATION.md').write_text(render_markdown(report), encoding='utf-8')
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(
+        description='Clean-room verification of every circuit in circuits/. '
+                    'By default this writes nothing: it recomputes everything and '
+                    'compares the result against the tracked audit artifacts.')
+    parser.add_argument(
+        '--update-artifacts',
+        action='store_true',
+        help='Rewrite audit/recomputed_metrics.json and audit/MATHEMATICAL_VERIFICATION.md '
+             'from this run instead of comparing against them.')
+    args = parser.parse_args()
+
     AUDIT_DIR.mkdir(exist_ok=True)
     target_masks = build_target_masks()
     output_supports = [popcount(mask) for mask in target_masks]
@@ -617,8 +679,14 @@ def main() -> int:
         ],
     }
 
-    (AUDIT_DIR / 'recomputed_metrics.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
-    write_markdown(report)
+    if args.update_artifacts:
+        (AUDIT_DIR / 'recomputed_metrics.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+        write_markdown(report)
+        artifacts_ok = True
+        artifact_lines = ['audit/recomputed_metrics.json: REWRITTEN',
+                          'audit/MATHEMATICAL_VERIFICATION.md: REWRITTEN']
+    else:
+        artifacts_ok, artifact_lines = compare_artifacts(report)
 
     warning_issue = 'sha256_canonical_gates could not be reproduced from the documented inputCount+gates canonical encoding'
     blocking_issues = [
@@ -628,7 +696,7 @@ def main() -> int:
         if issue != warning_issue
     ]
     warning_count = sum(1 for circuit in circuits for issue in circuit['issues'] if issue == warning_issue)
-    overall_ok = not blocking_issues and all(test['passed'] for test in tests)
+    overall_ok = not blocking_issues and all(test['passed'] for test in tests) and artifacts_ok
     overall_label = 'PASS WITH WARNINGS' if overall_ok and warning_count else ('PASS' if overall_ok else 'FAIL')
     print('Clean-room mathematical verification summary')
     print('Generated UTC: ' + report['generated_utc'])
@@ -636,6 +704,9 @@ def main() -> int:
     for circuit in circuits:
         print('- ' + circuit['id'] + ': gates=' + str(circuit['gateCount_actual']) + ', depth=' + str(circuit['depth_measured']) + ', issues=' + str(len(circuit['issues'])))
     print('Adversarial tests passed: ' + str(sum(1 for test in tests if test['passed'])) + ' of ' + str(len(tests)))
+    print('Artifact mode: ' + ('rewrite (--update-artifacts)' if args.update_artifacts else 'compare only, nothing written'))
+    for line in artifact_lines:
+        print('- ' + line)
     print('Warnings: ' + str(warning_count))
     print('Overall result: ' + overall_label)
     return 0 if overall_ok else 1

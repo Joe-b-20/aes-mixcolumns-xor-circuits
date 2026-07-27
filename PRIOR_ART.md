@@ -70,13 +70,18 @@ in-place instructions `x[i] <- x[i] XOR x[j]` on 32 registers initialized with
 the inputs, such that at the end every output resides in a register.
 
 > **Proposition.** Every s-XOR program with `k` instructions yields a circuit
-> of exactly `k` free-standing 2-input XOR gates computing the same map.
+> of exactly `k` free-standing 2-input XOR gates computing the same map, **and
+> of the same depth**.
 >
 > *Proof sketch (SSA unrolling).* Maintain a map `cur` from register index to
 > signal name, initialized `cur[i] = input_i`. For each instruction
 > `x[i] <- x[i] XOR x[j]`, emit one gate `s_new = cur[i] XOR cur[j]` and set
 > `cur[i] = s_new`. Each instruction emits exactly one gate whose parents
-> already exist, and after the last instruction `cur` names the outputs. ∎
+> already exist, and after the last instruction `cur` names the outputs. The
+> unrolling is a bijection between instructions and gates that preserves the
+> data-dependency relation — gate `s_new`'s parents are exactly the signals the
+> instruction read — so every input-to-output path has the same length in both,
+> and the depths are equal. ∎
 >
 > The converse does not hold (s-XOR is the more restrictive model), so an
 > s-XOR count is an upper bound that any g-XOR comparison must respect: a
@@ -109,7 +114,7 @@ comparable models, with the Pareto frontier in bold:
 | 6 | **92** | Maximov, ePrint [2019/833](https://eprint.iacr.org/2019/833); also Xiang, Zeng, Lin, Bao, Zhang, ToSC 2020(2). DOI: [10.13154/tosc.v2020.i2.120-145](https://doi.org/10.13154/tosc.v2020.i2.120-145) | 2-input XOR / s-XOR |
 | 7 | 91 | Lin, Xiang, Zeng, Zhang, CT-RSA 2021, LNCS 12704. DOI: [10.1007/978-3-030-75539-3_25](https://doi.org/10.1007/978-3-030-75539-3_25); tied by Yuan et al., ToSC 2024(2). DOI: [10.46586/tosc.v2024.i2.322-347](https://doi.org/10.46586/tosc.v2024.i2.322-347) | s-XOR |
 | n/s | 89 | Sun, Yang, Li, ePrint [2025/1493](https://eprint.iacr.org/2025/1493) (depth not stated; **depth 9** is our own measurement of our transcription, not a figure from the paper) | g-XOR |
-| 7 | **88** | Jean, ePrint [2026/1481](https://eprint.iacr.org/2026/1481) (posted 2026-07-23; Jean has priority over the matching 88 shipped here — count and depth re-verified by us) | 2-input XOR |
+| 7\* | **88** | Jean, ePrint [2026/1481](https://eprint.iacr.org/2026/1481) (posted 2026-07-23; Jean has priority over the matching 88 shipped here. Count re-verified by us; \*that paper **states no depth either** — **depth 7** is our own measurement of our transcription, exactly as for the 89 above) | 2-input XOR |
 | 8 | 97 | [KLSW17] (Kranz, Leander, Stoffelen, Wiemer, ToSC 2017(4)) | see note |
 
 Published frontier: **(3, 99), (4, 97), (5, 94), (6, 92), (7, 88)**, with

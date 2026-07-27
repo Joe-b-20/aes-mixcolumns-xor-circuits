@@ -9,6 +9,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 BASE_COMMANDS = [
     [sys.executable, str(ROOT / "verify.py")],
+    # No --update-artifacts: the clean-room verifier compares its recomputation
+    # against the tracked audit files and writes nothing, so verifying never
+    # dirties the working tree.
     [sys.executable, str(ROOT / "audit" / "cleanroom_verify.py")],
 ]
 

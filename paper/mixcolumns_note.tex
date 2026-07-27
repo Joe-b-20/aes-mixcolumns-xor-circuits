@@ -10,8 +10,7 @@
 \urlstyle{tt}
 
 \title{Smaller and Shallower XOR Circuits for AES MixColumns:\\
-97 Gates at Depth 3; 92 at Depth 4; 89 at Depth 5;\\
-and an Independent 88 at Depth 7}
+97 Gates at Depth 3; 92 at Depth 4; 89 at Depth 5}
 \author{Joe Bachir\\[2pt]
 Independent researcher\\[2pt]
 \texttt{joebachir20@gmail.com}}
@@ -70,14 +69,16 @@ Depth & Published best & Model & This work & Relation \\
 4 & 97~\cite{OC24} & XOR2 & \textbf{92} & $-5$ \\
 5 & 94~\cite{OC24} & XOR2 & \textbf{89} & $-5$ \\
 6 & 92~\cite{Max19,XZLBZ20} & XOR2 / s-XOR & --- & dominated by 89 @ 5 \\
-7 & 88~\cite{Jean26} & XOR2 & \textbf{88} & ties it; independent, 61/88 masks shared \\
+7$^{\ddagger}$ & 88~\cite{Jean26} & XOR2 & \textbf{88} & ties it; independent, 61/88 masks shared \\
 8 & --- & XOR2 & (88)$^{\dagger}$ & derived from~\cite{Jean26}; dominated by 88 @ 7 \\
-n/s & 89~\cite{SYL25} & g-XOR & --- & depth not stated \\
+9$^{\ddagger}$ & 89~\cite{SYL25} & g-XOR & --- & off the frontier \\
 \bottomrule
 \end{tabular}
 \caption{The published depth--count landscape in comparable models, and this
 work. $^{\dagger}$Derived and non-frontier: listed for completeness, claimed as
-nothing. Jean's 88~\cite{Jean26} supersedes the earlier 91
+nothing. $^{\ddagger}$\emph{Neither}~\cite{Jean26} \emph{nor}~\cite{SYL25}
+states a depth: the 7 and the 9 are both our own measurements of our own
+transcriptions, on the same footing. Jean's 88~\cite{Jean26} supersedes the earlier 91
 of~\cite{LXZZ21,YWSZZ24} at depth 7; the depth-3 lineage is 105 $\rightarrow$
 103 $\rightarrow$ 102 $\rightarrow$ 99 (\cite{SFX23}, Table 3). Listings:
 Appendices~\ref{app:mixcolumns_97gates_depth3}--\ref{app:mixcolumns_88gates_depth8}.}
@@ -88,7 +89,8 @@ depth $\ge \lceil \log_2 w \rceil$, and MixColumns has outputs of weight
 7~\cite{SFX23} --- so the depth-3 circuit's contribution is its count. The 89 at
 depth 5 is shallower than any published circuit of fewer than 94 gates whose
 depth is stated, and stays on the frontier: the published sub-89 point, Jean's
-88~\cite{Jean26}, sits at depth 7, and~\cite{SYL25} states none.
+88~\cite{Jean26}, measures depth 7 on our transcription --- that note states no
+depth, exactly as~\cite{SYL25} does not.
 
 The 88 at depth 7 \emph{ties} Jean's point rather than improving it: Jean's note
 was posted 2026-07-23 and has priority. Ours was found 2026-07-26 on a fully
@@ -111,9 +113,12 @@ operation, circuits compare by mask overlap regardless of gate order, and a
 neighbourhood --- remove $k$ masks, add at most $k-1$ --- becomes finite and
 enumerable (Section~\ref{sec:certificates}).
 
-In published circuits every gate is locally efficient, the signature of greedy
-construction; smaller circuits are separated from them by locally
-\emph{suboptimal} steps. \textbf{Remove-1} drops a non-output mask if the set
+Good circuits at this size \emph{look} locally efficient --- every gate reads as
+an optimal step --- and that is what makes them hard to improve: they sit at
+local optima, so smaller circuits are separated from them by locally
+\emph{suboptimal} steps. (This was true of the naive construction we started
+from and of every circuit we produced up to the 89; we make no claim about how
+anyone else's circuit was built.) \textbf{Remove-1} drops a non-output mask if the set
 stays realizable. The
 \textbf{neutral swap} removes one mask and adds one repair mask at unchanged
 size: with $A = \mathrm{closure}(S')$ and $\mathit{stuck} = (S' \cup T)
@@ -173,9 +178,14 @@ genuine negatives at $k = 4$.
   siblings, and a third family's anchor with 33 representatives --- \textbf{have
   exhaustively empty $k \le 3$ shells}: all 1\,540 windows at $k=2$ and all
   27\,720 at $k=3$ each, none reducible. Hence \emph{any 87-gate circuit differs
-  from each of the 47 by at least 4 masks.} Our own 88 at depth 7 is \emph{not}
-  among the 47: its exhaustive $k \le 3$ sweep was never run; it has 9 exact
-  $k=4$ windows and 8 SAT cone windows instead.
+  from each of the 47 by at least 4 masks.} Stated plainly: all 47 lie in
+  Jean's-lineage families --- families 1--2 are Jean's circuit and its siblings,
+  and the third family's anchor is itself seeded through Jean's circuit --- so
+  this is a rigidity statement about \emph{that} neighbourhood, and the one
+  circuit here independent of that lineage, our own 88 at depth 7, is exactly
+  the least-certified: it is \emph{not} among the 47, its exhaustive $k \le 3$
+  sweep was never run, and it has only 9 exact $k=4$ windows and 8 SAT cone
+  windows. The best-certified shell and the independent shell are disjoint.
 \item \textbf{Population and depth census.} Harvesting mapped $\approx 139\,878$
   distinct 88-gate mask sets, of which 105\,801 are proven irreducible at $k=2$.
   Every one has minimum build depth $\ge 7$, and 18\,353 (13.1\,\%) reach depth
@@ -245,9 +255,15 @@ from-scratch cascade of hours. The re-runs are re-runs, not independent
 confirmations.
 
 Implementation and execution used LLM coding agents as programming tools,
-directed by the author, who designed the moves and acceptance rules. The
-published method is fully specified and reproducible with the accompanying
-code, with no AI system in the loop.
+directed by the author, who designed the moves and acceptance rules. Concretely:
+the three frontier records of this note are reproduced by the published,
+dependency-free code with no AI system in the loop, whereas the v2 engine, the
+certificates of Section~\ref{sec:certificates} and both 88-gate circuits came
+out of a 24-agent LLM campaign over 2026-07-26/27, again author-directed. That
+distinction changes nothing about correctness: every circuit any of it produced
+is machine-verified against MixColumns rebuilt from $\mathrm{GF}(2^8)$, and the
+method is fully specified and reproducible from the accompanying code either
+way.
 
 \section{Scope and claims}
 
