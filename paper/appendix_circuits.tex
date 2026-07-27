@@ -3,7 +3,7 @@
 \label{app:mixcolumns_97gates_depth3}
 Signals $s_0,\dots,s_{31}$ are the inputs; gate $k$ produces $s_{32+k}$. Canonical gate-list SHA-256 (see Section~\ref{sec:verification}): \\
 \texttt{\small e4c4e678c4b7c22d889c6e060b43859c111b82b953d6d9b43c49c079c0545b56}
-\begin{multicols}{3}\scriptsize\ttfamily
+\begin{multicols}{4}\scriptsize\ttfamily
 s32 = s0 $\oplus$ s8 \\
 s33 = s5 $\oplus$ s13 \\
 s34 = s6 $\oplus$ s14 \\
@@ -111,7 +111,7 @@ s128 = s88 $\oplus$ s64 \\
 \label{app:mixcolumns_92gates_depth4}
 Signals $s_0,\dots,s_{31}$ are the inputs; gate $k$ produces $s_{32+k}$. Canonical gate-list SHA-256 (see Section~\ref{sec:verification}): \\
 \texttt{\small e79bfccf5322fe8933242b47b53e94e73163615c70d5c45c9721e27ac86fd97d}
-\begin{multicols}{3}\scriptsize\ttfamily
+\begin{multicols}{4}\scriptsize\ttfamily
 s32 = s10 $\oplus$ s26 \\
 s33 = s12 $\oplus$ s20 \\
 s34 = s14 $\oplus$ s30 \\
@@ -214,7 +214,7 @@ s123 = s90 $\oplus$ s75 \\
 \label{app:mixcolumns_89gates_depth5}
 Signals $s_0,\dots,s_{31}$ are the inputs; gate $k$ produces $s_{32+k}$. Canonical gate-list SHA-256 (see Section~\ref{sec:verification}): \\
 \texttt{\small c3b972af282d25e8313a510f5cf840472401c6268bd28cda889593fc3379f064}
-\begin{multicols}{3}\scriptsize\ttfamily
+\begin{multicols}{4}\scriptsize\ttfamily
 s32 = s9 $\oplus$ s17 \\
 s33 = s19 $\oplus$ s27 \\
 s34 = s1 $\oplus$ s25 \\
@@ -308,5 +308,205 @@ s120 = s32 $\oplus$ s110 \\
 \noindent Output signals (output bit $j$ is carried by the listed signal, $j = 0,\dots,31$):
 \begin{center}\scriptsize\ttfamily
 [96, 119, 83, 113, 118, 78, 79, 84, 107, 103, 76, 116, 102, 80, 85, 91, 106, 115, 105, 117, 114, 81, 86, 94, 97, 120, 77, 109, 111, 82, 88, 100]
+\end{center}
+
+\section{Circuit \texttt{mixcolumns\_88gates\_depth7} (88 gates, depth 7; ties the published floor)}
+\label{app:mixcolumns_88gates_depth7}
+\noindent \emph{Status: the same (depth, count) point as Jean~\cite{Jean26}, reached independently on this project's own lineage; 61 of 88 internal masks are shared. It ties that point and does not beat it, and Jean has priority.}\\[3pt]
+Signals $s_0,\dots,s_{31}$ are the inputs; gate $k$ produces $s_{32+k}$. Canonical gate-list SHA-256 (see Section~\ref{sec:verification}): \\
+\texttt{\small 76bac50ab0e4a7dd54578e77f57f6d08e96a8803aff72dba2c3f5fadaaa06ee1}
+\begin{multicols}{4}\scriptsize\ttfamily
+s32 = s13 $\oplus$ s29 \\
+s33 = s21 $\oplus$ s29 \\
+s34 = s22 $\oplus$ s30 \\
+s35 = s15 $\oplus$ s23 \\
+s36 = s17 $\oplus$ s25 \\
+s37 = s12 $\oplus$ s20 \\
+s38 = s12 $\oplus$ s28 \\
+s39 = s9 $\oplus$ s25 \\
+s40 = s2 $\oplus$ s18 \\
+s41 = s3 $\oplus$ s27 \\
+s42 = s4 $\oplus$ s28 \\
+s43 = s5 $\oplus$ s13 \\
+s44 = s15 $\oplus$ s31 \\
+s45 = s10 $\oplus$ s26 \\
+s46 = s6 $\oplus$ s22 \\
+s47 = s6 $\oplus$ s14 \\
+s48 = s11 $\oplus$ s19 \\
+s49 = s7 $\oplus$ s23 \\
+s50 = s7 $\oplus$ s31 \\
+s51 = s18 $\oplus$ s26 \\
+s52 = s32 $\oplus$ s46 \\
+s53 = s32 $\oplus$ s38 \\
+s54 = s33 $\oplus$ s30 \\
+s55 = s34 $\oplus$ s15 \\
+s56 = s35 $\oplus$ s20 \\
+s57 = s35 $\oplus$ s8 \\
+s58 = s36 $\oplus$ s2 \\
+s59 = s37 $\oplus$ s5 \\
+s60 = s39 $\oplus$ s1 \\
+s61 = s39 $\oplus$ s51 \\
+s62 = s41 $\oplus$ s50 \\
+s63 = s42 $\oplus$ s21 \\
+s64 = s43 $\oplus$ s14 \\
+s65 = s43 $\oplus$ s63 \\
+s66 = s44 $\oplus$ s45 \\
+s67 = s45 $\oplus$ s58 \\
+s68 = s46 $\oplus$ s49 \\
+s69 = s47 $\oplus$ s54 \\
+s70 = s47 $\oplus$ s31 \\
+s71 = s48 $\oplus$ s56 \\
+s72 = s49 $\oplus$ s19 \\
+s73 = s49 $\oplus$ s16 \\
+s74 = s50 $\oplus$ s24 \\
+s75 = s50 $\oplus$ s55 \\
+s76 = s51 $\oplus$ s72 \\
+s77 = s52 $\oplus$ s54 \\
+s78 = s52 $\oplus$ s64 \\
+s79 = s53 $\oplus$ s63 \\
+s80 = s53 $\oplus$ s59 \\
+s81 = s55 $\oplus$ s68 \\
+s82 = s57 $\oplus$ s16 \\
+s83 = s58 $\oplus$ s61 \\
+s84 = s59 $\oplus$ s33 \\
+s85 = s60 $\oplus$ s17 \\
+s86 = s62 $\oplus$ s76 \\
+s87 = s62 $\oplus$ s4 \\
+s88 = s64 $\oplus$ s34 \\
+s89 = s66 $\oplus$ s86 \\
+s90 = s67 $\oplus$ s85 \\
+s91 = s68 $\oplus$ s70 \\
+s92 = s70 $\oplus$ s35 \\
+s93 = s71 $\oplus$ s42 \\
+s94 = s72 $\oplus$ s3 \\
+s95 = s73 $\oplus$ s74 \\
+s96 = s73 $\oplus$ s0 \\
+s97 = s82 $\oplus$ s9 \\
+s98 = s82 $\oplus$ s24 \\
+s99 = s85 $\oplus$ s97 \\
+s100 = s86 $\oplus$ s48 \\
+s101 = s87 $\oplus$ s37 \\
+s102 = s90 $\oplus$ s61 \\
+s103 = s90 $\oplus$ s40 \\
+s104 = s94 $\oplus$ s38 \\
+s105 = s94 $\oplus$ s40 \\
+s106 = s95 $\oplus$ s60 \\
+s107 = s96 $\oplus$ s44 \\
+s108 = s96 $\oplus$ s36 \\
+s109 = s97 $\oplus$ s108 \\
+s110 = s98 $\oplus$ s49 \\
+s111 = s100 $\oplus$ s105 \\
+s112 = s104 $\oplus$ s87 \\
+s113 = s104 $\oplus$ s71 \\
+s114 = s106 $\oplus$ s108 \\
+s115 = s107 $\oplus$ s74 \\
+s116 = s107 $\oplus$ s110 \\
+s117 = s107 $\oplus$ s57 \\
+s118 = s111 $\oplus$ s41 \\
+s119 = s111 $\oplus$ s66 \\
+\end{multicols}
+\noindent Output signals (output bit $j$ is carried by the listed signal, $j = 0,\dots,31$):
+\begin{center}\scriptsize\ttfamily
+[110, 109, 103, 119, 113, 79, 88, 92, 115, 99, 83, 89, 93, 84, 77, 91, 116, 106, 67, 100, 112, 80, 69, 75, 117, 114, 102, 118, 101, 65, 78, 81]
+\end{center}
+
+\section{Circuit \texttt{mixcolumns\_88gates\_depth8} (88 gates, depth 8; derived, non-frontier)}
+\label{app:mixcolumns_88gates_depth8}
+\noindent \emph{Status: derived from published work, and not a frontier point. Its seed chain passes through Jean's published 88-gate circuit~\cite{Jean26} (Section~\ref{sec:results}), and it is dominated by Appendix~\ref{app:mixcolumns_88gates_depth7} (same count, greater depth). It is listed as a verified distinct construction, not as a claim.}\\[3pt]
+Signals $s_0,\dots,s_{31}$ are the inputs; gate $k$ produces $s_{32+k}$. Canonical gate-list SHA-256 (see Section~\ref{sec:verification}): \\
+\texttt{\small 3a23e2f2b2f3835cab74ba23800088bb03ab4ee3f076f2b9a826c78cd84f8ef1}
+\begin{multicols}{4}\scriptsize\ttfamily
+s32 = s13 $\oplus$ s29 \\
+s33 = s21 $\oplus$ s29 \\
+s34 = s22 $\oplus$ s30 \\
+s35 = s15 $\oplus$ s23 \\
+s36 = s9 $\oplus$ s17 \\
+s37 = s12 $\oplus$ s28 \\
+s38 = s2 $\oplus$ s18 \\
+s39 = s3 $\oplus$ s27 \\
+s40 = s4 $\oplus$ s28 \\
+s41 = s4 $\oplus$ s20 \\
+s42 = s9 $\oplus$ s25 \\
+s43 = s5 $\oplus$ s13 \\
+s44 = s15 $\oplus$ s31 \\
+s45 = s10 $\oplus$ s18 \\
+s46 = s1 $\oplus$ s25 \\
+s47 = s6 $\oplus$ s22 \\
+s48 = s6 $\oplus$ s14 \\
+s49 = s7 $\oplus$ s23 \\
+s50 = s7 $\oplus$ s31 \\
+s51 = s32 $\oplus$ s37 \\
+s52 = s32 $\oplus$ s47 \\
+s53 = s33 $\oplus$ s30 \\
+s54 = s34 $\oplus$ s15 \\
+s55 = s35 $\oplus$ s8 \\
+s56 = s38 $\oplus$ s26 \\
+s57 = s39 $\oplus$ s50 \\
+s58 = s40 $\oplus$ s21 \\
+s59 = s42 $\oplus$ s45 \\
+s60 = s43 $\oplus$ s14 \\
+s61 = s43 $\oplus$ s58 \\
+s62 = s45 $\oplus$ s19 \\
+s63 = s46 $\oplus$ s26 \\
+s64 = s47 $\oplus$ s49 \\
+s65 = s48 $\oplus$ s53 \\
+s66 = s48 $\oplus$ s31 \\
+s67 = s49 $\oplus$ s3 \\
+s68 = s50 $\oplus$ s24 \\
+s69 = s50 $\oplus$ s54 \\
+s70 = s51 $\oplus$ s58 \\
+s71 = s52 $\oplus$ s53 \\
+s72 = s52 $\oplus$ s60 \\
+s73 = s54 $\oplus$ s64 \\
+s74 = s55 $\oplus$ s16 \\
+s75 = s56 $\oplus$ s36 \\
+s76 = s56 $\oplus$ s10 \\
+s77 = s57 $\oplus$ s12 \\
+s78 = s59 $\oplus$ s75 \\
+s79 = s59 $\oplus$ s63 \\
+s80 = s60 $\oplus$ s34 \\
+s81 = s61 $\oplus$ s41 \\
+s82 = s63 $\oplus$ s76 \\
+s83 = s64 $\oplus$ s66 \\
+s84 = s66 $\oplus$ s35 \\
+s85 = s67 $\oplus$ s19 \\
+s86 = s67 $\oplus$ s11 \\
+s87 = s68 $\oplus$ s0 \\
+s88 = s74 $\oplus$ s17 \\
+s89 = s76 $\oplus$ s44 \\
+s90 = s77 $\oplus$ s41 \\
+s91 = s81 $\oplus$ s33 \\
+s92 = s81 $\oplus$ s51 \\
+s93 = s85 $\oplus$ s89 \\
+s94 = s85 $\oplus$ s40 \\
+s95 = s86 $\oplus$ s35 \\
+s96 = s87 $\oplus$ s49 \\
+s97 = s87 $\oplus$ s1 \\
+s98 = s88 $\oplus$ s46 \\
+s99 = s94 $\oplus$ s77 \\
+s100 = s95 $\oplus$ s62 \\
+s101 = s95 $\oplus$ s20 \\
+s102 = s96 $\oplus$ s16 \\
+s103 = s96 $\oplus$ s8 \\
+s104 = s97 $\oplus$ s36 \\
+s105 = s100 $\oplus$ s89 \\
+s106 = s100 $\oplus$ s39 \\
+s107 = s101 $\oplus$ s94 \\
+s108 = s101 $\oplus$ s37 \\
+s109 = s102 $\oplus$ s44 \\
+s110 = s102 $\oplus$ s68 \\
+s111 = s106 $\oplus$ s86 \\
+s112 = s106 $\oplus$ s38 \\
+s113 = s109 $\oplus$ s68 \\
+s114 = s110 $\oplus$ s42 \\
+s115 = s112 $\oplus$ s93 \\
+s116 = s113 $\oplus$ s103 \\
+s117 = s113 $\oplus$ s55 \\
+s118 = s114 $\oplus$ s97 \\
+s119 = s114 $\oplus$ s88 \\
+\end{multicols}
+\noindent Output signals (output bit $j$ is carried by the listed signal, $j = 0,\dots,31$):
+\begin{center}\scriptsize\ttfamily
+[116, 119, 79, 112, 108, 70, 80, 84, 109, 98, 75, 111, 107, 92, 71, 83, 103, 118, 78, 115, 99, 91, 65, 69, 117, 104, 82, 105, 90, 61, 72, 73]
 \end{center}
 
