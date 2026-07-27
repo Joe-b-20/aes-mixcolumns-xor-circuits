@@ -7,10 +7,12 @@
 that improve the published depth–count Pareto frontier at every depth from 3
 to 5: 97 gates at the minimum possible depth 3, 92 gates at depth 4, and 89
 gates at depth 5 — five fewer than the published depth-5 point, and shallower
-than any published circuit of fewer than 94 gates whose depth is stated.**
-(At unconstrained depth, the published count floor is 88 at depth 7 — Jean,
-ePrint 2026/1481 — plus an 89 at unstated depth, Sun–Yang–Li, ePrint
-2025/1493; see `PRIOR_ART.md`, including its Corrections section.)
+than any published circuit of fewer than 94 gates whose depth is stated. It
+also provides an 88-gate circuit at depth 7 that *matches, and does not beat*,
+the published count floor (Jean, ePrint 2026/1481) with an independent
+circuit.** The published count floor is 88 and stays 88; nothing here improves
+it. (There is also an 89 at unstated depth — Sun–Yang–Li, ePrint 2025/1493.
+See `PRIOR_ART.md`, including its Corrections section.)
 
 All circuits ship with self-contained verifiers. Every circuit is a static,
 machine-checkable artifact, and nothing here depends on how the circuits were
@@ -22,15 +24,35 @@ shortest-linear-program local search with plateau and hub moves — in its own
 repository, [`slp-plateau-search`](https://github.com/Joe-b-20/slp-plateau-search):
 the method write-up, the search pipeline, the untouched archives of the runs
 that produced each record, and a single-command pure-Python reproduction of
-the from-scratch depth-3 record.
+the from-scratch depth-3 record. The two 88-gate circuits come from that
+repository's **v2.0.0** release; their full lineage, the exact code, and the
+machine-checked local-optimality certificates are in its
+`evidence/campaign87_run_2026-07-26_got_88at7/`,
+`evidence/campaign87_run_2026-07-27_got_88at8_thirdfamily/`,
+`evidence/campaign87_certificates/`, and — for the transcribed, credited
+prior-art circuits — `evidence/campaign87_imported_prior_art/`.
 
 ## The circuits
 
-| File | Gates | Depth | Published best at that depth |
+| File | Gates | Depth | Published best at that depth | Status |
+|---|---|---|---|---|
+| `circuits/mixcolumns_97gates_depth3.json` | 97 | **3** | 99 (Shi, Feng, and Xu, ToSC 2023) — depth 3 is the known minimum depth (see below) | improves it by 2 |
+| `circuits/mixcolumns_92gates_depth4.json` | 92 | **4** | 97 (Osvik and Canright, ePrint 2024/1076, App. G) | improves it by 5 |
+| `circuits/mixcolumns_89gates_depth5.json` | **89** | **5** | 94 (Osvik and Canright, ePrint 2024/1076, App. F) | improves it by 5 |
+| `circuits/mixcolumns_88gates_depth7.json` | 88 | 7 | 88 (Jean, ePrint 2026/1481, posted 2026-07-23) | **matches it, does not beat it** — an independent circuit at the same point (61/88 shared masks, Jaccard 0.530); Jean has priority |
+
+A second 88-gate circuit ships alongside them, and it is **not** a frontier
+point:
+
+| File | Gates | Depth | Status |
 |---|---|---|---|
-| `circuits/mixcolumns_97gates_depth3.json` | 97 | **3** | 99 (Shi, Feng, and Xu, ToSC 2023) — depth 3 is the known minimum depth (see below) |
-| `circuits/mixcolumns_92gates_depth4.json` | 92 | **4** | 97 (Osvik and Canright, ePrint 2024/1076, App. G) |
-| `circuits/mixcolumns_89gates_depth5.json` | **89** | **5** | 94 (Osvik and Canright, ePrint 2024/1076, App. F). At unconstrained depth: 89 (Sun–Yang–Li, ePrint 2025/1493, depth not stated) and 88 at depth 7 (Jean, ePrint 2026/1481) |
+| `circuits/mixcolumns_88gates_depth8.json` | 88 | 8 | **Derived from published work**: its seed chain passes through Jean's 88 (ePrint 2026/1481) — that circuit was ρ²-symmetrized and peeled to 95, orbit-walked to 92, then unioned with a 91 of this project's own lineage before the descent. It is a third distinct construction by mask overlap (Jaccard 0.455 to Jean's 88, 0.544 to the 88 @ depth 7 above), but it is dominated by that 88 @ depth 7 — same count, greater depth — so it improves nothing. Shipped as a verified, documented distinct construction only. |
+
+The literature also has an 89 whose depth is not stated (Sun–Yang–Li, ePrint
+2025/1493). Where this repository needs a depth for that point — in the figure
+below, and in the frontier table in `PRIOR_ART.md` — it uses **9**, which is
+this project's own measurement of its own transcription of that circuit, not a
+figure from the paper.
 
 Earlier circuits from this project, kept for the archival record (each is now
 dominated by a circuit above):
@@ -61,8 +83,8 @@ also Xiang et al., ToSC 2020, s-XOR), and **88 @ depth 7** (Jean, ePrint
 floor, Sun–Yang–Li's 89 of ePrint 2025/1493). Because a `k`-instruction
 s-XOR program translates instruction-for-gate into a `k`-gate 2-input XOR
 circuit, we treat s-XOR counts as comparable. The circuits above improve the
-frontier at depths 3, 4, and 5 and remain on it alongside Jean's 88 @ depth
-7. See **Claims and scope** below for the careful wording.
+frontier at depths 3, 4, and 5, and land exactly on — not below — its depth-7
+point. See **Claims and scope** below for the careful wording.
 
 Each circuit is also provided as a human-readable plain-text listing in
 `listings/` (`s32 = s15 ^ s23`, one gate per line, generated from the JSON —
@@ -117,6 +139,19 @@ This runs the shipped software verification paths:
   MixColumns from an independent byte-level reference, recomputes metrics, runs
   deterministic random tests, and exercises adversarial rejection cases.
 
+Both walk every file in `circuits/`, so nothing needs to be listed by hand when
+a circuit is added; a passing run prints one line per circuit, including
+
+~~~text
+[ OK ] mixcolumns_88gates_depth7: 88 gates, depth 7 — all 32 outputs correct, SHA fields match
+[ OK ] mixcolumns_88gates_depth8: 88 gates, depth 8 — all 32 outputs correct, SHA fields match
+~~~
+
+and ends in `ALL CIRCUITS VERIFIED.` The clean-room run rewrites
+`audit/recomputed_metrics.json` and `audit/MATHEMATICAL_VERIFICATION.md` from
+what it measured, so those two files are always the output of the last audit,
+never hand-written.
+
 For a faster single-path check, you can still run:
 
 ~~~text
@@ -134,8 +169,8 @@ python3 verify_all.py --with-verilog
 
 `verilog/<circuit>.v` is the netlist and `verilog/<circuit>_tb.v` is a testbench
 that drives all 32 basis inputs and compares against the AES column masks.
-`verify_verilog.py` automates all three shipped testbenches. For a single manual
-run with Icarus Verilog:
+`verify_verilog.py` automates every shipped testbench (one per circuit). For a
+single manual run with Icarus Verilog:
 
 ~~~
 cd verilog
@@ -153,7 +188,12 @@ symmetric.
 Machine-readable summary: for each circuit, `inputCount`, `gateCount`, `depth`,
 `outputCount`, the `outputConvention` string, the exact
 `sha256_circuit_json`, the exact `sha256_canonical_gates`, and additional
-archival metadata.
+archival metadata — the `claim` string that says exactly what is and is not
+asserted for that circuit, and, for the two 88-gate circuits, a `provenance`
+string recording the lineage (including, for the depth-8 one, that its seed
+chain passes through Jean's published circuit). The circuit JSON files
+themselves carry only the eight schema keys the verifiers require; provenance
+deliberately lives beside them, because no correctness claim depends on it.
 `sha256_canonical_gates` is SHA-256 over the UTF-8 bytes of the compact JSON
 string `{"inputCount":32,"gates":[...]}` with keys in that order. The rule is
 implemented in `scripts/reproduce_canonical_hashes.py`. Both `verify.py` and
@@ -181,11 +221,20 @@ We state results conservatively.
    `PRIOR_ART.md`, including its Corrections section. Gate counts and depths
    are invariant under input/output bit relabeling, so these comparisons do
    not depend on convention choices.
-3. **Convention.** All counts are for the exact 2-input-XOR model and the
+3. **The 88s match, they do not beat.** `mixcolumns_88gates_depth7.json` has
+   the same gate count and the same depth as Jean's published circuit (ePrint
+   2026/1481, posted 2026-07-23, three days before ours was found). We claim
+   only that it is an *independent* circuit at that point — 61 of 88 internal
+   masks shared, Jaccard 0.530 — and we make no priority claim: **Jean has
+   priority**.
+   `mixcolumns_88gates_depth8.json` is **derived** from that published circuit
+   (its seed chain passes through it) and is dominated by our own depth-7 one;
+   it improves nothing and is shipped as an artifact, not as a claim.
+4. **Convention.** All counts are for the exact 2-input-XOR model and the
    exact MixColumns convention defined above. A hidden convention mismatch is
    the most common way such a comparison goes wrong, which is why the
    from-scratch verifier is included.
-4. **Circuits vs. search.** The circuits in this folder are fully verifiable:
+5. **Circuits vs. search.** The circuits in this folder are fully verifiable:
    anyone can re-run `verify.py` and confirm them forever, and none of the
    claims here depend on how they were found. The search method is published
    separately in
@@ -195,7 +244,7 @@ We state results conservatively.
 ## Contents
 
 ~~~
-circuits/    six circuit JSON files (the three current records + three superseded v1 circuits)
+circuits/    eight circuit JSON files (three frontier records + the 88 @ depth 7 that ties the published floor + the derived 88 @ depth 8 + three superseded v1 circuits)
 listings/    the same circuits as human-readable plain text (generated)
 docs/        generated figures (the depth-count frontier chart)
 PRIOR_ART.md source-by-source audit of every comparison claim

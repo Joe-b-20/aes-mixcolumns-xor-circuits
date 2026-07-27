@@ -20,6 +20,27 @@ circuits here, which remain on the frontier. All circuits are provided as machin
 pure-Python verifier that rebuilds the MixColumns specification from
 scratch. We make no optimality claim on gate counts.
 
+## Corrections
+
+This note is the write-up as published; its claims are left exactly as they
+were, and the dated entry below records what has changed since, in the same
+style as the Corrections section of `PRIOR_ART.md`.
+
+- **2026-07-27. The results list in Section 2 is no longer complete.** The
+  repository now also ships two 88-gate circuits, and neither of them changes
+  a claim made above:
+  - `mixcolumns_88gates_depth7` **matches** the published count floor — Jean's
+    88 at depth 7, ePrint 2026/1481, posted 2026-07-23 — with an independent
+    circuit (61 of 88 internal masks shared, Jaccard 0.530). It ties that
+    point; it does not beat it, and Jean has priority.
+  - `mixcolumns_88gates_depth8` is **derived from that published circuit**:
+    its seed chain passes through Jean's 88. It is dominated by the depth-7
+    circuit above (same count, greater depth) and improves nothing.
+  - The three circuits reported above remain on the depth–count Pareto
+    frontier, and the sentence "the published sub-89 point (88, Jean, ePrint
+    2026/1481) sits at depth 7" in Section 2 still holds: 88 remains the
+    published floor. See `README.md` and `PRIOR_ART.md` (Corrections).
+
 ## 1. Model and specification
 
 A circuit is an ordered list of 2-input XOR gates. Signals `0..31` are the input

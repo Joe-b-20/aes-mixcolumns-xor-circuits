@@ -108,7 +108,45 @@
         "measuredDepth": 5,
         "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
       },
-      "claim": "The smallest 2-input XOR count we are aware of at depth <= 5: five fewer gates than the published depth-5 point (94, Osvik and Canright, ePrint 2024/1076, Appendix F). Published smaller counts exist only at greater or unstated depth (88 at depth 7: Jean, ePrint 2026/1481; 89, depth not stated: Sun-Yang-Li, ePrint 2025/1493), so this circuit remains on the published depth-count Pareto frontier; we do not make an optimality claim. See PRIOR_ART.md Corrections."
+      "claim": "The smallest 2-input XOR count we are aware of at depth <= 5: five fewer gates than the published depth-5 point (94, Osvik and Canright, ePrint 2024/1076, Appendix F). Smaller counts exist only at greater or unstated depth (88 at depth 7: Jean, ePrint 2026/1481, matched by mixcolumns_88gates_depth7 in this repository; 89, depth not stated: Sun-Yang-Li, ePrint 2025/1493), so this circuit remains on the depth-count Pareto frontier; we do not make an optimality claim. See PRIOR_ART.md Corrections."
+    },
+    {
+      "id": "mixcolumns_88gates_depth7",
+      "inputCount": 32,
+      "gateCount": 88,
+      "depth": 7,
+      "outputCount": 32,
+      "outputConvention": "output j (j in 0..31) is MixColumns output bit j; bit j = bit (j mod 8) of state byte (j div 8), least-significant-bit-first within each byte. It is produced at internal signal index outputSignals[j].",
+      "sha256_canonical_gates": "76bac50ab0e4a7dd54578e77f57f6d08e96a8803aff72dba2c3f5fadaaa06ee1",
+      "sha256_circuit_json": "6e823ad8cc8953fc8859e37f7000e8054a16ab769118c8f878f116ff3d72852a",
+      "verified": {
+        "allOutputsCorrect": true,
+        "everyGateIs2InputXOR": true,
+        "everyParentIndexSmaller": true,
+        "measuredDepth": 7,
+        "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
+      },
+      "provenance": "Found by this project's own search (slp-plateau-search v2.0.0, campaign 87, merged engine, worker w10_sym94; the 88-gate size first appeared at walk iteration 45614, at depth 11, on 2026-07-26 22:08:19, and the walk's Pareto depth tie-break reached this depth-7 circuit at walk iteration 47436, 5.3 s later), on this project's own lineage and with no imported material: from-scratch 97 at depth 3 -> 89 at depth 6 -> 89 at depth 5 -> an exactly rho^2-symmetric 94 at depth 5 -> walk drift to 88 at depth 7. Untouched run archive: evidence/campaign87_run_2026-07-26_got_88at7/ in https://github.com/Joe-b-20/slp-plateau-search (source file there: evidence/circuits/mixcolumns_88gates_depth7.json).",
+      "claim": "Matches, and does not beat, the published count floor: 88 gates at depth 7 is the same (depth, count) point as Jean, ePrint 2026/1481. The circuit is an independent one, found by this project's search on its own lineage; it shares 61 of 88 internal masks with Jean's circuit (Jaccard 0.530), as measured in the method repository. Ties the published record with a different circuit; no priority claim over it and no optimality claim."
+    },
+    {
+      "id": "mixcolumns_88gates_depth8",
+      "inputCount": 32,
+      "gateCount": 88,
+      "depth": 8,
+      "outputCount": 32,
+      "outputConvention": "output j (j in 0..31) is MixColumns output bit j; bit j = bit (j mod 8) of state byte (j div 8), least-significant-bit-first within each byte. It is produced at internal signal index outputSignals[j].",
+      "sha256_canonical_gates": "3a23e2f2b2f3835cab74ba23800088bb03ab4ee3f076f2b9a826c78cd84f8ef1",
+      "sha256_circuit_json": "66bd373ab30c91e435f907176ffbab347c748b7ce80236bc4b692409eec2a54f",
+      "verified": {
+        "allOutputsCorrect": true,
+        "everyGateIs2InputXOR": true,
+        "everyParentIndexSmaller": true,
+        "measuredDepth": 8,
+        "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
+      },
+      "provenance": "DERIVED FROM PUBLISHED WORK. This circuit's seed chain passes through Jean's published 88-gate circuit (ePrint 2026/1481): Jean's 88 was rho^2-symmetrized and peeled to 95, orbit-walked to 92, unioned with a 91 of this project's own lineage to give a rho^2-symmetric 90 at depth 9, which was then descended to this 88 at depth 8. It is therefore not an independent from-scratch construction, and Jean is credited accordingly. Found by this project's search (slp-plateau-search v2.0.0, campaign 87, hunt-deeper, worker d3_orb90a, 2026-07-27; the 88-gate size first appeared at walk iteration 99444, at depth 10, and the depth tie-break reached this depth-8 circuit at walk iteration 100049, 1.2 s later). Untouched run archive: evidence/campaign87_run_2026-07-27_got_88at8_thirdfamily/ in https://github.com/Joe-b-20/slp-plateau-search (source file there: evidence/circuits/mixcolumns_88gates_depth8_thirdfamily.json).",
+      "claim": "Derived from published work (see provenance: its seed chain passes through Jean's 88, ePrint 2026/1481). A third distinct 88-gate construction, at Jaccard 0.455 to Jean's 88 and 0.544 to this repository's 88 at depth 7, both well below the 0.7 same-family threshold used in the method repository. It is dominated by mixcolumns_88gates_depth7 (same gate count, greater depth), so it is not a frontier point and improves nothing; it is kept as a verified, documented distinct construction. No optimality claim."
     }
   ]
 }
