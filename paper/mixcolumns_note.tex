@@ -186,14 +186,13 @@ genuine negatives at $k = 4$.
   the least-certified: it is \emph{not} among the 47, its exhaustive $k \le 3$
   sweep was never run, and it has only 9 exact $k=4$ windows and 8 SAT cone
   windows. The best-certified shell and the independent shell are disjoint.
-\item \textbf{Population and depth census.} Harvesting mapped $\approx 139\,878$
-  distinct 88-gate mask sets, of which 105\,801 are proven irreducible at $k=2$.
-  Every one has minimum build depth $\ge 7$, and 18\,353 (13.1\,\%) reach depth
-  exactly 7: no 88-gate circuit of depth $\le 6$ has been seen (depths
-  recomputed over the whole harvest, itself listed by size and SHA-256
-  in~\cite{Methods}). In total $\approx 165$ million exact window decisions,
-  zero timeouts, zero reducible windows; all five 89-gate seeds likewise have
-  empty $k=2$ shells.
+\item \textbf{Population.} Harvesting mapped $\approx 139\,878$
+  distinct 88-gate mask sets, of which 105\,801 are proven irreducible at
+  $k=2$. No 88-gate mask set of minimum build depth $\le 6$ has been seen in
+  this harvesting — an observation, not a certified claim: no per-circuit
+  depth census of the harvest is published. In total $\approx 165$ million
+  exact window decisions, zero timeouts, zero reducible windows; all five
+  89-gate seeds likewise have empty $k=2$ shells.
 \item \textbf{Windowed SAT is evidence, not proof.} A sound windowed CNF
   encoding, solved by Kissat under two soundness-proved symmetry-breaking
   layers, returned UNSAT up to $k=16$ on Jean's 88 and $k=15$ on the
@@ -288,11 +287,11 @@ way.
 
 \paragraph{Version history.} \textbf{v2}, 27 July 2026: adds the 88 at depth 7
 and its derived depth-8 companion, the exact neighbourhood certificates, the
-depth census and $\rho^2$ symmetry results, the v2 engine measurements and
-dated reproduction times; no claim of v1 is withdrawn. \textbf{v1}, July 2026,
-archived at version DOI
-\href{https://doi.org/10.5281/zenodo.21299093}{10.5281/zenodo.21299093}: the
-97, 92 and 89 only.
+$\rho^2$ symmetry results, the v2 engine measurements and dated reproduction
+times; no claim of v1 is withdrawn. \textbf{v1}, July 2026 (the 97, 92 and 89
+only), remains available in the repository history and in the Zenodo version
+archive under the concept DOI
+\href{https://doi.org/10.5281/zenodo.21299092}{10.5281/zenodo.21299092}.
 
 \begin{thebibliography}{9}
 

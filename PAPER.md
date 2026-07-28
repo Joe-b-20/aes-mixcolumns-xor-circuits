@@ -1,12 +1,12 @@
 # Small 2-input XOR circuits for AES MixColumns
 
 *A short note accompanying the verified circuit artifacts in this repository.
-The typeset note is `paper/mixcolumns_note.pdf` (LaTeX source in `paper/`);
-this file is the markdown version.*
+The typeset note, `paper/mixcolumns_note.pdf` (LaTeX source in `paper/`), is
+the authoritative version; this file is a condensed markdown companion.*
 
 ## Abstract
 
-We report four explicit implementations of the AES MixColumns linear
+We report five explicit implementations of the AES MixColumns linear
 transformation as circuits of 2-input XOR gates over GF(2). Three improve the
 published depth–count Pareto frontier at their depth: (i) a **97-gate** circuit
 at depth **3**, the known minimum depth, improving the 99-gate record of Shi,
@@ -30,9 +30,9 @@ Dated entries, in the style of the Corrections section of `PRIOR_ART.md`.
 
 - **2026-07-27 (note version 2).** Version 1 of this note (July 2026) reported
   only the 97, 92 and 89; version 2 adds the two 88-gate circuits, in Sections
-  2 and 4. No claim of version 1 is withdrawn, and version 1 stays archived at
-  version DOI
-  [10.5281/zenodo.21299093](https://doi.org/10.5281/zenodo.21299093).
+  2 and 4. No claim of version 1 is withdrawn; version 1 remains available in
+  the repository history and in the Zenodo version archive under the concept
+  DOI [10.5281/zenodo.21299092](https://doi.org/10.5281/zenodo.21299092).
 
 ## 1. Model and specification
 
@@ -78,8 +78,9 @@ the 88-gate plateau: 47 canonical 88-gate circuits have exhaustively empty
 remove-≤3 shells (so any 87 differs from each of them by ≥ 4 masks — this
 project's own 88 @ depth 7 is *not* one of the 47); 105,801 of the ≈ 139,878
 harvested distinct 88-gate mask sets are proven irreducible at k = 2; ≈ 165
-million exact window decisions returned zero reducible windows; and every one
-of the ≈ 139,878 has minimum depth ≥ 7, with 18,353 (13.1%) at exactly 7.
+million exact window decisions returned zero reducible windows. No 88-gate
+mask set of minimum build depth ≤ 6 has been seen in this harvesting — an
+observation, not a certified claim (no per-circuit depth census is published).
 Windowed SAT (UNSAT to k = 16 and k = 15 on two family anchors, 0 SAT anywhere)
 is evidence, not proof — it is relative to the encoding's fixed slot order.
 None of this bounds 87 away globally.
@@ -113,7 +114,11 @@ when Icarus Verilog is available.
 - **Provenance.** 97 @ 3 and 92 @ 4 are from scratch; 89 @ 5 and 88 @ 7 are on
   this project's own lineage, rooted in a from-scratch 97 @ 3; **88 @ 8 is
   derived from published work** — its seed chain passes through Jean's 88,
-  which is credited wherever that circuit appears.
+  which is credited wherever that circuit appears. The search campaigns were
+  implemented and executed with LLM coding agents as programming tools,
+  directed by the author; the published method is dependency-free Python that
+  reproduces the results with no AI system in the loop (see the note's Method
+  section and the method repository).
 - **One convention.** All counts hold for the single executable convention in
   `verify.py`. A different bit order or a transposed matrix is a different
   problem; re-derive the targets under your convention before comparing.

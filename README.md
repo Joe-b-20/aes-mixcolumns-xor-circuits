@@ -68,7 +68,7 @@ This is the column, not row `T[j]`, because the matrix is not symmetric.
 | `circuits/mixcolumns_97gates_depth3.json` | 97 | **3** | 99 (Shi, Feng, and Xu, ToSC 2023) | improves it by 2 |
 | `circuits/mixcolumns_92gates_depth4.json` | 92 | **4** | 97 (Osvik and Canright, ePrint 2024/1076, App. G) | improves it by 5 |
 | `circuits/mixcolumns_89gates_depth5.json` | **89** | **5** | 94 (Osvik and Canright, ePrint 2024/1076, App. F) | improves it by 5 |
-| `circuits/mixcolumns_88gates_depth7.json` | 88 | 7 | 88 (Jean, ePrint 2026/1481, posted 2026-07-23) | **matches it, does not beat it** — an independent circuit at the same point (61/88 shared masks, Jaccard 0.530); Jean has priority |
+| `circuits/mixcolumns_88gates_depth7.json` | 88 | 7 | 88 (Jean, ePrint 2026/1481, posted 2026-07-23; the paper states no depth — 7 is our measurement of our transcription) | **matches it, does not beat it** — an independent circuit at the same point (61/88 shared masks, Jaccard 0.530); Jean has priority |
 
 A second 88-gate circuit ships alongside them and is **not** a frontier point:
 
@@ -88,7 +88,7 @@ dominated by a circuit above:
 These v1 circuits came from earlier, more primitive versions of the same
 search, whose exact code state was not preserved; what is and is not
 reconstructable about their provenance is documented in
-[METHODS.md, "Provenance of the earlier (v1) circuits"](https://github.com/Joe-b-20/slp-plateau-search/blob/main/METHODS.md).
+[METHODS.md, "The earlier (v1) circuits"](https://github.com/Joe-b-20/slp-plateau-search/blob/main/METHODS.md#the-earlier-v1-circuits).
 No current claim depends on them.
 
 Each circuit is also a human-readable plain-text listing in `listings/`
@@ -102,10 +102,11 @@ The published frontier in comparable models, source-checked in `PRIOR_ART.md`:
 depth 5** (Osvik and Canright, ePrint 2024/1076), **92 @ depth 6** (Maximov,
 ePrint 2019/833; also Xiang et al., ToSC 2020, s-XOR), and **88 @ depth 7**
 (Jean, ePrint 2026/1481, which supersedes Lin et al.'s 91 at that depth and, as
-the count floor, Sun–Yang–Li's 89 of ePrint 2025/1493). Sun–Yang–Li state no
-depth; where this repository needs one for that point — the figure above, the
-frontier table in `PRIOR_ART.md` — it uses **9**, this project's own
-measurement of its own transcription, not a figure from the paper. The 89 @
+the count floor, Sun–Yang–Li's 89 of ePrint 2025/1493). Neither Jean nor
+Sun–Yang–Li states a depth; where this repository needs one — the figure
+above, the frontier table in `PRIOR_ART.md` — it uses **7** and **9**
+respectively, this project's own measurements of its own transcriptions, not
+figures from the papers. The 89 @
 depth 5 here is shallower than any published circuit of fewer than 94 gates
 whose depth is stated.
 

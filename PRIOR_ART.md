@@ -17,7 +17,8 @@ than 88 at any depth — please open an issue.
 - **2026-07-27.** This repository now also ships two 88-gate circuits. Neither
   beats anything published.
   - `circuits/mixcolumns_88gates_depth7.json` **matches** Jean's published
-    88 @ depth 7 (ePrint [2026/1481](https://eprint.iacr.org/2026/1481)): the
+    88 (ePrint [2026/1481](https://eprint.iacr.org/2026/1481); depth 7 is our
+    own measurement of our transcription — the paper states no depth): the
     same (depth, count) point, reached independently by this project's own
     search on its own lineage. The two circuits differ — 61 of 88 internal
     masks shared, Jaccard 0.530, measured in the method repository.
@@ -52,8 +53,9 @@ than 88 at any depth — please open an issue.
   - Jean, *88-XOR Implementation of the AES MixColumns Matrix*, ePrint
     [2026/1481](https://eprint.iacr.org/2026/1481) (posted 2026-07-23, after
     the releases that established the 97/92/89 records here), gives an
-    **88-XOR, depth-7** circuit; count and depth re-verified by us from its
-    listing. The published count floor is now 88.
+    **88-XOR** circuit; the count is re-verified by us from its listing, and
+    depth 7 is our own measurement of our transcription — the paper states no
+    depth. The published count floor is now 88.
   - Unchanged: 97 @ 3, 92 @ 4 and 89 @ 5 remain the smallest we are aware of at
     their depths and all three remain on the published depth–count Pareto
     frontier (88 @ depth 7 does not dominate 89 @ depth 5).
@@ -188,9 +190,10 @@ smallest count at unconstrained depth.
 This is deliberately not phrased as an improvement.
 
 - The published count floor for AES MixColumns in a comparable model is **88
-  XORs at depth 7** (Jean, ePrint [2026/1481](https://eprint.iacr.org/2026/1481),
-  Algorithm 1, posted 2026-07-23; count and depth re-verified here from its
-  listing). `circuits/mixcolumns_88gates_depth7.json` has the same count and
+  XORs** (Jean, ePrint [2026/1481](https://eprint.iacr.org/2026/1481),
+  Algorithm 1, posted 2026-07-23; count re-verified here from its listing —
+  the paper states no depth, and depth 7 is our own measurement of our
+  transcription, exactly as for the Sun–Yang–Li 89). `circuits/mixcolumns_88gates_depth7.json` has the same count and
   the same depth. It **ties** that point; it does not beat it, and Jean has
   priority — the paper predates this circuit, found 2026-07-26.
 - The circuits are nevertheless different. The method repository transcribed
