@@ -3,21 +3,24 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21299092.svg)](https://doi.org/10.5281/zenodo.21299092)
 [![verify](https://github.com/Joe-b-20/aes-mixcolumns-xor-circuits/actions/workflows/verify.yml/badge.svg)](https://github.com/Joe-b-20/aes-mixcolumns-xor-circuits/actions/workflows/verify.yml)
 
-Verified 2-input XOR circuits for AES MixColumns. Four improve the published
-depth–count Pareto frontier: **97 gates at depth 3** (the minimum possible
-depth), **92 at depth 4**, **89 at depth 5**, and **88 at depth 6** — four gates
-below the published depth-6 point, and one level shallower than the published 88
-at the same count. That 88 is **not** a new gate count: **88 is Jean's count**
-(ePrint 2026/1481), **Jean has priority**, and the floor is 88 and stays 88. A
-fifth circuit, **88 at depth 7**, *matches, and does not beat*, that floor with
-an independent circuit. Two further 88s, at depths 5 and 8, are **derived from
-Jean's circuit** and are labelled so wherever they appear; the depth-5 one is
-six gates below the published depth-5 point.
+Verified 2-input XOR circuits for AES MixColumns. Four are smaller than any
+published circuit at their own depth: **97 gates at depth 3** (the minimum
+possible depth), **92 at depth 4**, **88 at depth 5** — six gates below the
+published depth-5 point — and **88 at depth 6**, four gates below the published
+depth-6 point. Three of them are the depth–count Pareto frontier below; the
+depth-6 88 is dominated by the depth-5 one and so sits behind it. Those 88s are **not** a new gate count: **88 is Jean's count** (ePrint
+2026/1481, posted 2026-07-23), **Jean has priority**, and the floor is 88 and
+stays 88. What they improve is the *depth* at that count. A further circuit,
+**88 at depth 7**, *matches, and does not beat*, the floor with an independent
+circuit. Two more 88s, at depths 5 and 8, are **derived from Jean's circuit**
+and are labelled so wherever they appear.
 
-Two frontiers, and both are stated here: taking every circuit in this repository
-together, **97 @ 3, 92 @ 4, 88 @ 5**; restricted to circuits with no imported
-material anywhere in their lineage, **97 @ 3, 92 @ 4, 89 @ 5, 88 @ 6**. **87 was
-not found**, and nothing here is claimed optimal.
+**Verified frontier: 97 @ 3, 92 @ 4, 88 @ 5 — one line, entirely this project's
+own lineage, with no imported material.** Until 2026-07-30 there were two, the
+depth-5 point being reachable only through work derived from Jean's circuit; a
+circuit found from scratch now reaches it, which **removes this project's
+dependence on that circuit at the depth-5 point — it does not beat it**. **87
+was not found**, and nothing here is claimed optimal.
 
 Every circuit is a static artifact checked by a verifier that rebuilds the
 MixColumns specification from scratch; no claim here depends on how the
@@ -82,16 +85,17 @@ anywhere in their lineage:
 |---|---|---|---|---|
 | `circuits/mixcolumns_97gates_depth3.json` | 97 | **3** | 99 (Shi, Feng, and Xu, ToSC 2023) | improves it by 2 |
 | `circuits/mixcolumns_92gates_depth4.json` | 92 | **4** | 97 (Osvik and Canright, ePrint 2024/1076, App. G) | improves it by 5 |
-| `circuits/mixcolumns_89gates_depth5.json` | **89** | **5** | 94 (Osvik and Canright, ePrint 2024/1076, App. F) | improves it by 5 |
-| `circuits/mixcolumns_88gates_depth6.json` | 88 | **6** | 92 (Maximov, ePrint 2019/833; also Xiang et al., ToSC 2020, s-XOR) | improves it by 4, and dominates the published 88 — same count, one level shallower (on the depth 7 discussed below, which is forced). **Not a new count**: 88 is Jean's and Jean has priority |
+| `circuits/mixcolumns_88gates_depth5_fromscratch.json` | 88 | **5** | 94 (Osvik and Canright, ePrint 2024/1076, App. F) | improves it by 6, and dominates the published 88 — same count, two levels shallower (on the depth 7 discussed below, which is forced). **Not a new count**: 88 is Jean's and Jean has priority. Found from scratch, root `constructors.build("naive", 1958)`; it is what collapses the frontier above to one line |
+| `circuits/mixcolumns_88gates_depth6.json` | 88 | **6** | 92 (Maximov, ePrint 2019/833; also Xiang et al., ToSC 2020, s-XOR) | improves it by 4, and dominates the published 88 — same count, one level shallower. **Not a new count**, same reason. The first 88 this project found from scratch; now dominated here by the depth-5 one above, and kept as a different family (43 shared masks, Jaccard 0.323) |
 
-Three more 88-gate circuits ship alongside them. None is a new count, and two are
-not independent constructions:
+Four more circuits ship alongside them. None improves a frontier point, and two
+of them are not independent constructions:
 
 | File | Gates | Depth | Status |
 |---|---|---|---|
-| `circuits/mixcolumns_88gates_depth5.json` | 88 | 5 | **Derived from published work**: its seed chain passes through Jean's 88 (ePrint 2026/1481) — ρ²-symmetrized and peeled to 95, orbit-walked to 92, unioned with a 91 of this project's own lineage, then descended. Six gates below the published depth-5 point and the shallowest 88 here, but not an independent construction; it also shares 75 of its 88 masks with the 89 @ depth 5 above (Jaccard 0.735, the highest overlap between any two circuits here), so it is that 89's own basin reached at 88 gates |
-| `circuits/mixcolumns_88gates_depth7.json` | 88 | 7 | 88 is also the published count floor (Jean, ePrint 2026/1481, posted 2026-07-23). This circuit **matches it, does not beat it** — an independent circuit at the same point (61/88 shared masks, Jaccard 0.530); Jean has priority. Now dominated by the 88 @ depth 6 above, and kept because independent replication is worth archiving |
+| `circuits/mixcolumns_89gates_depth5.json` | 89 | 5 | Five gates below the published depth-5 point (94, Osvik and Canright), and this project's own-lineage depth-5 record until 2026-07-30. Now dominated by both 88s at depth 5; kept for the archival record |
+| `circuits/mixcolumns_88gates_depth5.json` | 88 | 5 | **Derived from published work**: its seed chain passes through Jean's 88 (ePrint 2026/1481) — ρ²-symmetrized and peeled to 95, orbit-walked to 92, unioned with a 91 of this project's own lineage, then descended. Six gates below the published depth-5 point, but not an independent construction; it also shares 75 of its 88 masks with the 89 @ depth 5 (Jaccard 0.735, the highest overlap between any two circuits here), so it is that 89's own basin reached at 88 gates. Superseded at its own point on 2026-07-30 by the from-scratch 88 @ depth 5 above, and retained |
+| `circuits/mixcolumns_88gates_depth7.json` | 88 | 7 | 88 is also the published count floor (Jean, ePrint 2026/1481, posted 2026-07-23). This circuit **matches it, does not beat it** — an independent circuit at the same point (61/88 shared masks, Jaccard 0.530); Jean has priority. Now dominated by the 88s at depths 5 and 6 above, and kept because independent replication is worth archiving |
 | `circuits/mixcolumns_88gates_depth8.json` | 88 | 8 | **Derived from published work**: the same chain through Jean's 88 as the depth-5 one above, as far as the ρ²-symmetric 90 they share; the two were then descended separately. A distinct construction by mask overlap (Jaccard 0.455 to Jean's 88, 0.544 to the 88 @ depth 7), but dominated by the 88s at depths 5, 6 and 7, so it improves nothing |
 
 Earlier circuits from this project, kept for the archival record, each now
@@ -172,11 +176,11 @@ counts.
 Machine-readable summary: per circuit, `inputCount`, `gateCount`, `depth`,
 `outputCount`, `outputConvention`, `sha256_circuit_json`,
 `sha256_canonical_gates`, a `claim` string stating exactly what is and is not
-asserted, and for each of the four 88-gate circuits a `provenance` string
+asserted, and for each of the five 88-gate circuits a `provenance` string
 recording the lineage — including, for the two derived ones, every link of the
 chain back to Jean's published circuit. The `claim` strings carry dated updates
 where a later circuit changed what a circuit is (for instance the 89 @ depth 5,
-dominated at its depth since 2026-07-29 by a derived 88); the original claims are
+dominated at its depth since 2026-07-29); the original claims are
 not rewritten. The circuit JSON files carry only the eight schema keys the verifiers
 require; provenance lives beside them because no correctness claim depends on
 it.
@@ -199,11 +203,12 @@ hash, the canonical gate hash, and the declared gate/depth metadata.
    input/output bit relabeling, so no comparison here depends on convention.
 3. **Scope of the count claims.** We claim the smallest counts we are aware of
    at depths 3, 4, 5 and 6 — not at unconstrained depth, where the published
-   floor is Jean's 88 and **Jean has priority**. Our four 88s do not lower that
-   floor: the one at depth 6 improves the frontier by being one level shallower
-   at the same count, the one at depth 7 ties the published point with an
-   independent circuit, and the ones at depths 5 and 8 are derived from Jean's
-   circuit. See the tables above and `PRIOR_ART.md`, Claims 4–6.
+   floor is Jean's 88 and **Jean has priority**. Our five 88s do not lower that
+   floor: the from-scratch ones at depths 5 and 6 improve the frontier by being
+   two levels and one level shallower at the same count, the one at depth 7 ties
+   the published point with an independent circuit, and the ones at depths 5 and
+   8 that are derived from Jean's circuit are labelled so. See the tables above
+   and `PRIOR_ART.md`, Claims 4–7.
 4. **Convention.** All counts are for the exact model and convention defined
    above. A hidden convention mismatch is the most common way such a comparison
    goes wrong, which is why the from-scratch verifier is included.
@@ -214,14 +219,15 @@ hash, the canonical gate hash, and the declared gate/depth metadata.
    [`slp-plateau-search`](https://github.com/Joe-b-20/slp-plateau-search), with
    the method write-up, untouched run archives, machine-checked
    local-optimality certificates, and per-record reproduction instructions. The
-   four 88-gate circuits all come from its campaign 87: those at depths 7 and 8
-   from its **v2.0.0** release, those at depths 6 and 5 from its **v3.0.0**
-   release, which accompanies this one.
+   five 88-gate circuits all come from its campaign 87: those at depths 7 and 8
+   from its **v2.0.0** release, the depth-6 one and the derived depth-5 one from
+   **v3.0.0**, and the from-scratch depth-5 one from **v3.1.0**, which
+   accompanies this release.
 
 ## Contents
 
 ~~~
-circuits/    ten circuit JSON files (see the tables above)
+circuits/    eleven circuit JSON files (see the tables above)
 listings/    the same circuits as human-readable plain text (generated)
 docs/        generated figures (the depth-count frontier chart)
 PRIOR_ART.md source-by-source audit of every comparison claim

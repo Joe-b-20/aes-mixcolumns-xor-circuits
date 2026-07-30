@@ -210,6 +210,106 @@ s123 = s90 $\oplus$ s75 \\
 [97, 122, 89, 118, 119, 82, 84, 90, 115, 110, 111, 113, 120, 85, 91, 117, 93, 83, 88, 114, 99, 86, 92, 95, 98, 116, 112, 96, 121, 87, 94, 123]
 \end{center}
 
+\section{Circuit \texttt{mixcolumns\_88gates\_depth5\_fromscratch} (88 gates, depth 5; from scratch, the frontier's depth-5 point)}
+\label{app:mixcolumns_88gates_depth5_fromscratch}
+\noindent \emph{Status: found from scratch on this project's own lineage, with no imported material at any step; it is the depth-5 point of the frontier (Section~\ref{sec:results}). 88 is \emph{not} a new gate count --- it is Jean's~\cite{Jean26}, who has priority. What this circuit changes is that the $(88,5)$ point is now reached without depending on that circuit; it does not beat it. It is six gates below the published depth-5 94~\cite{OC24} and two levels shallower than the published 88. Its depth 5 is forced, and its remove-$\le 3$ shell is exhaustively empty (Section~\ref{sec:certificates}).}\\[3pt]
+Signals $s_0,\dots,s_{31}$ are the inputs; gate $k$ produces $s_{32+k}$. Canonical gate-list SHA-256 (see Section~\ref{sec:verification}): \\
+\texttt{\small 4fb3ba75a5e3208c8d853b0e26e289cdc979305a5c040ea38e3488db239df6ad}
+\begin{multicols}{4}\scriptsize\ttfamily
+s32 = s22 $\oplus$ s30 \\
+s33 = s14 $\oplus$ s22 \\
+s34 = s13 $\oplus$ s21 \\
+s35 = s15 $\oplus$ s23 \\
+s36 = s13 $\oplus$ s29 \\
+s37 = s12 $\oplus$ s28 \\
+s38 = s23 $\oplus$ s31 \\
+s39 = s1 $\oplus$ s9 \\
+s40 = s3 $\oplus$ s19 \\
+s41 = s4 $\oplus$ s12 \\
+s42 = s9 $\oplus$ s25 \\
+s43 = s5 $\oplus$ s29 \\
+s44 = s10 $\oplus$ s18 \\
+s45 = s19 $\oplus$ s27 \\
+s46 = s2 $\oplus$ s10 \\
+s47 = s16 $\oplus$ s24 \\
+s48 = s7 $\oplus$ s15 \\
+s49 = s1 $\oplus$ s17 \\
+s50 = s8 $\oplus$ s16 \\
+s51 = s18 $\oplus$ s26 \\
+s52 = s32 $\oplus$ s31 \\
+s53 = s32 $\oplus$ s6 \\
+s54 = s33 $\oplus$ s36 \\
+s55 = s33 $\oplus$ s7 \\
+s56 = s34 $\oplus$ s53 \\
+s57 = s35 $\oplus$ s40 \\
+s58 = s35 $\oplus$ s50 \\
+s59 = s37 $\oplus$ s20 \\
+s60 = s38 $\oplus$ s45 \\
+s61 = s38 $\oplus$ s55 \\
+s62 = s38 $\oplus$ s58 \\
+s63 = s39 $\oplus$ s47 \\
+s64 = s39 $\oplus$ s2 \\
+s65 = s40 $\oplus$ s11 \\
+s66 = s41 $\oplus$ s57 \\
+s67 = s41 $\oplus$ s5 \\
+s68 = s42 $\oplus$ s44 \\
+s69 = s43 $\oplus$ s30 \\
+s70 = s44 $\oplus$ s57 \\
+s71 = s45 $\oplus$ s46 \\
+s72 = s47 $\oplus$ s0 \\
+s73 = s48 $\oplus$ s52 \\
+s74 = s48 $\oplus$ s11 \\
+s75 = s48 $\oplus$ s0 \\
+s76 = s48 $\oplus$ s66 \\
+s77 = s51 $\oplus$ s64 \\
+s78 = s51 $\oplus$ s60 \\
+s79 = s53 $\oplus$ s14 \\
+s80 = s54 $\oplus$ s69 \\
+s81 = s54 $\oplus$ s56 \\
+s82 = s58 $\oplus$ s25 \\
+s83 = s59 $\oplus$ s4 \\
+s84 = s60 $\oplus$ s20 \\
+s85 = s62 $\oplus$ s63 \\
+s86 = s62 $\oplus$ s75 \\
+s87 = s64 $\oplus$ s68 \\
+s88 = s65 $\oplus$ s78 \\
+s89 = s67 $\oplus$ s34 \\
+s90 = s69 $\oplus$ s79 \\
+s91 = s70 $\oplus$ s27 \\
+s92 = s71 $\oplus$ s74 \\
+s93 = s72 $\oplus$ s35 \\
+s94 = s74 $\oplus$ s3 \\
+s95 = s75 $\oplus$ s8 \\
+s96 = s76 $\oplus$ s84 \\
+s97 = s77 $\oplus$ s49 \\
+s98 = s77 $\oplus$ s46 \\
+s99 = s79 $\oplus$ s35 \\
+s100 = s82 $\oplus$ s85 \\
+s101 = s82 $\oplus$ s49 \\
+s102 = s83 $\oplus$ s36 \\
+s103 = s83 $\oplus$ s84 \\
+s104 = s89 $\oplus$ s43 \\
+s105 = s89 $\oplus$ s37 \\
+s106 = s92 $\oplus$ s70 \\
+s107 = s93 $\oplus$ s62 \\
+s108 = s94 $\oplus$ s59 \\
+s109 = s95 $\oplus$ s72 \\
+s110 = s95 $\oplus$ s17 \\
+s111 = s97 $\oplus$ s68 \\
+s112 = s99 $\oplus$ s52 \\
+s113 = s99 $\oplus$ s55 \\
+s114 = s102 $\oplus$ s67 \\
+s115 = s102 $\oplus$ s105 \\
+s116 = s106 $\oplus$ s78 \\
+s117 = s108 $\oplus$ s76 \\
+s118 = s110 $\oplus$ s85 \\
+s119 = s110 $\oplus$ s42 \\
+\end{multicols}
+\noindent Output signals (output bit $j$ is carried by the listed signal, $j = 0,\dots,31$):
+\begin{center}\scriptsize\ttfamily
+[109, 119, 98, 92, 108, 104, 80, 112, 93, 101, 97, 91, 117, 115, 56, 61, 107, 100, 111, 88, 103, 114, 81, 73, 86, 118, 87, 116, 96, 105, 90, 113]
+\end{center}
+
 \section{Circuit \texttt{mixcolumns\_89gates\_depth5} (89 gates, depth 5)}
 \label{app:mixcolumns_89gates_depth5}
 Signals $s_0,\dots,s_{31}$ are the inputs; gate $k$ produces $s_{32+k}$. Canonical gate-list SHA-256 (see Section~\ref{sec:verification}): \\
@@ -310,9 +410,9 @@ s120 = s32 $\oplus$ s110 \\
 [96, 119, 83, 113, 118, 78, 79, 84, 107, 103, 76, 116, 102, 80, 85, 91, 106, 115, 105, 117, 114, 81, 86, 94, 97, 120, 77, 109, 111, 82, 88, 100]
 \end{center}
 
-\section{Circuit \texttt{mixcolumns\_88gates\_depth5} (88 gates, depth 5; derived, shallowest 88 here)}
+\section{Circuit \texttt{mixcolumns\_88gates\_depth5} (88 gates, depth 5; derived, superseded at its point)}
 \label{app:mixcolumns_88gates_depth5}
-\noindent \emph{Status: derived from published work. Its seed chain passes through Jean's published 88-gate circuit~\cite{Jean26} (Section~\ref{sec:results}), so this is not an independent construction and Jean is credited for the material it descends from. It is the shallowest 88 here and six gates below the published depth-5 94~\cite{OC24}; it shares 75 of its 88 masks with Appendix~\ref{app:mixcolumns_89gates_depth5} (Jaccard 0.735), the depth-5 89's own basin reached at 88 gates. 88 is Jean's count, not a new one.}\\[3pt]
+\noindent \emph{Status: derived from published work. Its seed chain passes through Jean's published 88-gate circuit~\cite{Jean26} (Section~\ref{sec:results}), so this is not an independent construction and Jean is credited for the material it descends from. It is six gates below the published depth-5 94~\cite{OC24}, and it shares 75 of its 88 masks with Appendix~\ref{app:mixcolumns_89gates_depth5} (Jaccard 0.735), the depth-5 89's own basin reached at 88 gates. 88 is Jean's count, not a new one. It is superseded at its own point by Appendix~\ref{app:mixcolumns_88gates_depth5_fromscratch} and retained.}\\[3pt]
 Signals $s_0,\dots,s_{31}$ are the inputs; gate $k$ produces $s_{32+k}$. Canonical gate-list SHA-256 (see Section~\ref{sec:verification}): \\
 \texttt{\small 91d45c57d638dc5832a23eaf7721ba80d07bc0566769c47b56bd5566ae4eabff}
 \begin{multicols}{4}\scriptsize\ttfamily
@@ -412,7 +512,7 @@ s119 = s112 $\oplus$ s36 \\
 
 \section{Circuit \texttt{mixcolumns\_88gates\_depth6} (88 gates, depth 6; improves the frontier at depth 6)}
 \label{app:mixcolumns_88gates_depth6}
-\noindent \emph{Status: found from scratch on this project's own lineage, with no imported circuit at any step. 88 is \emph{not} a new gate count --- it is Jean's~\cite{Jean26}, who has priority. What this circuit improves is the depth at that count: one level shallower than Jean's 88, and four gates below the published depth-6 92~\cite{Max19}. Its remove-$\le 3$ shell is exhaustively empty (Section~\ref{sec:certificates}).}\\[3pt]
+\noindent \emph{Status: found from scratch on this project's own lineage, with no imported circuit at any step. 88 is \emph{not} a new gate count --- it is Jean's~\cite{Jean26}, who has priority. What this circuit improves is the depth at that count: one level shallower than Jean's 88, and four gates below the published depth-6 92~\cite{Max19}. Its remove-$\le 3$ shell is exhaustively empty (Section~\ref{sec:certificates}). It is dominated within this note by Appendix~\ref{app:mixcolumns_88gates_depth5_fromscratch}, a different family (Jaccard 0.323), and remains the first 88 found here from scratch.}\\[3pt]
 Signals $s_0,\dots,s_{31}$ are the inputs; gate $k$ produces $s_{32+k}$. Canonical gate-list SHA-256 (see Section~\ref{sec:verification}): \\
 \texttt{\small 462a149979fe0ab39173e6aa70c1728fe55cb24b380ea0b2241ffaa6301a8c4c}
 \begin{multicols}{4}\scriptsize\ttfamily
@@ -512,7 +612,7 @@ s119 = s115 $\oplus$ s81 \\
 
 \section{Circuit \texttt{mixcolumns\_88gates\_depth7} (88 gates, depth 7; ties the published floor)}
 \label{app:mixcolumns_88gates_depth7}
-\noindent \emph{Status: the same (depth, count) point as Jean~\cite{Jean26}, reached independently on this project's own lineage; 61 of 88 internal masks are shared. It ties that point and does not beat it, and Jean has priority. It is dominated by Appendix~\ref{app:mixcolumns_88gates_depth6}, and kept because independent replication of a published point is worth archiving.}\\[3pt]
+\noindent \emph{Status: the same (depth, count) point as Jean~\cite{Jean26}, reached independently on this project's own lineage; 61 of 88 internal masks are shared. It ties that point and does not beat it, and Jean has priority. It is dominated by Appendices~\ref{app:mixcolumns_88gates_depth5_fromscratch} and~\ref{app:mixcolumns_88gates_depth6}, and kept because independent replication of a published point is worth archiving.}\\[3pt]
 Signals $s_0,\dots,s_{31}$ are the inputs; gate $k$ produces $s_{32+k}$. Canonical gate-list SHA-256 (see Section~\ref{sec:verification}): \\
 \texttt{\small 76bac50ab0e4a7dd54578e77f57f6d08e96a8803aff72dba2c3f5fadaaa06ee1}
 \begin{multicols}{4}\scriptsize\ttfamily

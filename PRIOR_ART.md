@@ -14,6 +14,38 @@ depth 6, or fewer than 88 at any depth — please open an issue.
 
 ## Corrections
 
+- **2026-07-30.** A third 88-gate circuit found from scratch collapses the two
+  frontiers stated below into one.
+  - `circuits/mixcolumns_88gates_depth5_fromscratch.json` is **88 gates at
+    depth 5**, found 2026-07-30 by this project's search **from scratch** —
+    root `constructors.build("naive", 1958)`, a randomized XOR tree over the 32
+    raw inputs — with no imported material anywhere in its chain. **88 is not a
+    new count and this is not a record**: the count is Jean's (ePrint
+    [2026/1481](https://eprint.iacr.org/2026/1481), posted 2026-07-23, before
+    this circuit existed) and **Jean has priority**. What changed is *whose
+    lineage* reaches the (88, 5) point. Until today it was reached only by
+    `mixcolumns_88gates_depth5`, whose seed chain runs through Jean's published
+    circuit. **This removes this project's dependence on that circuit at the
+    depth-5 point; it does not beat it.** Against published work it improves on
+    the depth-5 point (94, Osvik–Canright) by six gates and dominates Jean's 88
+    at depth 7 — equal count, two levels shallower, on the depth 7 the frontier
+    table below explains and Claim 5 shows to be forced. See Claim 7.
+  - Consequently the **two** frontiers this repository stated on 2026-07-29
+    **collapse into one**: **97 @ 3, 92 @ 4, 88 @ 5**, every point on this
+    project's own lineage with no imported material. **87 was not found**;
+    nothing is claimed optimal.
+  - Three circuits shipped earlier are now dominated and are **not withdrawn**:
+    the derived 88 @ depth 5 (superseded at its own point, retained with its
+    derived-work disclosure intact), the 89 @ depth 5, and the 88 @ depth 6
+    (still four gates below the published depth-6 point, still a different
+    family — 43 shared masks, Jaccard 0.323 — and still the first 88 this
+    project found from scratch). Their earlier claim statements stand as made.
+  - One statement made here on 2026-07-29 is now **false and is corrected**:
+    that the 89 @ depth 5 "remains the depth-5 point of the no-imported-material
+    frontier". It does not; the circuit above does.
+  - Unchanged: 97 @ 3 and 92 @ 4 remain the smallest we are aware of at their
+    depths. The literature-search cutoff is still 2026-07-23 — this entry
+    records a circuit, not a new sweep.
 - **2026-07-29.** Two more 88-gate circuits ship here, and they move the
   depth–count frontier without moving the count floor.
   - `circuits/mixcolumns_88gates_depth6.json` is **88 gates at depth 6**, found
@@ -169,12 +201,11 @@ release.
 
 Published frontier: **(3, 99), (4, 97), (5, 94), (6, 92), (7, 88)**, with
 Sun–Yang–Li's 89 alongside. This repository improves the first
-four points: 97 @ 3 by 2 gates, 92 @ 4 by 5, 89 @ 5 by 5 (88 @ 5 by 6, derived
-work), 88 @ 6 by 4. It does not improve the fifth: 88 is the published count
-floor, Jean has priority, and the two 88s here at depths 7 and 8 sit on or
-behind that point rather than below it. What the 88 @ depth 6 improves is the
-*depth* at the floor count — it dominates the published (7, 88) point. See
-Claims 4, 5 and 6.
+four points: 97 @ 3 by 2 gates, 92 @ 4 by 5, 88 @ 5 by 6, 88 @ 6 by 4. It does
+not improve the fifth: 88 is the published count floor, Jean has priority, and
+the two 88s here at depths 7 and 8 sit on or behind that point rather than
+below it. What the 88s at depths 5 and 6 improve is the *depth* at the floor
+count — they dominate the published (7, 88) point. See Claims 4, 5, 6 and 7.
 
 Note: Lin et al.'s 91 (and, depending on reading, KLSW17's 97) are stated in
 the s-XOR model; the depth-3 lineage, Osvik–Canright and Jean are free
@@ -230,15 +261,17 @@ than the published depth-4 point.
   (checked 2026-07-10) lists Maximov's 92 XOR / depth 6 as its AES MixColumns
   entry.
 - Since 2026-07-29 this repository also ships an 88 at depth 5, one gate
-  fewer at the same depth — but that circuit is **derived from published work**
-  (Claim 6), so the 89 remains the smallest count at depth ≤ 5 that this project
-  reached with no imported material in its lineage.
+  fewer at the same depth. That circuit is **derived from published work**
+  (Claim 6); as of 2026-07-30 a second 88 at depth 5, found from scratch
+  (Claim 7), reaches the same point with no imported material, so the 89 is now
+  dominated at its depth outright and is no longer the depth-5 point of any
+  frontier stated here.
 
 **Conclusion:** `circuits/mixcolumns_89gates_depth5.json` uses five fewer gates
 than the published depth-5 point. It is not dominated by any published circuit
 (88 @ depth 7 has strictly greater depth); within this repository it is
-dominated only by the derived 88 @ depth 5. We do not claim the smallest count
-at unconstrained depth.
+dominated by both 88s at depth 5. We do not claim the smallest count at
+unconstrained depth.
 
 ## Claim 4: 88 gates at depth 7 — matches the published record, does not beat it
 
@@ -341,9 +374,52 @@ this repository — it shares **75 of its 88 internal masks with the 89 @ depth 
 here (Jaccard 0.735, the highest overlap between any two circuits in this
 repository), so it is best described as that 89's own basin reached at 88 gates.
 
-**Conclusion:** it improves the published depth-5 point by six gates and is the
-depth-5 point of the combined frontier, but it is derived work and is labelled
-so wherever it appears. No optimality claim.
+**Conclusion:** it improves the published depth-5 point by six gates, but it is
+derived work and is labelled so wherever it appears. No optimality claim.
+**Updated 2026-07-30:** it is no longer the circuit that establishes the
+depth-5 point of this repository's frontier — the from-scratch 88 of Claim 7
+is. It is retained, unchanged and unwithdrawn.
+
+## Claim 7: 88 gates at depth 5, from scratch — one frontier, not a new count
+
+`circuits/mixcolumns_88gates_depth5_fromscratch.json`, found 2026-07-30. What
+it does and does not do, in that order:
+
+- **It is not a new count.** 88 is the published floor (Jean, ePrint
+  [2026/1481](https://eprint.iacr.org/2026/1481), posted 2026-07-23) and
+  **Jean has priority**. Nothing here lowers that floor; 87 was not found.
+- **What it changes is our own provenance.** Its root is
+  `constructors.build("naive", 1958)` — a randomized XOR tree over the 32 raw
+  inputs, a pure function of an integer seed — and no circuit file, published
+  mask set, or other worker's harvested mask entered the search that produced
+  it; the chain and the audited contamination arguments are in `bounds.json`.
+  Until it was found, the (88, 5) point in this repository was held only by the
+  derived circuit of Claim 6. **This removes this project's dependence on
+  Jean's circuit at that point. It does not beat it.** The two frontiers stated
+  here since 2026-07-29 therefore collapse to one: **97 @ 3, 92 @ 4, 88 @ 5**.
+- **Against published work.** Six gates below the published depth-5 point (94,
+  Osvik and Canright, ePrint 2024/1076, Appendix F). It dominates Jean's 88 —
+  equal count, two levels shallower — on the depth 7 discussed in the frontier
+  table's footnote and shown forced in Claim 5. Its own depth 5 is forced in
+  the same sense: the ASAP least-fixpoint schedule over its mask set still puts
+  11 of its 32 output bits at depth 5, so it cannot be rescheduled to 4.
+- **What "no imported material" does not mean.** Not method independence — the
+  engines and knobs were tuned over a campaign that did read published
+  circuits. Not disjointness: it shares 42 of 88 masks with Jean's circuit, of
+  which 32 are the forced output targets, leaving 10 of 56 free masks in
+  common; the vocabulary at this size is largely the map's own. Not
+  reproducibility of the descent: the root is exactly reproducible, the
+  trajectory is not.
+- **Within this repository** it is a distinct construction: the most masks it
+  shares with any other circuit here is 45, against the superseded 98 @ depth 3
+  (Jaccard 0.319), and the largest *Jaccard* it reaches is 0.323, against the
+  88 @ depth 6 (43 masks) — which is also the largest against any other 88. The
+  two maxima fall on different circuits because the 98 is a bigger set; both are
+  far below the 0.7 same-family threshold.
+
+**Conclusion:** six gates below the published depth-5 point, and the (88, 5)
+point is now reached with nothing imported — **not** a new count, **not** a
+record, and no optimality claim.
 
 ## Earlier claims from this project (v1, superseded)
 
@@ -379,9 +455,9 @@ ePrint, ToSC/FSE, CHES/TCHES, CT-RSA, Springer, arXiv, PeerJ and the NIST
 Circuit Complexity list, cross-checking every comparison table found against
 the primary papers, including full-text sweeps where a hidden depth-4/5 point
 could plausibly live (LZW23, LWF+22, HILL, Xu–Sun, Osvik–Canright); plus the
-2026-07-23 update in Corrections. The 2026-07-27 and 2026-07-29 entries are
-**not** new sweeps — they record circuits this project added, and the cutoff is
-still 2026-07-23.
+2026-07-23 update in Corrections. The 2026-07-27, 2026-07-29 and 2026-07-30
+entries are **not** new sweeps — they record circuits this project added, and
+the cutoff is still 2026-07-23.
 
 Negative claims ("nothing below X") rest on tables and targeted searches, not
 exhaustive enumeration — and the July sweeps are themselves a demonstrated

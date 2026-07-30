@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ORDER = [
     "mixcolumns_97gates_depth3",
     "mixcolumns_92gates_depth4",
+    "mixcolumns_88gates_depth5_fromscratch",
     "mixcolumns_89gates_depth5",
     "mixcolumns_88gates_depth5",
     "mixcolumns_88gates_depth6",
@@ -25,20 +26,32 @@ ORDER = [
 
 # Extra text for the section heading, and a status note printed under it.
 HEADING_SUFFIX = {
-    "mixcolumns_88gates_depth5": "; derived, shallowest 88 here",
+    "mixcolumns_88gates_depth5_fromscratch": "; from scratch, the frontier's depth-5 point",
+    "mixcolumns_88gates_depth5": "; derived, superseded at its point",
     "mixcolumns_88gates_depth6": "; improves the frontier at depth 6",
     "mixcolumns_88gates_depth7": "; ties the published floor",
     "mixcolumns_88gates_depth8": "; derived, non-frontier",
 }
 STATUS_NOTE = {
+    "mixcolumns_88gates_depth5_fromscratch": (
+        r"\emph{Status: found from scratch on this project's own lineage, with no imported "
+        r"material at any step; it is the depth-5 point of the frontier "
+        r"(Section~\ref{sec:results}). 88 is \emph{not} a new gate count --- it is "
+        r"Jean's~\cite{Jean26}, who has priority. What this circuit changes is that the "
+        r"$(88,5)$ point is now reached without depending on that circuit; it does not beat it. "
+        r"It is six gates below the published depth-5 94~\cite{OC24} and two levels shallower "
+        r"than the published 88. Its depth 5 is forced, and its remove-$\le 3$ shell is "
+        r"exhaustively empty (Section~\ref{sec:certificates}).}"
+    ),
     "mixcolumns_88gates_depth5": (
         r"\emph{Status: derived from published work. Its seed chain passes through Jean's "
         r"published 88-gate circuit~\cite{Jean26} (Section~\ref{sec:results}), so this is not an "
         r"independent construction and Jean is credited for the material it descends from. It is "
-        r"the shallowest 88 here and six gates below the published depth-5 94~\cite{OC24}; it "
+        r"six gates below the published depth-5 94~\cite{OC24}, and it "
         r"shares 75 of its 88 masks with Appendix~\ref{app:mixcolumns_89gates_depth5} "
         r"(Jaccard 0.735), the depth-5 89's own basin reached at 88 gates. 88 is Jean's count, "
-        r"not a new one.}"
+        r"not a new one. It is superseded at its own point by "
+        r"Appendix~\ref{app:mixcolumns_88gates_depth5_fromscratch} and retained.}"
     ),
     "mixcolumns_88gates_depth6": (
         r"\emph{Status: found from scratch on this project's own lineage, with no imported "
@@ -46,13 +59,16 @@ STATUS_NOTE = {
         r"who has priority. What this circuit improves is the depth at that count: one level "
         r"shallower than Jean's 88, and four gates below the published depth-6 92~\cite{Max19}. "
         r"Its remove-$\le 3$ shell is exhaustively empty "
-        r"(Section~\ref{sec:certificates}).}"
+        r"(Section~\ref{sec:certificates}). It is dominated within this note by "
+        r"Appendix~\ref{app:mixcolumns_88gates_depth5_fromscratch}, a different family "
+        r"(Jaccard 0.323), and remains the first 88 found here from scratch.}"
     ),
     "mixcolumns_88gates_depth7": (
         r"\emph{Status: the same (depth, count) point as Jean~\cite{Jean26}, reached "
         r"independently on this project's own lineage; 61 of 88 internal masks are shared. "
         r"It ties that point and does not beat it, and Jean has priority. It is dominated by "
-        r"Appendix~\ref{app:mixcolumns_88gates_depth6}, and kept because independent replication "
+        r"Appendices~\ref{app:mixcolumns_88gates_depth5_fromscratch} "
+        r"and~\ref{app:mixcolumns_88gates_depth6}, and kept because independent replication "
         r"of a published point is worth archiving.}"
     ),
     "mixcolumns_88gates_depth8": (

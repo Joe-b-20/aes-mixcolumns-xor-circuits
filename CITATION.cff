@@ -1,11 +1,11 @@
 cff-version: 1.2.0
 message: "If you use these circuits, please cite this repository."
-title: "Small 2-input XOR circuits for AES MixColumns (97 gates at depth 3; 92 at depth 4; 89 at depth 5; 88 at depth 6; 88 at depth 7, matching the published count floor held by Jean, ePrint 2026/1481)"
+title: "Small 2-input XOR circuits for AES MixColumns (97 gates at depth 3; 92 at depth 4; 88 at depth 5 and at depth 6, both found from scratch; 88 at depth 7, matching the published count floor held by Jean, ePrint 2026/1481, who has priority on the count)"
 authors:
   - family-names: Bachir
     given-names: Joe
-version: "3.0.0"
-date-released: 2026-07-29
+version: "3.1.0"
+date-released: 2026-07-30
 repository-code: "https://github.com/Joe-b-20/aes-mixcolumns-xor-circuits"
 doi: 10.5281/zenodo.21299092
 identifiers:
@@ -14,7 +14,7 @@ identifiers:
     description: "Concept DOI for all versions; resolves to the latest release."
   - type: doi
     value: 10.5281/zenodo.21696105
-    description: "Version DOI for v3.0.0."
+    description: "Version DOI of the earlier v3.0.0 release (historical; cite the concept DOI above for this version, whose own version DOI is minted when the v3.1.0 release is published)."
   - type: doi
     value: 10.5281/zenodo.21402971
     description: "Version DOI for v2.0.0."

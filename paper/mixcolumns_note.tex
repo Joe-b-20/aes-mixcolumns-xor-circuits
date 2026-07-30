@@ -1,4 +1,4 @@
-% Smaller and shallower XOR circuits for AES MixColumns -- version 3, for the IACR ePrint Archive.
+% Smaller and shallower XOR circuits for AES MixColumns -- version 3.1, for the IACR ePrint Archive.
 % Build: python3 generate_appendix.py && tectonic mixcolumns_note.tex
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=2.7cm]{geometry}
@@ -10,36 +10,36 @@
 \urlstyle{tt}
 
 \title{Smaller and Shallower XOR Circuits for AES MixColumns:\\
-97 Gates at Depth 3; 92 at Depth 4;\\
-89 at Depth 5; 88 at Depth 6}
+97 Gates at Depth 3; 92 at Depth 4; 88 at Depth 5}
 \author{Joe Bachir\\[2pt]
 Independent researcher\\[2pt]
 \texttt{joebachir20@gmail.com}}
-\date{29 July 2026 (version 3)}
+\date{30 July 2026 (version 3.1)}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-We give seven verified implementations of AES MixColumns as circuits of 2-input
+We give eight verified implementations of AES MixColumns as circuits of 2-input
 XOR gates over $\mathrm{GF}(2)$. Four improve the published depth--count Pareto
 frontier at their depth, on lineages holding no imported circuit: \textbf{97}
 gates at depth \textbf{3}, the minimum depth, against 99~\cite{SFX23};
-\textbf{92} at depth \textbf{4} against 97~\cite{OC24}; \textbf{89} at depth
+\textbf{92} at depth \textbf{4} against 97~\cite{OC24}; \textbf{88} at depth
 \textbf{5} against 94~\cite{OC24}; and \textbf{88} at depth \textbf{6} against
-92~\cite{Max19,XZLBZ20}, one level shallower than Jean's published
-88~\cite{Jean26} at the same count. \textbf{88 is not a new count}: it is
-Jean's, and \textbf{Jean has priority}. A fifth circuit, 88 at depth 7,
-\emph{ties} that point with an independent circuit sharing 61 of 88 internal
-masks. A sixth, 88 at depth 5, is two levels shallower again and six gates below
-the published depth-5 point, but its seed chain passes through Jean's circuit and
-is reported as derived work; so is the seventh, 88 at depth 8, which is dominated
-and claims nothing. Combined frontier \textbf{97 @ 3, 92 @ 4, 88 @ 5}; with no
-imported material, \textbf{97 @ 3, 92 @ 4, 89 @ 5, 88 @ 6}. All were found by
-stochastic local search over a value-set formulation of the
-shortest-linear-program problem. No 87 was found: 47 canonical 88-gate circuits,
-and the new 88 at depth 6, have exhaustively empty remove-$\le 3$
-neighbourhoods. Nothing here is claimed optimal.
+92~\cite{Max19,XZLBZ20}. \textbf{88 is not a new count}: it is Jean's
+published count~\cite{Jean26}, and \textbf{Jean has priority}. What the depth-5
+and depth-6 circuits improve is the depth at that count. Version 3 of this note
+reported two frontiers, because its only 88 at depth 5 had a seed chain through
+Jean's circuit; a circuit found from scratch now reaches that point, so
+the frontier is one line, \textbf{97 @ 3, 92 @ 4, 88 @ 5}, entirely on our own
+lineage. \emph{That removes our dependence on Jean's circuit at the depth-5
+point; it does not beat it.} Also here: an 88 at depth 7 that \emph{ties} Jean's
+point with an independent circuit sharing 61 of 88 internal masks, an 89 at
+depth 5 now dominated, and two further 88s at depths 5 and 8 derived from Jean's
+circuit and reported as such. All were found by stochastic local search over a
+value-set formulation of the shortest-linear-program problem. No 87 was found:
+47 canonical 88-gate circuits, and both from-scratch 88s here, have exhaustively
+empty remove-$\le 3$ neighbourhoods. Nothing here is claimed optimal.
 \end{abstract}
 
 \section{Model and specification}
@@ -76,17 +76,20 @@ Depth & Published best & Model & This work & Relation \\
 \midrule
 3 & 99~\cite{SFX23} & XOR2 & \textbf{97} & $-2$ (depth 3 is the minimum depth) \\
 4 & 97~\cite{OC24} & XOR2 & \textbf{92} & $-5$ \\
-5 & 94~\cite{OC24} & XOR2 & \textbf{89} & $-5$ \\
-5 & 94~\cite{OC24} & XOR2 & (88)$^{\dagger}$ & $-6$, but derived from~\cite{Jean26} \\
-6 & 92~\cite{Max19,XZLBZ20} & XOR2 / s-XOR & \textbf{88} & $-4$; dominates the 88 of~\cite{Jean26} \\
+5 & 94~\cite{OC24} & XOR2 & \textbf{88} & $-6$, from scratch; dominates~\cite{Jean26} \\
+5 & 94~\cite{OC24} & XOR2 & 89 & $-5$; dominated here \\
+5 & 94~\cite{OC24} & XOR2 & (88)$^{\dagger}$ & $-6$, derived from~\cite{Jean26} \\
+6 & 92~\cite{Max19,XZLBZ20} & XOR2 / s-XOR & 88 & $-4$, from scratch; dominated here \\
 7$^{\ddagger}$ & 88~\cite{Jean26} & XOR2 & 88 & ties it; independent, 61/88 masks shared \\
 8 & --- & XOR2 & (88)$^{\dagger}$ & derived from~\cite{Jean26}; dominated \\
 9$^{\ddagger}$ & 89~\cite{SYL25} & XOR2 & --- & off the frontier \\
 \bottomrule
 \end{tabular}
 \caption{The published depth--count landscape in comparable models, and this
-work. 88 is \emph{not} a new count: it is Jean's~\cite{Jean26}, who has
-priority; the depth-6 row improves the depth at that count, not the count.
+work. Our frontier is one line, 97 @ 3, 92 @ 4, 88 @ 5, and no imported material
+lies anywhere in its lineage. 88 is \emph{not} a new count: it is
+Jean's~\cite{Jean26}, who has priority; the depth-5 and depth-6 rows improve the
+depth at that count, not the count.
 $^{\dagger}$Derived: the seed chain passes through~\cite{Jean26}, which is
 credited; not an independent construction.
 $^{\ddagger}$\emph{Neither}~\cite{Jean26} \emph{nor}~\cite{SYL25}
@@ -104,12 +107,8 @@ Appendices~\ref{app:mixcolumns_97gates_depth3}--\ref{app:mixcolumns_88gates_dept
 Depth 3 is the known minimum depth --- an output depending on $w$ inputs needs
 depth $\ge \lceil \log_2 w \rceil$, and MixColumns has outputs of weight
 7~\cite{SFX23} --- so the depth-3 circuit's contribution is its count. The 89 at
-depth 5 is shallower than any published circuit of fewer than 94 gates whose
-depth is stated, and stays on the published frontier: the published sub-89 point,
-Jean's 88~\cite{Jean26}, measures depth 7 (Table~1, note~$\ddagger$). Within this
-note it is now
-undercut at its own depth, but only by derived work (below), so it remains the
-depth-5 point of what we reached with nothing imported.
+depth 5, five gates below the published depth-5 point, is dominated at its own
+depth within this note and kept for the record.
 
 The 88 at depth 7 \emph{ties} Jean's point rather than improving it: Jean's note
 was posted 2026-07-23 and has priority. Ours was found 2026-07-26 on a fully
@@ -125,53 +124,70 @@ its seed chain passes through Jean's, $\rho^2$-symmetrized and peeled to 95,
 orbit-walked to 92, then unioned with a 91 of our own lineage before the
 descent.
 
-Two further 88s differ in exactly the way that matters. The \textbf{88 at depth
-6} (Appendix~\ref{app:mixcolumns_88gates_depth6}), found 2026-07-28, is from
-scratch: worker
-\texttt{c\_naive}, restart 18, rooted in randomized balanced XOR trees over the
-32 raw inputs, then 89 $\rightarrow$ 88 at depth 7 (iteration 37\,270)
-$\rightarrow$ 88 at depth 6 (iteration 37\,501), half a second later on the same
-depth tie-break. The reason nothing imported can have reached it is the
-\emph{root}, not a knob setting: that worker's root spec was
-\texttt{constructor:naive}, and the constructor branch of the archived worker's
-root generator calls only \texttt{constructors.build(name,\,seed)} --- it
-contains no file-reading path at all, while every branch that can open a circuit
-off disk is a different branch, unreachable under this spec. All 38 restarts
-logged in the session that produced this circuit opened on such a root, and the
-one that produced it rebuilds to exactly the logged 139-gate depth-3 starting
-circuit from its seed. Knobs close the remaining routes --- cross-pollination is
-never enabled anywhere in the archived worker \emph{and} the log carries none of
-the lines the engine emits when a merge brings material in; repulsion was off;
-each restart carries its own context --- but the knobs alone would not settle it,
-as the derived 88 at depth 5 below shows: its worker had identical knobs, and
-imported material still reached it, through its root. It is the first 88 we have
-found \emph{from scratch} --- the depth-7 one above is on our own lineage and
-independent of Jean's, but was warm-started from our own earlier records --- and it
-dominates Jean's: equal count, one level shallower, while undercutting the
-published depth-6 92~\cite{Max19,XZLBZ20} by four gates. The depth 7 that
-comparison rests on is our own measurement of our own transcription (Table~1,
-note~$\ddagger$), but it is \emph{forced}: the ASAP least-fixpoint schedule over
-Jean's own mask set --- the shallowest schedule any circuit on that mask set
-admits --- still places three of its output bits at depth 7, so that circuit
-cannot be rescheduled shallower. Its largest mask overlap with any other
-circuit in the artifact repository is 47 (Jaccard 0.362, against the superseded 89
-at depth 10); against any other 88 it is 43 (Jaccard 0.323).
+Three further 88s differ in exactly the way that matters, and two are
+\textbf{from scratch}: the \textbf{88 at depth 6}
+(Appendix~\ref{app:mixcolumns_88gates_depth6}), found 2026-07-28 by worker
+\texttt{c\_naive} at restart 18 of its fourth session, and the \textbf{88 at
+depth 5} (Appendix~\ref{app:mixcolumns_88gates_depth5_fromscratch}), found
+2026-07-30 by the same worker at restart 16 of its fifth, whose root
+\texttt{constructors.build("naive",\,1958)} --- a randomized balanced XOR tree
+over the 32 raw inputs --- rebuilds to exactly the logged 146-gate depth-3
+circuit; from there the walk reached 88 gates at depth 6 at iteration 33\,873
+and 88 at depth 5 at iteration 37\,155, six seconds later on the Pareto depth
+tie-break.
 
-The \textbf{88 at depth 5} (Appendix~\ref{app:mixcolumns_88gates_depth5}), found
-2026-07-29, is \textbf{derived work}, and that is the first thing to say about it: its seed
-chain passes through Jean's 88 --- symmetrized and peeled to 95, orbit-walked to
-92, unioned with a 91 of our own lineage, descended to the exactly
-$\rho^2$-symmetric 90 at depth 9 of Section~\ref{sec:certificates}, reseeded
-mask-identically into the orbit hunt, then polished to 88 at depth 6 and 88 at
-depth 5, with mask identity checked at every link. It is two levels below the
-depth-6 88 and six gates below the published depth-5 94~\cite{OC24}. Neither is
-it a new construction: 75 of its 88 masks are the depth-5 89's (Jaccard 0.735,
-the largest overlap between any two circuits here), so it is that 89's own basin
-reached at 88 gates, not a new family.
+The reason nothing imported can have reached either is the \emph{root}, not a
+knob setting: the constructor branch of the archived worker's root generator
+calls only \texttt{constructors.build} and has no file-reading path at all,
+while every branch that can open a circuit off disk is a different branch,
+unreachable under this root spec. The producing engine reads nothing
+either: both finds came from walk chunks, and the walk has no candidate pool and
+no disk read path. Knobs close the rest --- the cross-pollination flag has one
+writer in the whole repository, the hunt worker never sets it, the supervisor
+never launches the process that would, and the untouched logs carry none of the
+lines a merge emits; repulsion was off; each restart carries its own context,
+visibly, since restart 16 opens worse than restart 15 ended. Knobs alone would
+not settle it, as the derived 88 below shows: identical knobs, and imported
+material still reached it through its root.
 
-Two frontiers therefore, and we report both: \textbf{97 @ 3, 92 @ 4, 88 @ 5}
-across all seven circuits, and \textbf{97 @ 3, 92 @ 4, 89 @ 5, 88 @ 6} once
-imported material is excluded. \textbf{87 was not found.}
+The depth-6 circuit was the first 88 we found from scratch, and undercuts the
+published depth-6 92~\cite{Max19,XZLBZ20} by four gates. The depth-5 one
+supersedes it and does something else besides: until it was found, the $(88,5)$
+point here was held only by a circuit whose seed chain runs through Jean's
+published work, which is why version 3 reported two frontiers. \textbf{This
+removes our dependence on that circuit at the depth-5 point; it does not beat
+it}, and 88 remains Jean's count, with priority. What it does improve is
+published: six gates below the depth-5 94~\cite{OC24}, and it dominates Jean's
+88 --- equal count, two levels shallower, on the \emph{forced} depth 7 of
+Table~1, note~$\ddagger$. Its own depth 5 is forced in the same sense, 11 output
+bits sitting there. It dominates our 88s at depths 6, 7 and 8 and our 89 at
+depth 5. ``No imported material'' claims less than it may seem: not method
+independence, since the engines were tuned over a campaign that did read
+published circuits; not disjointness, since 42 of its 88 masks are Jean's too,
+though 32 of those are the forced targets; and not a reproducible descent --- the
+root is exact, the trajectory is not. It sits outside every family named here:
+its Jaccard to every other circuit in this repository is 0.285--0.323,
+far below the 0.7 same-family threshold, and it is no closer to any of them
+than to its own rotations; its largest similarity to anything measured is
+0.386, at $\rho^3$ of Jean's 88. Nor is it a lone point: 135 distinct
+own-lineage 88-gate depth-5 mask sets came out of the same pocket, all
+oracle-verified.
+
+The \textbf{88 at depth 5} of Appendix~\ref{app:mixcolumns_88gates_depth5},
+found 2026-07-29, is \textbf{derived work}, and that is the first thing to say
+about it: its seed chain passes through Jean's 88 --- symmetrized and peeled to
+95, orbit-walked to 92, unioned with a 91 of our own lineage, descended to the
+exactly $\rho^2$-symmetric 90 at depth 9 of
+Section~\ref{sec:certificates}, reseeded mask-identically into the orbit hunt,
+then polished to 88 at depth 6 and 88 at depth 5, with mask identity checked at
+every link. It is six gates below the published depth-5 94~\cite{OC24}. Neither
+is it a new construction: 75 of its 88 masks are the depth-5 89's (Jaccard
+0.735, the largest overlap between any two circuits here), so it is that 89's
+own basin reached at 88 gates, not a new family. It is retained, superseded at
+its point rather than withdrawn.
+
+One frontier therefore: \textbf{97 @ 3, 92 @ 4, 88 @ 5}, every point of it on
+our own lineage with no imported material. \textbf{87 was not found.}
 
 \section{Method}
 
@@ -209,8 +225,9 @@ walk and rebuild, and a coordinator re-offers each the best circuit feasible at
 its cap (the reseeding ladder). A worker accepts fewer gates \emph{or equal
 gates at strictly lower depth} --- a Pareto tie-break, and not a cosmetic one:
 89 at depth 6 became 89 at depth 5 through it; both 88s of version 2, first seen
-at depths 11 and 10, reached depths 7 and 8 seconds later; and the 88 at depth 6
-followed its own depth-7 predecessor half a second later. Every candidate is
+at depths 11 and 10, reached depths 7 and 8 seconds later; the 88 at depth 6
+followed its own depth-7 predecessor half a second later; and the from-scratch
+88 at depth 5 followed its own depth-6 predecessor six seconds later. Every candidate is
 verified against MixColumns rebuilt from $\mathrm{GF}(2^8)$ before acceptance.
 The depth-3 circuit comes from a separate constructor: each output is modelled
 as $A \oplus B$, $A$ and $B$ partitioning its bits into shared,
@@ -256,10 +273,11 @@ genuine negatives at $k = 4$.
   \emph{not} among the 47, its exhaustive $k \le 3$ sweep was never run, and it
   has only 9 exact $k=4$ windows and 8 SAT cone windows. Version 2 of this note
   recorded that the best-certified shells and the independent one were therefore
-  disjoint; that no longer holds. \textbf{The 88 at depth 6 --- from scratch,
-  outside Jean's lineage --- has an exhaustively empty $k \le 3$ shell of its
-  own} (all 1\,540 windows at $k=2$, all 27\,720 at $k=3$), so any 87 differs
-  from it too by at least 4 masks. The depth-5 88's $k=2$ shell is empty as well
+  disjoint; that no longer holds. \textbf{Both from-scratch 88s --- at depths 6
+  and 5, outside Jean's lineage --- have exhaustively empty $k \le 3$ shells of
+  their own} (all 1\,540 windows at $k=2$ and all 27\,720 at $k=3$, each), so any
+  87 differs from each of them too by at least 4 masks. The \emph{derived}
+  depth-5 88's $k=2$ shell is empty as well
   (1\,540 windows, so any 87 differs from it by at least 3 masks), but its $k=3$
   shell was \emph{never swept}: with the depth-7 88 it is one of the two
   least-certified circuits here.
@@ -274,23 +292,26 @@ genuine negatives at $k = 4$.
   6 and 5, refute that observation --- which was reported as an observation and
   not as a certified claim. What was certified is narrower and stands: near the
   \emph{old} 88-plateau no 88 at depth 6 exists, all 4\,861 two-critical cores
-  being UNSAT at cap 6. Both new circuits live in a different basin, and the
+  being UNSAT at cap 6. The new circuits live in different basins, and the
   basins differ in exactly the relevant place: the old plateau's depth
   obstruction is output rows 3 and 27, the depth-6 88's is rows 1, 11, 17 and 25
-  --- four weight-7 targets, three of them column-rotations of one another.
-  MixColumns has at least two structurally distinct ways to hit a depth wall at 88
-  gates, and the second one gives way at depth 6.
-\item \textbf{And no further: the depth-6 basin does not reach depth 5.} The
-  natural next question is whether the depth-6 88's own family contains a member
-  realizable at depth 5, which would give a Jean-independent circuit at the
-  combined frontier's depth-5 point. It does not. All 8\,993 members of that
+  --- four weight-7 targets, three of them column-rotations of one another ---
+  and the from-scratch depth-5 88's is a third pattern again, rows 1, 7, 12, 13,
+  17, 18, 21, 25, 27, 28 and 31. MixColumns has at least three structurally
+  distinct ways to hit a depth wall at 88 gates, and they give way at different
+  depths.
+\item \textbf{A negative result that predicted where to look, and was right.}
+  Whether the depth-6 88's own family contains a member realizable at depth 5
+  was answered first, and negatively. All 8\,993 members of that
   family were screened by their ASAP (least-fixpoint) depth --- the shallowest
   depth each mask set admits at all --- and the histogram is exactly 4\,420 at
   depth 6 and 4\,573 at depth 7, with \emph{nothing below 6}: depth 6 is minimal
   for every member, not merely attained. A depth-capped-5 SAT sweep of 27 windows
   around the circuit returned 22 UNSAT and \textbf{0 SAT}, the 5 undecided ones
-  all at the widest radius. So the derived depth-5 88 remains the only 88 at
-  depth 5 here; a Jean-independent one, if it exists, is not in this basin.
+  all at the widest radius. We recorded the conclusion as ``a Jean-independent 88
+  at depth 5, if one exists, lives somewhere else''. It does, and it does: the
+  from-scratch 88 at depth 5 is in neither basin, sharing 43 of 88 masks with
+  the depth-6 88 and 42 with the derived depth-5 one.
 \item \textbf{Windowed SAT is evidence, not proof.} A sound windowed CNF
   encoding, solved by Kissat under two soundness-proved symmetry-breaking
   layers, returned UNSAT up to $k=16$ on Jean's 88 and $k=15$ on the
@@ -316,8 +337,8 @@ $\rho^2$-equivariant orbit engine produced two \emph{exactly}
 $\rho^2$-symmetric 90-gate circuits (depths 9 and 7), improving the best
 exactly symmetric circuit we know of from 94 to 90; both are certified locally
 optimal in orbit space, and both are derived work, each seed union containing a
-circuit symmetrized from Jean's 88; the depth-9 one is the ancestor of the 88 at
-depth 5 (Section~\ref{sec:results}). Symmetry is also a seeding device: the
+circuit symmetrized from Jean's 88; the depth-9 one is the ancestor of the
+derived 88 at depth 5 (Section~\ref{sec:results}). Symmetry is also a seeding device: the
 exactly $\rho^2$-symmetric 94 at depth 5 --- 82 of its 94 masks shared with the
 89 at depth 5 --- costs $+5$ over that 89 and is the seed from which the 88 at
 depth 7 was found.
@@ -343,8 +364,8 @@ Verilog testbenches, all under continuous integration. The method, pipeline,
 untouched run archives with each run's exact code, certificate summaries and
 the credited transcriptions of the imported circuits~\cite{Jean26,SYL25} are
 published separately~\cite{Methods}, with a reproduction command for every result
-that has one --- the 88 at depth 6 has none, and the derived 88s at depths 5 and
-8 are deliberately offered as archives rather than recipes.
+that has one --- neither from-scratch 88 has one, and the derived 88s at depths 5
+and 8 are deliberately offered as archives rather than recipes.
 Measured there on 2026-07-27 with the shipped v2 engine, and reported as
 measurements rather than promises: the from-scratch 97 at depth 3 in 81\,s
 on one core; the 89 at depth 5 in 19\,s and 22\,s from shipped seeds, against
@@ -358,17 +379,18 @@ Implementation and execution used LLM coding agents as programming tools,
 directed by the author, who designed the moves and acceptance rules. Concretely:
 the 97 at depth 3, the 92 at depth 4 and the 89 at depth 5 are reproduced by the
 published, dependency-free code with no AI system in the loop, as is a
-single-worker re-run of the 88 at depth 7. \emph{All four} 88-gate circuits came
+single-worker re-run of the 88 at depth 7. \emph{All five} 88-gate circuits came
 out of author-directed LLM-agent campaigns, in two chapters --- the v2 engine,
 the certificates of Section~\ref{sec:certificates} and the 88s at depths 7 and 8
-from a 24-agent campaign over 2026-07-26/27, and the 88 at depth 6 and the 88 at
-depth 5 from a later multi-day fleet of sixteen processes running that engine,
-built and operated by the same agents, on 2026-07-28 and 2026-07-29
-respectively. The 88 at depth 6 is the one frontier record of this note with
-\emph{no} single-command reproduction: it came out of restart 18 of one worker,
-18.96\,h into that fleet. What is published for it instead is its root
-constructor and seed, which rebuild the logged 139-gate depth-3 starting circuit
-exactly, and the worker's untouched log of every chunk from there to 88 gates.
+from a 24-agent campaign over 2026-07-26/27, and the three 88s at depths 6 and 5
+from a later multi-day fleet of sixteen processes running that engine,
+built and operated by the same agents, on 2026-07-28, 2026-07-29 and
+2026-07-30. The two from-scratch 88s are the frontier records of this note with
+\emph{no} single-command reproduction: each came out of one restart of one
+worker, 18.96\,h and 19.22\,h into its session. What is published for them
+instead is each root constructor and seed, which rebuild the logged 139-gate and
+146-gate depth-3 starting circuits exactly, and the worker's untouched log of
+every chunk from there to 88 gates.
 That distinction changes nothing about correctness: every circuit any of it
 produced is machine-verified against MixColumns rebuilt from
 $\mathrm{GF}(2^8)$, and the method is fully specified and reproducible from the
@@ -388,9 +410,11 @@ accompanying code either way.
   smallest counts at depths 3, 4, 5 and 6, and no improvement at unconstrained
   depth: the published floor is 88 and stays 88.
 \item \textbf{Priority.} \textbf{88 is Jean's count}~\cite{Jean26}, posted
-  first; none of our four 88s is a count record. The one at depth 7 ties that
-  point independently; the one at depth 6 improves the depth at that count; the
-  ones at depths 5 and 8 are derived from Jean's circuit, credited, and reported
+  first; none of our five 88s is a count record. The one at depth 7 ties that
+  point independently; the from-scratch ones at depths 5 and 6 improve the depth
+  at that count, and the depth-5 one removes our own dependence on Jean's
+  circuit at that point rather than improving on it; the remaining two, at
+  depths 5 and 8, are derived from Jean's circuit, credited, and reported
   as derived wherever they appear. The depths quoted for~\cite{Jean26}
   and~\cite{SYL25} --- 7 and 9 --- are ours, not theirs, and are treated
   identically: see Table~1, note~$\ddagger$.
@@ -398,7 +422,11 @@ accompanying code either way.
   3, 91 at depth 6 and 89 at depth 10, kept in the artifact repository.
 \end{itemize}
 
-\paragraph{Version history.} \textbf{v3}, 29 July 2026: adds the 88 at depth 6
+\paragraph{Version history.} \textbf{v3.1}, 30 July 2026: adds a second
+from-scratch 88, at depth 5, reaching with nothing imported the point v3 reached
+only through derived work; the two frontiers of v3 collapse into one. 88 remains
+Jean's count, with priority; no claim of v3 is withdrawn and both of its depth-5
+circuits are retained. \textbf{v3}, 29 July 2026: adds the 88 at depth 6
 (the first 88 here found from scratch) and the derived 88 at depth 5, both
 frontier statements, the depth-obstruction datum, and the two new $k \le 3$/$k=2$
 shells. Two \emph{observations} of v2 are retracted, both refuted by these
@@ -475,7 +503,7 @@ IACR Cryptology ePrint Archive, Report 2026/1481, 2026.
 J.~Bachir,
 \emph{The method: value-set SLP search, plateau walking, and exact local
 certificates} (\texttt{METHODS.md}, \texttt{evidence/RESULTS.md},
-\texttt{reproduce/}), \texttt{slp-plateau-search} v3.0.0, 2026.
+\texttt{reproduce/}), \texttt{slp-plateau-search} v3.1.0, 2026.
 \url{https://github.com/Joe-b-20/slp-plateau-search}
 
 \end{thebibliography}
