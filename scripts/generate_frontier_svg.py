@@ -9,12 +9,22 @@ single source, and every point in it is sourced:
     NEITHER Jean NOR Sun-Yang-Li states a depth: the 7 and the 9 are both this
     project's measurements of its own transcriptions, and the <desc> attributes
     them symmetrically.
-  - this project's circuits: bounds.json (97@3, 92@4, 89@5, 88@7, 88@8).
+  - this project's circuits: bounds.json (97@3, 92@4, 89@5, 88@5, 88@6, 88@7,
+    88@8).
+  - TWO frontier lines are drawn, because two are true. Solid blue is the
+    frontier reachable with no imported material: 97@3, 92@4, 89@5, 88@6.
+    Dashed blue extends it to the combined frontier 97@3, 92@4, 88@5, whose
+    depth-5 point is derived work.
+  - 88 is NOT a new count record; Jean holds it and has priority. The 88@6 is
+    drawn as a frontier point because it improves the depth-count frontier
+    (one level shallower than Jean's 88 at the same count, four gates below
+    Maximov's published depth-6 92), not because 88 is new.
   - the depth-7 point is a TIE: our 88@7 matches Jean's published 88@7 with an
     independent circuit (61/88 shared masks); it does not beat it, so it is
-    drawn as one half-grey half-blue marker rather than as an improvement.
-  - the 88@8 is ours but derived (its seed chain passes through Jean's circuit)
-    and is dominated by our own 88@7, so it is drawn hollow, off the frontier.
+    drawn as one half-grey half-blue marker rather than as an improvement. It is
+    now dominated by our own 88@6 and so is off our frontier.
+  - hollow blue = ours but derived from published work (its seed chain passes
+    through Jean's circuit): the 88@5, and the 88@8, which is also dominated.
   - the three crosses (98@3, 91@6, 89@10) are this project's superseded v1
     results, carried over unchanged from the earlier figure.
 """
@@ -39,9 +49,16 @@ PUBLISHED = [(3, 99, "99 SFX23", 9, -8, "start"),
 # published but dominated by 88 @ depth 7, so not a frontier point; the depth is
 # our own measurement of our transcription -- the paper states none
 PUBLISHED_OFF = [(9, 89, "89 SYL25", 9, -9, "start")]
-OURS = [(3, 97, "97"), (4, 92, "92"), (5, 89, "89")]
+# our own-lineage frontier: (depth, gates, label, dx, dy, anchor)
+OURS = [(3, 97, "97", 11, 15, "start"),
+        (4, 92, "92", -10, 4, "end"),
+        (5, 89, "89", 8, -8, "start"),
+        (6, 88, "88", 9, -8, "start")]
 TIE = (7, 88)                                            # ours == the published point
-OURS_DOMINATED = [(8, 88, "88 @ 8 ours (dominated)", 10, 20, "start")]
+# ours, but derived from published work (seed chain through Jean's 88)
+OURS_DERIVED = [(5, 88, "88 derived", 0, 19, "middle"),
+                (8, 88, "88 @ 8 derived", 0, 19, "middle")]
+COMBINED_EXTRA = [(4, 92), (5, 88)]                      # dashed: frontier with derived material
 SUPERSEDED = [(3, 98), (6, 91), (10, 89)]                # this project's v1 points
 
 
@@ -89,18 +106,24 @@ def main():
          '(Shi-Feng-Xu 2023), 97 at depth 4 and 94 at depth 5 (Osvik-Canright '
          '2024), 92 at depth 6 (Maximov) and 88 at depth 7 (Jean, ePrint '
          '2026/1481; that paper states no depth either, so the 7 is likewise '
-         'this project\'s own measurement of its transcription). This work '
-         '(solid blue) runs 97 at depth 3, 92 at depth 4, '
-         '89 at depth 5 and 88 at depth 7; the depth-7 point is drawn as a '
-         'half-grey half-blue marker because our 88 ties the published 88 with '
-         'an independent circuit (61 of 88 masks shared), rather than beating '
-         'it. A hollow blue marker shows our 88 at depth 8, a third distinct '
-         'family whose seed chain is derived from Jean\'s circuit and which is '
-         'dominated by our own 88 at depth 7. A hollow grey marker shows the '
-         'published Sun-Yang-Li 89 (ePrint 2025/1493), off the frontier; that '
-         'paper states no depth, so it is placed at depth 9, this project\'s '
-         'own measurement of its transcription. Crosses mark this project\'s '
-         'superseded earlier results.</desc>',
+         'this project\'s own measurement of its transcription). Two frontier '
+         'lines are drawn for this work. Solid blue is what no imported '
+         'material touches: 97 gates at depth 3, 92 at depth 4, 89 at depth 5 '
+         'and 88 at depth 6. Dashed blue extends it to the combined frontier '
+         '97 at depth 3, 92 at depth 4 and 88 at depth 5, whose depth-5 point '
+         'is derived work and is drawn hollow. 88 is not a new gate count: Jean '
+         'published it first and has priority. What the 88 at depth 6 improves '
+         'is the depth-count frontier - one level shallower than Jean\'s 88 at '
+         'the same count, and four gates below Maximov\'s published depth-6 92. '
+         'The depth-7 point is drawn as a half-grey half-blue marker because '
+         'our 88 there ties the published 88 with an independent circuit (61 of '
+         '88 masks shared) rather than beating it; it is now dominated by our '
+         'own 88 at depth 6. A second hollow blue marker shows our 88 at depth '
+         '8, also derived from Jean\'s circuit and also dominated. A hollow '
+         'grey marker shows the published Sun-Yang-Li 89 (ePrint 2025/1493), '
+         'off the frontier; that paper states no depth, so it is placed at '
+         'depth 9, this project\'s own measurement of its transcription. '
+         'Crosses mark this project\'s superseded earlier results.</desc>',
          f'<rect x="0" y="0" width="{W}" height="{H}" fill="white"/>']
 
     # gridlines + axis ticks
@@ -135,22 +158,25 @@ def main():
     for d, g in SUPERSEDED:
         cross(e, x(d), y(g))
 
-    # this work
-    pts = " ".join(f"{x(d):.1f},{y(g):.1f}" for d, g, _ in OURS) + f" {x(TIE[0]):.1f},{y(TIE[1]):.1f}"
+    # this work: the frontier reachable with no imported material
+    pts = " ".join(f"{x(d):.1f},{y(g):.1f}" for d, g, *_ in OURS)
     e.append(f'<polyline points="{pts}" fill="none" stroke="{BLUE}" stroke-width="2.5"/>')
-    for d, g, txt in OURS:
+    # ... and its extension once derived material is allowed (combined frontier)
+    pts = " ".join(f"{x(d):.1f},{y(g):.1f}" for d, g in COMBINED_EXTRA)
+    e.append(f'<polyline points="{pts}" fill="none" stroke="{BLUE}" stroke-width="2" '
+             f'stroke-dasharray="5,4"/>')
+    for d, g, txt, dx, dy, anch in OURS:
         dot(e, x(d), y(g), 6, BLUE)
-        label(e, x(d), y(g), 10, 18, txt, BLUE, weight=True)
+        label(e, x(d), y(g), dx, dy, txt, BLUE, anch, weight=True)
 
     # the tie: same count, same depth, different circuit
     half_dot(e, x(TIE[0]), y(TIE[1]))
-    e.append(f'<text x="{x(7)-6:.1f}" y="306" text-anchor="end" font-size="11.5" '
-             f'fill="{BLUE}">ours: 88 @ 7 - ties the published point</text>')
-    e.append(f'<text x="{x(7)-6:.1f}" y="320" text-anchor="end" font-size="10.5" '
-             f'fill="#666666">independent circuit, 61/88 shared masks</text>')
+    e.append(f'<text x="{XR-4}" y="322" text-anchor="end" font-size="10.5" '
+             f'fill="#666666">88 @ 7: ours ties the published point with an '
+             f'independent circuit (61/88 shared masks)</text>')
 
-    # ours, dominated by our own 88 @ depth 7 (not a frontier point)
-    for d, g, txt, dx, dy, anch in OURS_DOMINATED:
+    # ours, but derived from published work (and, at depth 8, dominated too)
+    for d, g, txt, dx, dy, anch in OURS_DERIVED:
         e.append(f'<circle cx="{x(d):.1f}" cy="{y(g):.1f}" r="5.5" fill="#ffffff" '
                  f'stroke="{BLUE}" stroke-width="2"/>')
         label(e, x(d), y(g), dx, dy, txt, BLUE, anch, size=12)
@@ -158,9 +184,10 @@ def main():
     # legend
     lx, tx = 407, 432
     rows = [("dashline", "published frontier"),
-            ("blueline", "this work"),
+            ("blueline", "this work, no imported material"),
+            ("bluedash", "... extended by derived work"),
             ("half", "88 @ 7: ours ties published"),
-            ("hollowblue", "88 @ 8: ours, derived, dominated"),
+            ("hollowblue", "ours, derived from published work"),
             ("hollowgrey", "published, off-frontier"),
             ("cross", "this project, superseded (v1)")]
     for i, (kind, txt) in enumerate(rows):
@@ -172,6 +199,10 @@ def main():
         elif kind == "blueline":
             e.append(f'<line x1="{lx-17}" y1="{ly-4}" x2="{lx+17}" y2="{ly-4}" stroke="{BLUE}" stroke-width="2.5"/>')
             dot(e, lx, ly - 4, 6, BLUE)
+        elif kind == "bluedash":
+            e.append(f'<line x1="{lx-17}" y1="{ly-4}" x2="{lx+17}" y2="{ly-4}" stroke="{BLUE}" '
+                     f'stroke-width="2" stroke-dasharray="5,4"/>')
+            e.append(f'<circle cx="{lx}" cy="{ly-4}" r="5.5" fill="#ffffff" stroke="{BLUE}" stroke-width="2"/>')
         elif kind == "half":
             half_dot(e, lx, ly - 4)
         elif kind == "hollowblue":

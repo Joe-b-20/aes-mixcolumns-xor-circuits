@@ -96,6 +96,15 @@ class VerificationTests(unittest.TestCase):
         )
         self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
 
+    def test_verilog_matches_artifacts(self) -> None:
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "scripts" / "generate_verilog.py"), "--check"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
+
     def test_rejects_permuted_outputs(self) -> None:
         artifact = copy.deepcopy(self.base_circuit)
         artifact["outputSignals"][0], artifact["outputSignals"][1] = artifact["outputSignals"][1], artifact["outputSignals"][0]

@@ -9,16 +9,46 @@ reproduction — see
 
 **Literature-search cutoff: 2026-07-23.** If you know of a published
 implementation of AES MixColumns in a comparable model that beats a point
-claimed here — fewer than 97 at depth 3, 92 at depth 4, 89 at depth 5, or fewer
-than 88 at any depth — please open an issue.
+claimed here — fewer than 97 at depth 3, 92 at depth 4, 88 at depth 5, 88 at
+depth 6, or fewer than 88 at any depth — please open an issue.
 
 ## Corrections
 
+- **2026-07-29.** Two more 88-gate circuits ship here, and they move the
+  depth–count frontier without moving the count floor.
+  - `circuits/mixcolumns_88gates_depth6.json` is **88 gates at depth 6**, found
+    2026-07-28 by this project's search from scratch, with no imported material
+    anywhere in its chain. **88 is not a new count and this is not a
+    record**: the count is Jean's (ePrint
+    [2026/1481](https://eprint.iacr.org/2026/1481), posted 2026-07-23, before
+    this circuit existed), **Jean has priority**, and this repository's own 88 @
+    depth 7 already matched it. What is new is the *depth* at that count: this circuit
+    **dominates Jean's 88** — same count, one level shallower, on the depth 7 the
+    frontier table below explains and Claim 5 shows to be forced — and it uses
+    **four fewer gates than the published depth-6 point** (92, Maximov). See
+    Claim 5.
+  - `circuits/mixcolumns_88gates_depth5.json` is **88 gates at depth 5**, found
+    2026-07-29, and it is **derived from published work**: its seed chain passes
+    through Jean's 88 (chain in `bounds.json`). It is not an independent
+    construction, Jean is credited for the material it descends from, and it is
+    reported as derived everywhere it appears. It uses six fewer gates than the published depth-5
+    point (94, Osvik–Canright). See Claim 6.
+  - Consequently this repository now has **two** frontiers, and states both:
+    **97 @ 3, 92 @ 4, 88 @ 5** taking every circuit here together, and
+    **97 @ 3, 92 @ 4, 89 @ 5, 88 @ 6** restricted to circuits with no imported
+    material in their lineage. **87 was not found**; nothing is claimed optimal.
+  - Two circuits shipped earlier are now dominated by circuits above and are
+    **not withdrawn**: the 89 @ depth 5 (dominated at depth 5 by the derived 88,
+    and still the depth-5 point of the no-imported-material frontier) and the 88
+    @ depth 7 (dominated by the 88 @ depth 6, and still the independent match of
+    Jean's published point). Their earlier claim statements stand as made.
+  - Unchanged: 97 @ 3 and 92 @ 4 remain the smallest we are aware of at their
+    depths. The literature-search cutoff is still 2026-07-23 — this entry
+    records circuits, not a new sweep.
 - **2026-07-27.** This repository now also ships two 88-gate circuits. Neither
   beats anything published.
   - `circuits/mixcolumns_88gates_depth7.json` **matches** Jean's published
-    88 (ePrint [2026/1481](https://eprint.iacr.org/2026/1481); depth 7 is our
-    own measurement of our transcription — the paper states no depth): the
+    88 (ePrint [2026/1481](https://eprint.iacr.org/2026/1481)): the
     same (depth, count) point, reached independently by this project's own
     search on its own lineage. The two circuits differ — 61 of 88 internal
     masks shared, Jaccard 0.530, measured in the method repository.
@@ -115,16 +145,36 @@ comparable models, with the Pareto frontier in bold:
 | 6 | 94 | [TP20], as tabulated in SFX23 Table 3 | 2-input XOR |
 | 6 | **92** | Maximov, ePrint [2019/833](https://eprint.iacr.org/2019/833); also Xiang, Zeng, Lin, Bao, Zhang, ToSC 2020(2). DOI: [10.13154/tosc.v2020.i2.120-145](https://doi.org/10.13154/tosc.v2020.i2.120-145) | 2-input XOR / s-XOR |
 | 7 | 91 | Lin, Xiang, Zeng, Zhang, CT-RSA 2021, LNCS 12704. DOI: [10.1007/978-3-030-75539-3_25](https://doi.org/10.1007/978-3-030-75539-3_25); tied by Yuan et al., ToSC 2024(2). DOI: [10.46586/tosc.v2024.i2.322-347](https://doi.org/10.46586/tosc.v2024.i2.322-347) | s-XOR |
-| n/s | 89 | Sun, Yang, Li, ePrint [2025/1493](https://eprint.iacr.org/2025/1493) (depth not stated; **depth 9** is our own measurement of our transcription, not a figure from the paper) | g-XOR |
-| 7\* | **88** | Jean, ePrint [2026/1481](https://eprint.iacr.org/2026/1481) (posted 2026-07-23; Jean has priority over the matching 88 shipped here. Count re-verified by us; \*that paper **states no depth either** — **depth 7** is our own measurement of our transcription, exactly as for the 89 above) | 2-input XOR |
+| 9\* | 89 | Sun, Yang, Li, ePrint [2025/1493](https://eprint.iacr.org/2025/1493) (depth not stated; \***depth 9** is ours, see below) | 2-input XOR (the paper's "g-XOR") |
+| 7\* | **88** | Jean, ePrint [2026/1481](https://eprint.iacr.org/2026/1481) (posted 2026-07-23; Jean has priority over the matching 88 shipped here. Count re-verified by us; \*that paper **states no depth either**, and **depth 7** is likewise ours) | 2-input XOR |
 | 8 | 97 | [KLSW17] (Kranz, Leander, Stoffelen, Wiemer, ToSC 2017(4)) | see note |
 
+**\* The two starred depths are ours, not the papers'** — and this is the one
+place in this repository that spells the caveat out in full, because every other
+mention points here. Neither Sun–Yang–Li (2025/1493) nor Jean (2026/1481) states
+a depth. The 9 and the 7 are what this project's oracle measures on this
+project's own transcriptions of their published listings, and the two papers are
+treated identically in this respect throughout. They are, however, **forced
+rather than merely observed**: the ASAP (least-fixpoint) schedule over a mask
+set is the shallowest depth *any* circuit on that mask set can have, independent
+of the order the gates happen to be written in, and computing it over each
+published mask set still returns **9** for Sun–Yang–Li's and **7** for Jean's
+(three of Jean's output bits sit at depth 7). So neither circuit can be
+rescheduled shallower, and no comparison below depends on a transcription choice
+of ours. Reproducible with `engines.py:relax` in the method repository; the run
+and its command are in that repository's
+`evidence/campaign87_imported_prior_art/PROVENANCE.md`. This check was
+suggested and independently performed by an external first-reader of the v3
+release.
+
 Published frontier: **(3, 99), (4, 97), (5, 94), (6, 92), (7, 88)**, with
-Sun–Yang–Li's 89 at unstated depth alongside. This repository's 97 @ 3, 92 @ 4
-and 89 @ 5 improve the first three points by 2, 5 and 5 gates, and all three
-remain on the frontier: 88 @ depth 7 has fewer gates but strictly greater depth
-than 89 @ depth 5, so neither dominates the other. Its fourth circuit sits
-exactly on the published (7, 88) point rather than below it; see Claim 4.
+Sun–Yang–Li's 89 alongside. This repository improves the first
+four points: 97 @ 3 by 2 gates, 92 @ 4 by 5, 89 @ 5 by 5 (88 @ 5 by 6, derived
+work), 88 @ 6 by 4. It does not improve the fifth: 88 is the published count
+floor, Jean has priority, and the two 88s here at depths 7 and 8 sit on or
+behind that point rather than below it. What the 88 @ depth 6 improves is the
+*depth* at the floor count — it dominates the published (7, 88) point. See
+Claims 4, 5 and 6.
 
 Note: Lin et al.'s 91 (and, depending on reading, KLSW17's 97) are stated in
 the s-XOR model; the depth-3 lineage, Osvik–Canright and Jean are free
@@ -164,13 +214,13 @@ depth 3 for AES.
 **Conclusion:** `circuits/mixcolumns_92gates_depth4.json` uses five fewer gates
 than the published depth-4 point.
 
-## Claim 3: 89 gates at depth 5 — smallest we are aware of at depth ≤ 5
+## Claim 3: 89 gates at depth 5 — five fewer than the published depth-5 point
 
 - The only published depth-5 point in a comparable model is **94 XORs at depth
   5** (Osvik and Canright, ePrint 2024/1076, Appendix F). Nothing published
   below 94 gates has depth 5 or less.
-- Counts below 89 exist only at greater depth: Jean's 88 (ePrint 2026/1481) is
-  at depth 7, and the 88-gate circuits shipped here are at depths 7 and 8.
+- No *published* count below 89 has depth 5 or less: Jean's 88 (ePrint
+  2026/1481) is at depth 7 (see the frontier table's footnote).
   Sun–Yang–Li's 89 (ePrint 2025/1493) ties 89 rather than going below it, and
   states no depth. Lin et al.'s 91 (CT-RSA 2021, s-XOR, depth 7 per SFX23
   Table 3) and Yuan et al.'s 91 (s-XOR) are above 89. See Corrections for the
@@ -179,11 +229,16 @@ than the published depth-4 point.
   [List of circuits](https://csrc.nist.gov/projects/circuit-complexity/list-of-circuits)
   (checked 2026-07-10) lists Maximov's 92 XOR / depth 6 as its AES MixColumns
   entry.
+- Since 2026-07-29 this repository also ships an 88 at depth 5, one gate
+  fewer at the same depth — but that circuit is **derived from published work**
+  (Claim 6), so the 89 remains the smallest count at depth ≤ 5 that this project
+  reached with no imported material in its lineage.
 
 **Conclusion:** `circuits/mixcolumns_89gates_depth5.json` uses five fewer gates
-than the published depth-5 point and remains on the published depth–count
-Pareto frontier (88 @ depth 7 does not dominate it). We do not claim the
-smallest count at unconstrained depth.
+than the published depth-5 point. It is not dominated by any published circuit
+(88 @ depth 7 has strictly greater depth); within this repository it is
+dominated only by the derived 88 @ depth 5. We do not claim the smallest count
+at unconstrained depth.
 
 ## Claim 4: 88 gates at depth 7 — matches the published record, does not beat it
 
@@ -191,15 +246,20 @@ This is deliberately not phrased as an improvement.
 
 - The published count floor for AES MixColumns in a comparable model is **88
   XORs** (Jean, ePrint [2026/1481](https://eprint.iacr.org/2026/1481),
-  Algorithm 1, posted 2026-07-23; count re-verified here from its listing —
-  the paper states no depth, and depth 7 is our own measurement of our
-  transcription, exactly as for the Sun–Yang–Li 89). `circuits/mixcolumns_88gates_depth7.json` has the same count and
+  Algorithm 1, posted 2026-07-23; count re-verified here from its listing, depth
+  per the frontier table's footnote). `circuits/mixcolumns_88gates_depth7.json` has the same count and
   the same depth. It **ties** that point; it does not beat it, and Jean has
   priority — the paper predates this circuit, found 2026-07-26.
 - The circuits are nevertheless different. The method repository transcribed
   Jean's circuit and measured the overlap of the two internal mask sets: **61
   of 88 masks shared, Jaccard 0.530** — far below the 0.7 threshold that
-  project uses for "same family". The lineage here contains no imported
+  project uses for "same family". For calibration, and *not* as a strengthening
+  of that claim: the same measurement between Jean's 88 and Sun–Yang–Li's 89
+  (ePrint 2025/1493) — two independently published circuits — gives **63 shared
+  masks, Jaccard 0.553**, slightly *more* overlap than ours has with Jean's. An
+  overlap of this size is what independent constructions for this particular map
+  look like; it is not evidence of derivation in either direction. The lineage
+  here contains no imported
   material: from this project's own from-scratch 97 @ depth 3, through 89 @
   depth 6 and 89 @ depth 5, to an exactly ρ²-symmetric 94 @ depth 5, then by
   walk drift to 88 @ depth 7. The untouched run archive, with the exact code,
@@ -222,6 +282,68 @@ greater depth — so it is on nobody's frontier and improves nothing.
 **Conclusion:** the published count floor is 88 and stays 88. Neither 88-gate
 circuit here is claimed to improve it; one matches it independently, the other
 is derived from it and dominated.
+
+Two further 88s were added on 2026-07-29 — one at depth 6, one at depth 5 — and
+neither changes that conclusion: **88 remains Jean's count, with priority.**
+They are treated in Claims 5 and 6. The 88 @ depth 7 of this claim is dominated
+by the depth-6 one from that date; it is kept because independent replication of
+a published point is worth archiving whether or not it is on a frontier.
+
+## Claim 5: 88 gates at depth 6 — improves the frontier at that depth, not the count
+
+`circuits/mixcolumns_88gates_depth6.json`. Two separate comparisons, both
+against published work:
+
+- **Against the published depth-6 point.** That point is **92 XORs at depth 6**
+  (Maximov, ePrint [2019/833](https://eprint.iacr.org/2019/833); also Xiang,
+  Zeng, Lin, Bao, Zhang, ToSC 2020(2), s-XOR, which is comparable by the
+  proposition above). This circuit uses **four fewer gates at the same depth**.
+- **Against the published count floor.** The floor is 88 (Jean, ePrint
+  2026/1481, posted 2026-07-23) and this circuit **does not lower it** — it has
+  exactly 88 gates, and **Jean has priority**: that note predates this circuit,
+  found 2026-07-28. It does dominate that point in
+  the depth–count order: same count, depth 6 against depth 7. That depth 7 is our
+  own measurement (frontier-table footnote), but it is **not merely an artifact of
+  how we transcribed the listing**: the ASAP least-fixpoint schedule over Jean's
+  own mask set — the shallowest schedule any circuit on that mask set admits —
+  still puts three of its 32 output bits at depth 7. Jean's circuit therefore
+  cannot be rescheduled to depth 6 or less without changing which internal masks
+  it computes, so this domination does not depend on a choice of ours. Should
+  either paper's authors publish a *different* mask set, that is what would
+  change the comparison.
+- **Provenance.** From scratch, on a lineage that contains no imported circuit
+  at any step; the audited chain and the checks that closed the contamination
+  routes are in `bounds.json`. Its highest internal-mask overlap with any other
+  circuit in this repository is 47 masks (Jaccard 0.362, against the superseded
+  89 @ depth 10; against any 88 here it is at most 43 masks, Jaccard 0.323), so it
+  is also not a re-derivation of one of them.
+
+**Conclusion:** four gates fewer than the published depth-6 point, and one level
+shallower than the published 88 at the same count — **not** a new count, **not**
+a record, and no optimality claim. **87 was not found.**
+
+## Claim 6: 88 gates at depth 5 — derived from Jean's circuit, and reported as such
+
+`circuits/mixcolumns_88gates_depth5.json` is **derived from published work**: its
+seed chain passes through Jean's published 88 (ePrint 2026/1481), which was
+ρ²-symmetrized and peeled to 95 gates, orbit-walked to 92, and unioned with a 91
+of this project's own lineage before the descent that produced it. The full
+chain, with the mask-identity check at each link, is in `bounds.json`. It is
+therefore not an independent construction and Jean is credited for the material
+it descends from.
+
+What it is: 88 gates at depth 5, found 2026-07-29, **six fewer than the
+published depth-5 point**
+(94, Osvik and Canright, ePrint 2024/1076, Appendix F), and the shallowest
+88-gate circuit this project holds. What it is not: a new count (88 is Jean's),
+an independent construction (see above), or even a new construction relative to
+this repository — it shares **75 of its 88 internal masks with the 89 @ depth 5**
+here (Jaccard 0.735, the highest overlap between any two circuits in this
+repository), so it is best described as that 89's own basin reached at 88 gates.
+
+**Conclusion:** it improves the published depth-5 point by six gates and is the
+depth-5 point of the combined frontier, but it is derived work and is labelled
+so wherever it appears. No optimality claim.
 
 ## Earlier claims from this project (v1, superseded)
 
@@ -257,8 +379,9 @@ ePrint, ToSC/FSE, CHES/TCHES, CT-RSA, Springer, arXiv, PeerJ and the NIST
 Circuit Complexity list, cross-checking every comparison table found against
 the primary papers, including full-text sweeps where a hidden depth-4/5 point
 could plausibly live (LZW23, LWF+22, HILL, Xu–Sun, Osvik–Canright); plus the
-2026-07-23 update in Corrections. The 2026-07-27 entry is **not** a new sweep —
-it records two circuits this project added, and the cutoff is still 2026-07-23.
+2026-07-23 update in Corrections. The 2026-07-27 and 2026-07-29 entries are
+**not** new sweeps — they record circuits this project added, and the cutoff is
+still 2026-07-23.
 
 Negative claims ("nothing below X") rest on tables and targeted searches, not
 exhaustive enumeration — and the July sweeps are themselves a demonstrated

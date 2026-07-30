@@ -108,7 +108,45 @@
         "measuredDepth": 5,
         "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
       },
-      "claim": "The smallest 2-input XOR count we are aware of at depth <= 5: five fewer gates than the published depth-5 point (94, Osvik and Canright, ePrint 2024/1076, Appendix F). Smaller counts exist only at greater or unstated depth (88 at depth 7: Jean, ePrint 2026/1481, matched by mixcolumns_88gates_depth7 in this repository; 89, depth not stated: Sun-Yang-Li, ePrint 2025/1493), so this circuit remains on the depth-count Pareto frontier; we do not make an optimality claim. See PRIOR_ART.md Corrections."
+      "claim": "Uses five fewer 2-input XOR gates than the published depth-5 point (94, Osvik and Canright, ePrint 2024/1076, Appendix F), and is the smallest count at depth <= 5 among published circuits and among this project's own-lineage circuits. Updated 2026-07-29: it is no longer the smallest count at depth 5 in this repository - mixcolumns_88gates_depth5 has 88 gates at the same depth - but that circuit is derived from published work, so this 89 remains the depth-5 point of the frontier reachable with no imported material. We do not make an optimality claim. See PRIOR_ART.md Corrections."
+    },
+    {
+      "id": "mixcolumns_88gates_depth5",
+      "inputCount": 32,
+      "gateCount": 88,
+      "depth": 5,
+      "outputCount": 32,
+      "outputConvention": "output j (j in 0..31) is MixColumns output bit j; bit j = bit (j mod 8) of state byte (j div 8), least-significant-bit-first within each byte. It is produced at internal signal index outputSignals[j].",
+      "sha256_canonical_gates": "91d45c57d638dc5832a23eaf7721ba80d07bc0566769c47b56bd5566ae4eabff",
+      "sha256_circuit_json": "979c01a00b4be500e2e27f04cf60a592fa097853de6892dead2f5c0dbaf4ce25",
+      "verified": {
+        "allOutputsCorrect": true,
+        "everyGateIs2InputXOR": true,
+        "everyParentIndexSmaller": true,
+        "measuredDepth": 5,
+        "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
+      },
+      "provenance": "DERIVED FROM PUBLISHED WORK. Its seed chain passes through Jean's published 88-gate circuit (ePrint 2026/1481), so it is not an independent construction and Jean is credited for the material it descends from. The full chain, mask-identity checked at every link: Jean's transcribed 88 -> rho^2-symmetrized and peeled to 95 -> orbit-walked to 92 -> unioned with a 91 of this project's own lineage -> an exactly rho^2-symmetric 90 at depth 9 -> the hunt87 orbit seed (mask-identical to that 90, Jaccard 1.000) -> orbit worker o1, cycle 129 -> polish worker o_polish, restart 71 -> 88 at depth 6 at walk iteration 38447 (worker run-time t = 127003.3 s, 2026-07-29 09:39:14 -0400) -> this 88 at depth 5 at walk iteration 40419 (t = 127007.5 s, 2026-07-29 09:39:18 -0400), 4.2 s later by the walk's Pareto depth tie-break. All wall-clock times here are local, UTC-04:00, not UTC; the worker process these run-times are measured from started 2026-07-27 22:22:30 -0400, so t exceeds 35 h. Found by this project's search (slp-plateau-search v3.0.0, campaign 87, hunt87 fleet). Untouched run archive: evidence/campaign87_run_2026-07-29_got_88at5_derived/ in https://github.com/Joe-b-20/slp-plateau-search, whose PROVENANCE.md opens with this derived lineage (source file there: evidence/circuits/mixcolumns_88gates_depth5.json).",
+      "claim": "Derived from published work: its seed chain passes through Jean's 88 (ePrint 2026/1481) - see provenance - so nothing here is claimed as an independent construction, and 88 is not a new count in any case (Jean has priority). What the circuit is: 88 gates at depth 5, the shallowest 88-gate circuit this project holds, six fewer gates than the published depth-5 point (94, Osvik and Canright, ePrint 2024/1076, Appendix F). It is also not a new construction relative to this repository: it shares 75 of its 88 internal masks with mixcolumns_89gates_depth5 (Jaccard 0.735, the highest overlap between any two circuits here), so it is best described as that depth-5 89's own basin reached at 88 gates. No optimality claim."
+    },
+    {
+      "id": "mixcolumns_88gates_depth6",
+      "inputCount": 32,
+      "gateCount": 88,
+      "depth": 6,
+      "outputCount": 32,
+      "outputConvention": "output j (j in 0..31) is MixColumns output bit j; bit j = bit (j mod 8) of state byte (j div 8), least-significant-bit-first within each byte. It is produced at internal signal index outputSignals[j].",
+      "sha256_canonical_gates": "462a149979fe0ab39173e6aa70c1728fe55cb24b380ea0b2241ffaa6301a8c4c",
+      "sha256_circuit_json": "45d6957669cd3e63af93a936c17b784fcc37ece7ef84c51d30df4eb01ed1f84a",
+      "verified": {
+        "allOutputsCorrect": true,
+        "everyGateIs2InputXOR": true,
+        "everyParentIndexSmaller": true,
+        "measuredDepth": 6,
+        "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
+      },
+      "provenance": "Found by this project's own search from scratch, with no imported material anywhere in the chain: fleet worker c_naive, restart 18, rooted in randomized balanced XOR trees over the 32 raw inputs (root naive#2163, no seeded circuit), then root -> 89 gates -> 88 gates at depth 7 at walk iteration 37270 (worker run-time t = 68238.2 s, 2026-07-28 17:19:45 -0400) -> this 88 at depth 6 at walk iteration 37501 (t = 68238.7 s, 2026-07-28 17:19:45 -0400), 0.5 s later by the walk's Pareto depth tie-break. All wall-clock times here are local, UTC-04:00, not UTC; the worker process these run-times are measured from started 2026-07-27 22:22:27 -0400, so t is 18.96 h at the find. Why nothing imported can be in that chain, strongest fact first: the ROOT reads nothing. The worker's root spec was constructor:naive, and the constructor branch of the archived worker's root generator calls only constructors.build(name, seed) -- it has no file-reading path at all, and every branch of that generator that can open a circuit off disk is a different branch, unreachable under this spec. All 38 restarts logged in the session that produced this circuit opened on a naive#<seed> root, and root naive#2163 rebuilds to exactly the logged 139 gates at depth 3. The remaining routes were audited closed as well, and are stated as two-part arguments because the fleet launcher as run is not archived: the hunt worker never mentions the cross-pollination knob (pop_glob) anywhere AND its untouched log contains none of the lines the engine emits when a merge brings material in; family repulsion was off; and a per-restart local context means no global-best carryover. Knobs alone would not settle it -- the derived 88 at depth 5 in this file had identical knobs and imported material still reached it, through its root. This is the first 88 this project has found from scratch; the 88 at depth 7 remains its independently found match of Jean's published point. Found in campaign 87, hunt87 fleet (slp-plateau-search v3.0.0). Untouched run archive: evidence/campaign87_run_2026-07-28_got_88at6_fromscratch/ in https://github.com/Joe-b-20/slp-plateau-search (source file there: evidence/circuits/mixcolumns_88gates_depth6.json).",
+      "claim": "Realizes AES MixColumns in 88 two-input XOR gates at depth 6. This is NOT a new gate-count record: 88 is the existing best-known count, published by Jean (ePrint 2026/1481, posted 2026-07-23, who has priority) and independently matched by mixcolumns_88gates_depth7 in this repository. What this circuit does is improve the published depth-count Pareto frontier at its depth: it dominates Jean's 88 (equal count, one level shallower - with the standing caveat that depth 7 is this project's own measurement of its own transcription, because that paper states no depth), and it uses four fewer gates than the published depth-6 point (92: Maximov, ePrint 2019/833; also Xiang et al., ToSC 2020(2), s-XOR). It is a construction distinct from every other circuit here: its highest internal-mask overlap with any of them is 47 masks (Jaccard 0.362, against the superseded mixcolumns_89gates_depth10; the highest against any 88 here is 43 masks, Jaccard 0.323). 87 was not found, and no optimality claim is made."
     },
     {
       "id": "mixcolumns_88gates_depth7",
@@ -127,7 +165,7 @@
         "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
       },
       "provenance": "Found by this project's own search (slp-plateau-search v2.0.0, campaign 87, merged engine, worker w10_sym94; the 88-gate size first appeared at walk iteration 45614, at depth 11, on 2026-07-26 22:08:19, and the walk's Pareto depth tie-break reached this depth-7 circuit at walk iteration 47436, 5.3 s later), on this project's own lineage and with no imported material: from-scratch 97 at depth 3 -> 89 at depth 6 -> 89 at depth 5 -> an exactly rho^2-symmetric 94 at depth 5 -> walk drift to 88 at depth 7. Untouched run archive: evidence/campaign87_run_2026-07-26_got_88at7/ in https://github.com/Joe-b-20/slp-plateau-search (source file there: evidence/circuits/mixcolumns_88gates_depth7.json).",
-      "claim": "Matches, and does not beat, the published count floor: 88 gates at depth 7 is the same (depth, count) point as Jean, ePrint 2026/1481 (that paper states no depth; depth 7 is this project's measurement of its own transcription). The circuit is an independent one, found by this project's search on its own lineage; it shares 61 of 88 internal masks with Jean's circuit (Jaccard 0.530), as measured in the method repository. Jean has priority; no optimality claim."
+      "claim": "Matches, and does not beat, the published count floor: 88 gates at depth 7 is the same (depth, count) point as Jean, ePrint 2026/1481 (that paper states no depth; depth 7 is this project's measurement of its own transcription). The circuit is an independent one, found by this project's search on its own lineage; it shares 61 of 88 internal masks with Jean's circuit (Jaccard 0.530), as measured in the method repository. Jean has priority; no optimality claim. Updated 2026-07-29: this circuit is now dominated by mixcolumns_88gates_depth6 (same count, one level shallower, also on this project's own lineage); it is kept as the independent replication of Jean's published point."
     },
     {
       "id": "mixcolumns_88gates_depth8",
@@ -146,7 +184,7 @@
         "method": "checked against AES MixColumns rebuilt from GF(2^8) in verify.py, and against 32 basis-vector responses in the Verilog testbench"
       },
       "provenance": "DERIVED FROM PUBLISHED WORK. This circuit's seed chain passes through Jean's published 88-gate circuit (ePrint 2026/1481): Jean's 88 was rho^2-symmetrized and peeled to 95, orbit-walked to 92, unioned with a 91 of this project's own lineage to give a rho^2-symmetric 90 at depth 9, which was then descended to this 88 at depth 8. It is therefore not an independent from-scratch construction, and Jean is credited accordingly. Found by this project's search (slp-plateau-search v2.0.0, campaign 87, hunt-deeper, worker d3_orb90a, 2026-07-27; the 88-gate size first appeared at walk iteration 99444, at depth 10, and the depth tie-break reached this depth-8 circuit at walk iteration 100049, 1.2 s later). Untouched run archive: evidence/campaign87_run_2026-07-27_got_88at8_thirdfamily/ in https://github.com/Joe-b-20/slp-plateau-search (source file there: evidence/circuits/mixcolumns_88gates_depth8_thirdfamily.json).",
-      "claim": "Derived from published work (see provenance: its seed chain passes through Jean's 88, ePrint 2026/1481). A third distinct 88-gate construction, at Jaccard 0.455 to Jean's 88 and 0.544 to this repository's 88 at depth 7, both well below the 0.7 same-family threshold used in the method repository. It is dominated by mixcolumns_88gates_depth7 (same gate count, greater depth), so it improves nothing; kept as a verified, documented distinct construction. No optimality claim."
+      "claim": "Derived from published work (see provenance: its seed chain passes through Jean's 88, ePrint 2026/1481). A third distinct 88-gate construction, at Jaccard 0.455 to Jean's 88 and 0.544 to this repository's 88 at depth 7, both well below the 0.7 same-family threshold used in the method repository. It is dominated by mixcolumns_88gates_depth7 (same gate count, greater depth), so it improves nothing; kept as a verified, documented distinct construction. No optimality claim. Updated 2026-07-29: also dominated by mixcolumns_88gates_depth6 and by mixcolumns_88gates_depth5."
     }
   ]
 }
