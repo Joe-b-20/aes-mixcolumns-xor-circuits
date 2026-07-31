@@ -223,6 +223,19 @@ hash, the canonical gate hash, and the declared gate/depth metadata.
    from its **v2.0.0** release, the depth-6 one and the derived depth-5 one from
    **v3.0.0**, and the from-scratch depth-5 one from **v3.1.0**, which
    accompanies this release.
+6. **What the local-optimality certificates do and do not say (added
+   2026-07-30).** Those certificates prove that several of these 88s admit no
+   87 within "remove ≤ 3 masks, re-add fewer" — a completely enumerated
+   neighbourhood, and a real theorem. They are **not** evidence that 87 does not
+   exist, and they are not why "87 was not found" appears above. The control is
+   in `slp-plateau-search`, `METHODS.md` §10a: the same procedure returns
+   "irreducible" for 97-, 94-, 92-, 91-, 90- and 89-gate circuits as well, every
+   one of which is provably improvable, and across 74 verified circuits the
+   smallest window that could carry one to a strictly smaller verified circuit
+   is a median of 42 masks — 44 of the 45 measurable cases need a window of 8 or
+   more. The certified radius is smaller than all but one of the improvements
+   observed in that work. **87 was not found** is a statement
+   about a search, and stays one.
 
 ## Contents
 

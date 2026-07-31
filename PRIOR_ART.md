@@ -14,6 +14,27 @@ depth 6, or fewer than 88 at any depth — please open an issue.
 
 ## Corrections
 
+- **2026-07-30 (scope, not a correction of any figure).** The "87 was not
+  found" statements below are unchanged and remain accurate, but they travel in
+  this repository next to a family of exhaustive local certificates, and a
+  reader can be forgiven for reading the two together as evidence that 87 is
+  unlikely. **They are not that**, and the method repository now says so
+  explicitly (`slp-plateau-search`, `METHODS.md` §10a). The control: the same
+  decision procedure, run over the same exhaustive remove-≤3 shell, returns
+  "irreducible" for **97-, 94-, 92-, 91-, 90- and 89-gate circuits too** — all
+  of them provably improvable, since an 88 exists and is published here. Over
+  74 distinct verified circuits, the smallest window that could carry one to a
+  strictly smaller *verified* circuit is **median 42 masks (min 3, max 48; 44 of
+  45 need ≥ 8)**, so the certified radius k ≤ 3 is smaller than 44 of those 45
+  transitions — by a factor of ~2.7 against the closest and ~14 against the
+  median. The certificates are exactly
+  what they state — rigidity statements about small, completely enumerated
+  neighbourhoods — and by that instrument an optimal circuit and a
+  nine-gates-too-big circuit are indistinguishable. Nothing here is withdrawn;
+  no comparison figure changes. The decision procedure itself was re-audited at
+  the same time (4 200 planted positive instances across 74 circuits, all
+  answered correctly, including the two proof branches that had never been
+  exercised on a positive) and **no completeness bug was found**.
 - **2026-07-30.** A third 88-gate circuit found from scratch collapses the two
   frontiers stated below into one.
   - `circuits/mixcolumns_88gates_depth5_fromscratch.json` is **88 gates at

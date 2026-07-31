@@ -37,9 +37,12 @@ point; it does not beat it.} Also here: an 88 at depth 7 that \emph{ties} Jean's
 point with an independent circuit sharing 61 of 88 internal masks, an 89 at
 depth 5 now dominated, and two further 88s at depths 5 and 8 derived from Jean's
 circuit and reported as such. All were found by stochastic local search over a
-value-set formulation of the shortest-linear-program problem. No 87 was found:
+value-set formulation of the shortest-linear-program problem. No 87 was found.
 47 canonical 88-gate circuits, and both from-scratch 88s here, have exhaustively
-empty remove-$\le 3$ neighbourhoods. Nothing here is claimed optimal.
+empty remove-$\le 3$ neighbourhoods --- a local rigidity result, and not
+evidence about whether an 87 exists: the same procedure empties the
+remove-$\le 3$ neighbourhood of a 97-gate circuit too. Nothing here is claimed
+optimal.
 \end{abstract}
 
 \section{Model and specification}
@@ -324,6 +327,26 @@ None of this bounds 87 away globally; it is consistent with 88 being locally
 rigid, and it redirected the search: at 88 gates every move class small enough
 to enumerate is empty, so what remains is walking the equal-size plateau
 widely.
+
+\paragraph{The control (added 2026-07-30).} The reading these numbers invite ---
+that an empty $k \le 3$ shell is evidence about 87 --- does not survive its
+control. Run identically on 97-, 94-, 92-, 91-, 90- and 89-gate circuits, every
+one of them provably improvable because an 88 exists, the same decision
+procedure returns \emph{irreducible} for all of them; a 97-gate circuit, nine
+gates above the best known, has an exhaustively empty $k=2$ shell. Over the 74
+verified circuits of that corpus the smallest window that could carry one to a
+strictly smaller verified circuit is a median of 42 masks (minimum 3, maximum
+48; 44 of 45 need $\ge 8$), so the certified radius $k \le 3$ is smaller than 44
+of those 45 transitions --- by a factor of ${\sim}2.7$ against the closest and
+${\sim}14$ against the median. The theorems
+stand exactly as stated --- they are rigidity statements about small, completely
+enumerated neighbourhoods --- but by this instrument an optimal circuit and a
+nine-gates-too-big circuit are indistinguishable. The decision procedure itself
+was branch-audited at the same time on 4\,200 planted positive instances across
+74 circuits, including the two cases of its completeness proof that had never
+run on a positive; all were answered correctly and no completeness bug was
+found. Method and raw results: \texttt{METHODS.md}~\S10a--10c and
+\texttt{campaign\_87/cert\_audit/} in the search repository.
 
 \paragraph{Symmetry.} Byte rotation $\rho$ (order 4) commutes with MixColumns,
 so the 32 targets form 8 $\rho$-orbits of size 4 and equivariant circuits can be
