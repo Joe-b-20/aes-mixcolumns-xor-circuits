@@ -9,10 +9,10 @@ single source, and every point in it is sourced:
     NEITHER Jean NOR Sun-Yang-Li states a depth: the 7 and the 9 are both this
     project's measurements of its own transcriptions, and the <desc> attributes
     them symmetrically.
-  - this project's circuits: bounds.json (97@3, 92@4, 89@5, 88@5 derived,
+  - this project's circuits: bounds.json (97@3, 91@4, 92@4, 89@5, 88@5 derived,
     88@5 from scratch, 88@6, 88@7, 88@8).
   - ONE frontier line is drawn, because since 2026-07-30 only one is true:
-    97@3, 92@4, 88@5, every point on a lineage with no imported material.
+    97@3, 91@4, 88@5, every point on a lineage with no imported material.
     Earlier versions of this figure drew two, the combined one reaching 88@5
     only through derived work.
   - 88 is NOT a new count record; Jean holds it and has priority. What the
@@ -56,7 +56,7 @@ PUBLISHED = [(3, 99, "99 SFX23", 9, -8, "start"),
 PUBLISHED_OFF = [(9, 89, "89 SYL25", 9, -9, "start")]
 # our frontier, all of it own-lineage: (depth, gates, label, dx, dy, anchor)
 OURS = [(3, 97, "97", 11, 15, "start"),
-        (4, 92, "92", -10, 4, "end"),
+        (4, 91, "91", -10, 4, "end"),
         (5, 88, "88", 8, -8, "start")]
 # ours, no imported material, but dominated by a point on the line above
 OURS_OFF = [(5, 89, "89", 8, -8, "start"),
@@ -113,7 +113,7 @@ def main():
          '2024), 92 at depth 6 (Maximov) and 88 at depth 7 (Jean, ePrint '
          '2026/1481; that paper states no depth either, so the 7 is likewise '
          'this project\'s own measurement of its transcription). One solid blue '
-         'frontier line is drawn for this work - 97 gates at depth 3, 92 at '
+         'frontier line is drawn for this work - 97 gates at depth 3, 91 at '
          'depth 4, 88 at depth 5 - and every point on it lies on a lineage with '
          'no imported material. Earlier versions of this figure drew two lines, '
          'because the depth-5 point was then reached only through work derived '

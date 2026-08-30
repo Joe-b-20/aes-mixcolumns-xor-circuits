@@ -9,11 +9,26 @@ reproduction — see
 
 **Literature-search cutoff: 2026-07-23.** If you know of a published
 implementation of AES MixColumns in a comparable model that beats a point
-claimed here — fewer than 97 at depth 3, 92 at depth 4, 88 at depth 5, 88 at
+claimed here — fewer than 97 at depth 3, 91 at depth 4, 88 at depth 5, 88 at
 depth 6, or fewer than 88 at any depth — please open an issue.
 
 ## Corrections
 
+- **2026-08-29 (the depth-4 point moves from 92 to 91).** This repository's
+  depth-4 circuit is now a **91-gate** one, oracle-verified and on this
+  project's own from-scratch cascade lineage. It improves Osvik and Canright's
+  97-gate depth-4 point by **six** gates rather than five, and the standing
+  invitation at the top of this file is corrected with it — the bar for a
+  better depth-4 circuit was set one gate too high. Every frontier statement in
+  the dated entries below reads **92 at depth 4** and each was correct on its
+  date; they are retained and not rewritten, and this entry is what makes them
+  read as history. The 92 @ depth 4 circuit is likewise retained, not
+  withdrawn: its own claim stands as made, and it is not a dead-gate strip of
+  the 91 (all 92 of its gates are live). **90 @ depth 4 is undecided, not
+  refuted** — the exactness result behind the 91 is relative to a fixed mask
+  vocabulary, so no optimality is claimed at depth 4. Nothing else moves: the
+  97 @ 3, 88 @ 5 and 88 @ 6 claims and margins are unchanged, 88 remains the
+  published count floor, and Jean retains priority on it.
 - **2026-07-30 (scope, not a correction of any figure).** The "87 was not
   found" statements below are unchanged and remain accurate, but they travel in
   this repository next to a family of exhaustive local certificates, and a
@@ -222,7 +237,7 @@ release.
 
 Published frontier: **(3, 99), (4, 97), (5, 94), (6, 92), (7, 88)**, with
 Sun–Yang–Li's 89 alongside. This repository improves the first
-four points: 97 @ 3 by 2 gates, 92 @ 4 by 5, 88 @ 5 by 6, 88 @ 6 by 4. It does
+four points: 97 @ 3 by 2 gates, 91 @ 4 by 6, 88 @ 5 by 6, 88 @ 6 by 4. It does
 not improve the fifth: 88 is the published count floor, Jean has priority, and
 the two 88s here at depths 7 and 8 sit on or behind that point rather than
 below it. What the 88s at depths 5 and 6 improve is the *depth* at the floor
@@ -251,7 +266,7 @@ MixColumns has outputs of weight 7), so only the count at depth 3 can improve.
 `circuits/mixcolumns_97gates_depth3.json` uses two fewer at the same (minimum)
 depth.
 
-## Claim 2: 92 gates at depth 4 improves the published depth-4 point (97)
+## Claim 2: 91 gates at depth 4 improves the published depth-4 point (97)
 
 The only published depth-4 AES MixColumns circuit in a comparable model we
 found is Osvik and Canright's **97 XORs at depth 4** (ePrint 2024/1076,
@@ -263,8 +278,22 @@ depth-4 rows in Table 5 concern a different involutory matrix, not AES);
 LZW23's full body contains no depth-4 AES entry; LWF+22 reports only 103 @
 depth 3 for AES.
 
-**Conclusion:** `circuits/mixcolumns_92gates_depth4.json` uses five fewer gates
-than the published depth-4 point.
+**Conclusion:** `circuits/mixcolumns_91gates_depth4.json` uses **six** fewer
+gates than the published depth-4 point.
+
+**Its predecessor, retained.** Until 2026-08-01 this repository's depth-4 point
+was `circuits/mixcolumns_92gates_depth4.json`, five fewer than the published 97.
+It is superseded at its depth by the 91 and is **retained, not withdrawn**; its
+claim stands as it was made, and it is not a dead-gate strip of the 91 (all 92
+of its gates are live). Both circuits are on the same from-scratch cascade
+lineage of this project. Two further verified 91-gate depth-4 circuits exist in
+independent lineages (mask-Jaccard 0.433 and 0.358 against the shipped one) and
+are not shipped here.
+
+**No optimality claim, and one guard.** **90 gates at depth 4 is undecided, not
+refuted.** The exactness result behind the 91 is relative to a fixed mask
+vocabulary, and the question that would settle 90 was left in flight. Nothing
+here says "optimal at depth 4".
 
 ## Claim 3: 89 gates at depth 5 — five fewer than the published depth-5 point
 

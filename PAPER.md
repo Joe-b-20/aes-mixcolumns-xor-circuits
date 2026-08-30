@@ -6,13 +6,13 @@ the authoritative version; this file is a condensed markdown companion.*
 
 ## Abstract
 
-We report eight explicit implementations of the AES MixColumns linear
+We report nine explicit implementations of the AES MixColumns linear
 transformation as circuits of 2-input XOR gates over GF(2). Four improve the
 published depth–count Pareto frontier at their depth, on lineages that contain
 no imported circuit: (i) a **97-gate** circuit at depth **3**, the known minimum
 depth, improving the 99-gate record of Shi, Feng, and Xu (ToSC 2023); (ii) a
-**92-gate** circuit at depth **4**, improving the 97-gate depth-4 point of Osvik
-and Canright (ePrint 2024/1076); (iii) an **88-gate** circuit at depth **5**,
+**91-gate** circuit at depth **4**, six gates below the 97-gate depth-4 point
+of Osvik and Canright (ePrint 2024/1076); (iii) an **88-gate** circuit at depth **5**,
 found from scratch, six gates below Osvik and Canright's 94-gate depth-5 point
 and two levels shallower than the published 88 at the same count; and (iv) an
 **88-gate** circuit at depth **6**, four gates below the published depth-6 point
@@ -23,7 +23,7 @@ depth **7**, **ties** that floor with an independent circuit sharing 61 of 88
 internal masks; it does not beat it. Two more 88s, at depths **5** and **8**,
 are **derived from Jean's circuit** and reported as derived work. An 89 at depth
 5, five gates below the published depth-5 point, is now dominated at its depth
-and kept for the record. **Verified frontier: 97 @ 3, 92 @ 4, 88 @ 5 — one line,
+and kept for the record. **Verified frontier: 97 @ 3, 91 @ 4, 88 @ 5 — one line,
 entirely this project's own lineage, with no imported material.** Until
 2026-07-30 there were two frontiers, the depth-5 point being reachable only
 through derived work; the from-scratch circuit **removes this project's
@@ -38,6 +38,20 @@ counts.
 
 Dated entries, in the style of the Corrections section of `PRIOR_ART.md`.
 
+- **2026-08-29 (note version 3.2).** The depth-4 frontier point moves from **92
+  to 91**. A 91-gate depth-4 circuit, oracle-verified and on this project's own
+  from-scratch cascade lineage, is added in Sections 2 and 3; it improves the
+  97-gate published depth-4 point by **six** gates rather than five. Two further
+  verified 91s exist in independent lineages and are not shipped. The 92 @ depth
+  4 is **retained, not withdrawn** — its claim stands as made, and it is not a
+  dead-gate strip of the 91 (all 92 of its gates are live). Every frontier
+  statement dated earlier than today therefore reads 92 at depth 4 and is
+  correct as history. **90 @ depth 4 is undecided, not refuted**: the exactness
+  result behind the 91 is relative to a fixed mask vocabulary, so nothing here
+  says "optimal at depth 4". The same entry corrects two figures in Section 2 —
+  the k = 2 irreducibility sweep finished, so the count is all 139,878 harvested
+  mask sets, not 105,801 of them — and adds the joint-level UNSAT ladder and the
+  deletion regularity.
 - **2026-07-30 (note version 3.1).** Adds a third from-scratch 88-gate circuit,
   at depth 5, in Sections 2 and 3. Its root is a randomized XOR tree over the 32
   raw inputs and no imported material is anywhere in its chain, so the **two
@@ -86,7 +100,8 @@ the 32 unit-input vectors is a complete correctness check.
 | Circuit | Gates | Depth | Published best at that depth | Relation | Lineage |
 |---|---|---|---|---|---|
 | `mixcolumns_97gates_depth3` | 97 | 3 | 99 (Shi, Feng, Xu, ToSC 2023) | improves it by 2 | own |
-| `mixcolumns_92gates_depth4` | 92 | 4 | 97 (Osvik, Canright, ePrint 2024/1076, App. G) | improves it by 5 | own |
+| `mixcolumns_91gates_depth4` | 91 | 4 | 97 (Osvik, Canright, ePrint 2024/1076, App. G) | improves it by 6. **Not claimed optimal**: 90 at depth 4 is undecided, not refuted | own, from scratch |
+| `mixcolumns_92gates_depth4` | 92 | 4 | 97 (as above) | improves it by 5; **superseded at its depth** within this repository by the 91 above, and retained. Not a dead-gate strip of it — all 92 gates are live | own |
 | `mixcolumns_88gates_depth5_fromscratch` | 88 | 5 | 94 (Osvik, Canright, ePrint 2024/1076, App. F) | improves it by 6, and dominates the published 88 — same count, two levels shallower. **Not a new count**: 88 is Jean's, who has priority | own, from scratch |
 | `mixcolumns_89gates_depth5` | 89 | 5 | 94 (as above) | improves it by 5; dominated at its depth by the row above | own |
 | `mixcolumns_88gates_depth5` | 88 | 5 | 94 (as above) | improves it by 6, but **derived**, and not a new count; superseded at its point by the from-scratch 88 @ 5 | **derived from Jean's 88** |
@@ -94,7 +109,7 @@ the 32 unit-input vectors is a complete correctness check.
 | `mixcolumns_88gates_depth7` | 88 | 7 | 88 (Jean, ePrint 2026/1481) | **ties it, does not beat it** — an independent circuit at the same point (61/88 masks shared, Jaccard 0.530); Jean has priority. Dominated by the two rows above | own |
 | `mixcolumns_88gates_depth8` | 88 | 8 | — | **derived from Jean's 88** (its seed chain passes through it); dominated, so not a frontier point | **derived from Jean's 88** |
 
-One frontier follows: **97 @ 3, 92 @ 4, 88 @ 5**, every point of it on this
+One frontier follows: **97 @ 3, 91 @ 4, 88 @ 5**, every point of it on this
 project's own lineage with no imported material. (Version 3 of this note
 reported two, because the depth-5 point was then reached only through derived
 work.) At unconstrained depth the published
@@ -179,7 +194,7 @@ when Icarus Verilog is available.
   *forced*: the ASAP least-fixpoint schedule over each published mask set — the
   shallowest either admits — still gives 7 and 9, so neither can be rescheduled
   shallower (`PRIOR_ART.md`, frontier-table footnote).
-- **Provenance.** 97 @ 3 and 92 @ 4 are from scratch; 89 @ 5 and 88 @ 7 are on
+- **Provenance.** 97 @ 3 and 91 @ 4 are from scratch; 89 @ 5 and 88 @ 7 are on
   this project's own lineage, rooted in a from-scratch 97 @ 3; 88 @ 6 and the
   from-scratch 88 @ 5 are from scratch on second and third independently rooted
   lineages; **the derived 88 @ 5 and the 88 @ 8 are

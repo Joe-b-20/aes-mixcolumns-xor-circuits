@@ -15,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ORDER = [
     "mixcolumns_97gates_depth3",
+    "mixcolumns_91gates_depth4",
     "mixcolumns_92gates_depth4",
     "mixcolumns_88gates_depth5_fromscratch",
     "mixcolumns_89gates_depth5",
@@ -26,6 +27,8 @@ ORDER = [
 
 # Extra text for the section heading, and a status note printed under it.
 HEADING_SUFFIX = {
+    "mixcolumns_91gates_depth4": "; from scratch, the frontier's depth-4 point",
+    "mixcolumns_92gates_depth4": "; superseded at its depth, retained",
     "mixcolumns_88gates_depth5_fromscratch": "; from scratch, the frontier's depth-5 point",
     "mixcolumns_88gates_depth5": "; derived, superseded at its point",
     "mixcolumns_88gates_depth6": "; improves the frontier at depth 6",
