@@ -158,12 +158,44 @@ depths 6 and 5, each have an exhaustively empty remove-≤3 shell of their own (
 them by ≥ 4 masks as well, and the derived 88 @ depth 5
 has an empty k = 2 shell (≥ 3 masks) but its k = 3 shell was **never swept**, so
 with the 88 @ depth 7 it is one of the two least-certified circuits here;
-105,801 of the ≈ 139,878
-harvested distinct 88-gate mask sets are proven irreducible at k = 2; ≈ 165
-million exact window decisions returned zero reducible windows. Windowed SAT
-(UNSAT to k = 16 and k = 15 on two family anchors, 0 SAT anywhere) is evidence,
-not proof — it is relative to the encoding's fixed slot order. None of this
-bounds 87 away globally.
+all 139,878 harvested distinct 88-gate mask sets
+are proven irreducible at k = 2 — 215,412,120 exact window decisions, 1,540
+windows each, zero reducible.
+
+Two further certificate classes, both stronger than the shells above.
+
+**The joint-level ladder.** For a merged 16-dimensional block that any 87-gate
+circuit must contain, no program of 9, 10, 11, 12 or 13 gates exists — all five
+levels UNSAT — so that block needs at least 14 gates. The levels at 9, 10 and 11
+were re-proved independently with a second CNF encoding, 528 of 528 cubes UNSAT
+at each level, zero disagreements, and the encoding's positive control fired (a
+satisfiable cube with a checked witness), so the test can fail. The 14 case is
+undecided and running; as of 2026-08-29 08:27 −0400, 87 of its 528 cubes are
+proven UNSAT, 0 SAT, 441 open. **That is a coverage bracket, not a refutation.**
+
+**Two population-scale negatives.** First: deleting a gate from a valid 88-gate
+circuit yields an 87 only if that gate is redundant — a duplicated mask, or a
+non-output gate nothing consumes. Across 1,575,516 distinct verified 88-gate
+mask sets there is no duplicated mask, and all 28,796 that carry a build order
+have exactly 56 consumed non-output gates, the value that certifies neither
+defect. No 87 is available by deletion anywhere in that corpus. (The
+consumer-less half is undecided for the 1,546,720 mask-only sets, which carry no
+build order.) Second: for the verified 88 at depth 5, all 35,960 four-output-row
+drop sets were refuted at one gate fewer — no four output rows can be
+resynthesised from the rest of the circuit even one gate more cheaply. The same
+screen ran to completion on the from-scratch 88 at depth 5.
+
+Windowed SAT (UNSAT to k = 16 and k = 15 on two family anchors, 0 SAT anywhere)
+is evidence, not proof — it is relative to the encoding's fixed slot order, and
+the joint-level ladder above is the stronger and independently cross-checked
+object.
+
+**The scope of all of it.** A negative at radius ≤ 4 carries no information
+about whether an 87 exists. These are locality theorems — rigidity statements
+about small, completely enumerated neighbourhoods — not bounds. By this
+instrument an optimal circuit and a four-gates-too-big circuit are
+indistinguishable. The honest bracket is 56 ≤ L(M) ≤ 88. This **extends** the
+2026-07-30 scope entry already in this repository; it does not replace it.
 
 Each circuit is verified by two shipped software paths: `verify.py` against a
 from-scratch GF(2^8) MixColumns, and `audit/cleanroom_verify.py` against a
