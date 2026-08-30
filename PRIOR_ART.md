@@ -247,6 +247,16 @@ Note: Lin et al.'s 91 (and, depending on reading, KLSW17's 97) are stated in
 the s-XOR model; the depth-3 lineage, Osvik–Canright and Jean are free
 straight-line 2-input XOR programs with full listings in the papers.
 
+**Footnote on the Lin et al. model label (added 2026-08-29, unresolved).** This
+table labels Lin, Xiang, Zeng and Zhang's 91 (CT-RSA 2021) **s-XOR**. Two
+independent secondary sources label it **g-XOR**: Yuan et al., ToSC 2024(2),
+Table 2 header, and Shi, Feng and Xu, ToSC 2023(4), Table 3. The primary is
+paywalled and we have not read it, so we cannot resolve the conflict here and
+record it rather than pick a side. It is not only bookkeeping: s-XOR programs
+invert gate-for-gate (Beierle, Kranz and Leander, CRYPTO 2016, Corollary 1), so
+the label decides whether that 91 also implies a 91 for **InvMixColumns**. If
+the g-XOR reading is right, it does not.
+
 ## Claim 1: 97 gates at depth 3 improves the published depth-3 record (99)
 
 Depth-3 lineage in the 2-input XOR model, as documented by Shi, Feng, and Xu
