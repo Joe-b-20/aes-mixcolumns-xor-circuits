@@ -164,14 +164,18 @@ windows each, zero reducible.
 
 Two further certificate classes, both stronger than the shells above.
 
-**The joint-level ladder.** For a merged 16-dimensional block that any 87-gate
-circuit must contain, no program of 9, 10, 11, 12 or 13 gates exists — all five
-levels UNSAT — so that block needs at least 14 gates. The levels at 9, 10 and 11
-were re-proved independently with a second CNF encoding, 528 of 528 cubes UNSAT
-at each level, zero disagreements, and the encoding's positive control fired (a
-satisfiable cube with a checked witness), so the test can fail. The 14 case is
-undecided and running; as of 2026-08-29 08:27 −0400, 87 of its 528 cubes are
-proven UNSAT, 0 SAT, 441 open. **That is a coverage bracket, not a refutation.**
+**The joint-level ladder.** For the merged 16-dimensional block of our standard
+decomposition — the block structure shared by every known 88-gate circuit — no
+program of 9, 10, 11, 12, 13, or 14 gates exists: all six levels UNSAT, the
+14-level decided 2026-09-01 by a complete single-solver run (kissat 4.0.4,
+356,322 core-seconds, on a hash-asserted instance). The block therefore costs
+exactly 15, merging the two largest levels saves nothing, and **no 87-gate
+circuit exists that shares the block structure of every known 88.** The levels
+at 9, 10 and 11 were re-proved independently with a second CNF encoding, 528 of
+528 cubes UNSAT at each level, zero disagreements, and the encoding's positive
+control fired (a satisfiable cube with a checked witness), so the test can
+fail. Scope: an 87 that does not split into these blocks is not excluded by
+this ladder.
 
 **Two population-scale negatives.** First: deleting a gate from a valid 88-gate
 circuit yields an 87 only if that gate is redundant — a duplicated mask, or a
