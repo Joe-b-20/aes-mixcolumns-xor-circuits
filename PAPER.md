@@ -6,8 +6,11 @@ the authoritative version; this file is a condensed markdown companion.*
 
 ## Abstract
 
-We report nine explicit implementations of the AES MixColumns linear
-transformation as circuits of 2-input XOR gates over GF(2). Four improve the
+We report **thirteen** explicit implementations of the AES MixColumns linear
+transformation as circuits of 2-input XOR gates over GF(2) — the nine
+discussed in the results table of Section 2, three earlier circuits kept for
+the archival record, and one cancellation-free circuit that answers a
+different question (Section 2, "The cancellation-free record"). Four improve the
 published depth–count Pareto frontier at their depth, on lineages that contain
 no imported circuit: (i) a **97-gate** circuit at depth **3**, the known minimum
 depth, improving the 99-gate record of Shi, Feng, and Xu (ToSC 2023); (ii) a
@@ -38,6 +41,18 @@ counts.
 
 Dated entries, in the style of the Corrections section of `PRIOR_ART.md`.
 
+- **2026-09-03 (note version 3.2).** Two corrections, both in Section 2. (i) The
+  **corpus-wide deletion negative is now complete**. This note previously
+  reported it as decided for the 28,796 mask sets that carry a build order and
+  explicitly *undecided* for the other 1,546,720; the whole corpus has since
+  been streamed and certified, **88,228,896 of 88,228,896 candidate 87-mask sets
+  closed, 0 realisable**, over all 1,575,516 sets. The earlier, weaker statement
+  is retained beside the new one as history. (ii) The **census is reconciled**:
+  the abstract said "nine explicit implementations" while thirteen circuits
+  ship. Thirteen it is — the nine in the results table, three archival circuits,
+  and `mixcolumns_102gates_cf`, which had no paragraph anywhere in this note
+  despite `README.md` making a cancellation-free claim about it. It has one now,
+  with the `L_cf(M) >= 92` certificate that brackets it.
 - **2026-08-29 (note version 3.2).** The depth-4 frontier point moves from **92
   to 91**. A 91-gate depth-4 circuit, oracle-verified and on this project's own
   from-scratch cascade lineage, is added in Sections 2 and 3; it improves the
@@ -118,6 +133,22 @@ floor is 88 (Jean, ePrint 2026/1481) and stays 88; Sun–Yang–Li's 89 (ePrint
 depth 3, 91 @ depth 6) remain in the repository for the archival record; each is
 dominated by a circuit above.
 
+**The cancellation-free record.** One further circuit is shipped and is not in
+the table above, because it is not competing on the same axis:
+`mixcolumns_102gates_cf`, 102 gates at depth 5, **cancellation-free** — every
+gate's two operand masks have disjoint support, so no gate ever destroys a bit
+an earlier gate produced (κ = 0, verified by replaying the gate list over
+input-dependency bitsets). It is the only such circuit in this repository, and
+the best cancellation-free circuit known for this map. Its interest is that the
+matching lower bound sits *above* the record: `L_cf(M) ≥ 92`, an integer price
+certificate checkable in a fraction of a second with the standard library
+(`bounds/cf_gte92/` in the method repository), so the honest cancellation-free
+bracket is **92 ≤ L_cf(M) ≤ 102**. Equivalently: **every XOR circuit for
+MixColumns with at most 91 gates contains a cancelling gate**, and the 88-gate
+record is four gates below the cancellation-free floor — the one proved quantity
+in this programme that lies above 88. It says nothing about whether 87 exists.
+Counting it and the three archival circuits, thirteen circuits ship.
+
 Five points are worth isolating. First, depth 3 is the known minimum depth for
 AES MixColumns (stated e.g. by Shi, Feng, and Xu; an output depending on w
 inputs needs depth at least ⌈log₂ w⌉, and MixColumns has outputs of weight 7),
@@ -177,14 +208,31 @@ control fired (a satisfiable cube with a checked witness), so the test can
 fail. Scope: an 87 that does not split into these blocks is not excluded by
 this ladder.
 
-**Two population-scale negatives.** First: deleting a gate from a valid 88-gate
-circuit yields an 87 only if that gate is redundant — a duplicated mask, or a
-non-output gate nothing consumes. Across 1,575,516 distinct verified 88-gate
-mask sets there is no duplicated mask, and all 28,796 that carry a build order
-have exactly 56 consumed non-output gates, the value that certifies neither
-defect. No 87 is available by deletion anywhere in that corpus. (The
-consumer-less half is undecided for the 1,546,720 mask-only sets, which carry no
-build order.) Second: for the verified 88 at depth 5, all 35,960 four-output-row
+**Two population-scale negatives.** First, the corpus-wide single-gate deletion
+certificate, now **complete**: let `M` be any of the **1,575,516** distinct
+verified 88-gate mask sets in the corpus — the corpus entire — and `m` any of
+its 56 non-target masks; then `M \ {m}` is not realisable as an XOR
+straight-line program over the 32 inputs. **88,228,896 of 88,228,896 candidate
+87-mask sets closed, machine-checked, 0 realisable** (40.0 % of them passed the
+local necessary condition and were then decided the hard way). So **no 87-gate
+MixColumns circuit is obtainable from any known 88 by deleting one gate**, and
+the statement allows the surviving 87 masks to be rebuilt in any order
+whatsoever — it is strictly stronger than the `B = 56` tripwire, which only asks
+whether a middle gate has *a consumer* and not whether that consumer has an
+alternative derivation. Two byproducts over the same population: no set has a
+duplicated mask, and every set has exactly 56 consumed non-output gates. The
+certificate, its positive control, its tooling and its interval-coverage proof
+are in `corpus/deletion_certificate/` in the method repository.
+
+*Superseded statement, kept as history.* Versions of this note before 2026-09-01
+reported this negative as complete only for the 28,796 sets that carry a build
+order, with the consumer-less test "undecided for the 1,546,720 mask-only sets".
+Those sets were re-streamed from their sources and certified; the covered
+population is now 1,575,516 of 1,575,516, and the two set-identity checks
+(symmetric difference against the corpus index; interval tiling of
+`[0, 1575516)` with no gap and no overlap) are part of the certificate.
+
+Second: for the verified 88 at depth 5, all 35,960 four-output-row
 drop sets were refuted at one gate fewer — no four output rows can be
 resynthesised from the rest of the circuit even one gate more cheaply. The same
 screen ran to completion on the from-scratch 88 at depth 5.
@@ -273,7 +321,24 @@ repository-only check. With Icarus Verilog installed,
 `python3 verify_all.py --with-verilog` adds the hardware path (or
 `python3 verify_verilog.py` for the testbenches alone). Canonical-hash metadata
 is reproduced by
-`python3 scripts/reproduce_canonical_hashes.py --check-bounds`.
+`python3 scripts/reproduce_canonical_hashes.py --check-bounds`. The regression
+suite, which is what CI runs, is
+`python3 -m unittest discover -s tests` (`python3 -m pytest -q tests/` also
+works).
+
+A circuit that is not one of the shipped records — yours, or a paper's — is
+checked with `python3 verify.py --adhoc FILE`, which runs the structural,
+correctness and declared-metadata checks and skips the `bounds.json` hash match
+that by construction applies only to circuits this repository makes claims
+about. That is how the two transcribed published circuits in `prior_art/` are
+verified.
+
+Every generated data file regenerates from its own generator, byte-identically:
+`scripts/build_matrix.py`, `scripts/build_golden_vectors.py`,
+`scripts/build_wrong_answers.py`, `scripts/build_metadata.py`,
+`scripts/generate_listings.py`, `scripts/generate_verilog.py` and
+`scripts/generate_frontier_svg.py` all take `--check`, and the test suite runs
+them that way. Nothing in this repository is hand-edited away from its source.
 
 ## References
 
