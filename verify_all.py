@@ -7,6 +7,19 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
+
+
+def shorten(part: str) -> str:
+    """Render one argv element for display: no absolute paths from the runner's
+    machine, and no dependence on where the repository happens to live."""
+    if part == sys.executable:
+        return "python3"
+    try:
+        return Path(part).resolve().relative_to(ROOT).as_posix()
+    except ValueError:
+        return part
+
+
 BASE_COMMANDS = [
     [sys.executable, str(ROOT / "verify.py")],
     # No --update-artifacts: the clean-room verifier compares its recomputation
@@ -38,10 +51,15 @@ def main() -> int:
         commands.append(command)
 
     for command in commands:
-        print("Running:", " ".join(command))
+        # Repository-relative, and flushed before the child runs: the previous
+        # version printed absolute paths from the runner's filesystem, and
+        # printed them after the output they were meant to introduce.
+        shown = " ".join(shorten(part) for part in command)
+        print("Running:", shown, flush=True)
         result = subprocess.run(command, cwd=ROOT)
+        sys.stdout.flush()
         if result.returncode != 0:
-            print("Verification failed for command:", " ".join(command))
+            print("Verification failed for command:", shown, flush=True)
             return result.returncode
     print("All requested verification paths passed.")
     return 0

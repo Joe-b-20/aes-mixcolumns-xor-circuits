@@ -310,6 +310,29 @@ when Icarus Verilog is available.
   ten-worker run. These are measurements, not promises, and the re-runs are
   re-runs, not independent confirmations.
 
+## 3a. The vocabulary in the provenance fields
+
+`bounds.json`'s `provenance` fields, and the lineage sentences in Section 2,
+name internal machinery. The detail is deliberate — it is what lets a skeptic
+follow a circuit back to the run that produced it — but nothing else in this
+repository defines the words, so:
+
+| term | what it means |
+|---|---|
+| **campaign** | a dated block of search work with a fixed goal and a published run archive. "Campaign 87" is the block whose goal was an 87-gate circuit; "beat88" is the earlier block whose goal was to get below 88 |
+| **fleet** | a set of independent search processes ("workers") run concurrently on one machine from one operator's configuration, sharing nothing but their target. "Sixteen-process fleet" means sixteen such workers |
+| **worker** | one search process in a fleet. Names like `c_naive`, `o1`, `o_polish`, `w10_sym94`, `d3_orb90a` are just its configuration label, logged so a result can be traced to the exact process that emitted it |
+| **session** | one contiguous execution of a worker; a worker restarted after an interruption begins a new session, and its log numbering continues |
+| **restart** | within a session, a reset of the local search back to a stored incumbent after a stall. "Restart 71" is the 71st such reset |
+| **walk iteration** | one step of the local search's mask-set walk — one accepted or rejected mutation of the current circuit's mask set. It is the finest-grained timestamp in the logs, which is why two circuits found seconds apart differ by a few thousand iterations |
+| **hunt87**, **hunt-deeper** | named configurations of a campaign-87 fleet: `hunt87` searched for 87 gates at any depth, `hunt-deeper` searched for smaller circuits at greater depth |
+| **orbit** | a search restricted to circuits invariant under a column rotation (ρ or ρ², the AES column shift), so a 32-bit target is worked as a smaller symmetric one |
+| **tripwire**, **B = 56** | the cheap deletability screen: `B` is the number of consumed non-output gates, which is `gates - 32` exactly when no gate is dead or duplicated. `B != 56` on an 88 means a gate can be deleted. See `corpus/tripwire_demo/` in the method repository |
+
+Wall-clock times in `provenance` fields are **local time, UTC−04:00**, and
+worker run-times `t` are seconds since that worker process started, not since
+the campaign began.
+
 ## 4. Reproduce
 
 ~~~text
