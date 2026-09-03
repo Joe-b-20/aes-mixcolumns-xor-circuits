@@ -24,7 +24,7 @@ ALL CIRCUITS VERIFIED.
 The map is linear, so checking the 32 unit inputs is a **proof of correctness,
 not a sample**. The verifier rebuilds the target from the FIPS-197 field
 arithmetic — never from the circuit under test, never from a bundled matrix —
-recomputes gate count and depth (measured, not trusted), and checks each
+recomputes gate count and depth rather than reading them, and checks each
 circuit's hashes against `bounds.json`. CI additionally runs the regression
 suite (`python3 -m unittest discover -s tests`, ~90 s), which requires the
 verifier to reject the eight broken circuits in [`tests/bad/`](tests/bad/).
@@ -57,16 +57,22 @@ These three files are generated from the specification by
 |---|---|---|---|---|
 | 3 | **97** | `circuits/mixcolumns_97gates_depth3.json` | 99 (Shi–Feng–Xu, ToSC 2023) | depth 3 is the minimum possible |
 | 4 | **91** | `circuits/mixcolumns_91gates_depth4.json` | 97 (Osvik–Canright, ePrint 2024/1076) | |
-| 5 | **88** | `circuits/mixcolumns_88gates_depth5_fromscratch.json` | 94 (Osvik–Canright) | fewest gates known at any depth — a **tie** with Jean's 88 (ePrint 2026/1481), who found it first; this one is two levels shallower |
+| 5 | **88** | `circuits/mixcolumns_88gates_depth5_fromscratch.json` | 94 (Osvik–Canright) | fewest gates known at any depth — a **tie** with Jean's 88 (ePrint 2026/1481), who found it first; this one is two levels shallower. **Note the `_fromscratch` suffix**: a second 88 at depth 5 also ships, as `circuits/mixcolumns_88gates_depth5.json`, and that one is **derived from Jean's circuit** |
 
 Which row do I want? Round-based design → the 88 at depth 5. Heavily
 pipelined / latency-critical → the 97 at depth 3. Everything else shipped
 (further 88s at depths 6–8, superseded and archival circuits, the best known
 cancellation-free circuit at 102) is in
 [`circuits_metadata.csv`](circuits_metadata.csv): per-circuit depth,
-per-output depth, fan-out histogram, SHA-256 — 21 computed columns. No area or
-latency figures are offered; gate count is not one. A circuit file's contents
-never change under a stable name.
+per-output depth, fan-out histogram, SHA-256 — 21 computed columns, plus a
+`provenance_class` column reduced from `bounds.json` so that
+`derived-from-published-work` is one sort away. Fan-out and per-output depth
+are reported because in a masked or threshold implementation they, rather than
+gate count, drive glitch-extended probing behaviour and the cost of the
+refresh network: the 97 @ 3 has a maximum fan-out of 5. No area or latency
+figures are offered; gate count is not one. A circuit file's contents never
+change under a stable name, which is why the derived 88 keeps the plain
+`_depth5` name it was published under.
 
 ## File format
 
@@ -106,36 +112,49 @@ python3 scripts/overlap.py circuits/mixcolumns_88gates_depth7.json prior_art/jea
 
 For scale: two *independently published* circuits — Jean's 88 and
 Sun–Yang–Li's 89 (ePrint 2025/1493, also in `prior_art/`) — share 63. Overlap
-of this size is what independent constructions for this map look like. Two
-shipped 88s (`_depth5` and `_depth8`) have seed chains that pass through
-Jean's circuit and are derived work, disclosed link by link in their
-`bounds.json` provenance.
+of this size is what independent constructions for this map look like.
+
+Exactly two shipped circuits are derived work: `mixcolumns_88gates_depth5.json`
+and `mixcolumns_88gates_depth8.json`, whose seed chains pass through Jean's
+circuit. Both are disclosed link by link in their `bounds.json` provenance and
+carry `derived-from-published-work` in `circuits_metadata.csv`. Neither is the
+frontier point above — that is `mixcolumns_88gates_depth5_fromscratch.json`,
+whose chain reads no circuit at all.
 
 ## What is known about optimality
 
 One line each. The proofs, instruments, negative results and open leads are in
 [slp-plateau-search](https://github.com/Joe-b-20/slp-plateau-search):
 
-- Any circuit needs **≥ 56** gates — the only unconditional lower bound known
-  for this matrix. So `56 ≤ L(M) ≤ 88`.
+- Any circuit needs **≥ 56** gates — the best unconditional bound we are aware
+  of for this matrix. So `56 ≤ L(M) ≤ 88`.
 - Any depth-3 circuit needs **≥ 80** (checkable certificate) and **≥ 81** by a
   time-limited solver bound.
 - Any circuit where no gate's inputs share a bit needs **≥ 92**; the 102 here is
   the best such circuit known — so every circuit of ≤ 91 gates contains a
   cancelling gate.
-- No 87-gate circuit shares the internal block structure of every known 88 (a
-  SAT result, six UNSAT levels), and none is one gate-deletion away from any
-  of 1,575,516 known 88s (all 88,228,896 deletions machine-checked).
+- **Under that project's block decomposition**, no 87-gate circuit shares the
+  internal block structure of every known 88 (a SAT result, six UNSAT levels).
+  The decomposition is a choice; whether every known 88 respects it was not
+  verified, and the decisive level carries no DRAT proof, so it rests on two
+  solvers agreeing on one CNF.
+- No 87 is one gate-deletion away from any of **1,575,516 distinct verified
+  88-gate value sets** — each a set of 88 intermediate values known to be
+  realisable, of which 28,796 carry a full build order — with all 88,228,896
+  deletions machine-checked.
 
 Whether 87 exists at all is open: every negative above is either a bound below
 88 or a statement about a completely enumerated neighbourhood.
 
-Beat a row of the table? Check it with `verify.py --adhoc`, then open an issue
-with the file. We verify it, add its `bounds.json` entry (that is the
-acceptance step), and you get named credit in the table and the changelog.
+To beat a row of the table, check your circuit with `verify.py --adhoc` and
+open an issue with the file. We verify it and add its `bounds.json` entry,
+which is the acceptance step; the table and the changelog then carry your
+name.
 
 ## Cite / license
 
 MIT. Cite via <https://doi.org/10.5281/zenodo.21299092> (`CITATION.cff`).
-Sole-author work; no employer IP. Report verification failures as issues with
-your Python version and the full output.
+Sole-author work by Joe; no employer IP. The search behind these circuits was
+carried out with heavy use of AI agents directed by the author, and "we" on
+these pages means that collaboration. Report verification failures as issues
+with your Python version and the full output.

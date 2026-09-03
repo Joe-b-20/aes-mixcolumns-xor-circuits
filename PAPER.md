@@ -46,7 +46,7 @@ Dated entries, in the style of the Corrections section of `PRIOR_ART.md`.
   reported it as decided for the 28,796 mask sets that carry a build order and
   explicitly *undecided* for the other 1,546,720; the whole corpus has since
   been streamed and certified, **88,228,896 of 88,228,896 candidate 87-mask sets
-  closed, 0 realisable**, over all 1,575,516 sets. The earlier, weaker statement
+  closed, 0 realisable**, over all 1,575,516 verified 88-gate value sets. The earlier, weaker statement
   is retained beside the new one as history. (ii) The **census is reconciled**:
   the abstract said "nine explicit implementations" while thirteen circuits
   ship. Thirteen it is — the nine in the results table, three archival circuits,
@@ -58,14 +58,14 @@ Dated entries, in the style of the Corrections section of `PRIOR_ART.md`.
   from-scratch cascade lineage, is added in Sections 2 and 3; it improves the
   97-gate published depth-4 point by **six** gates rather than five. Two further
   verified 91s exist in independent lineages and are not shipped. The 92 @ depth
-  4 is **retained, not withdrawn** — its claim stands as made, and it is not a
-  dead-gate strip of the 91 (all 92 of its gates are live). Every frontier
+  4 is **retained**, its claim standing as made, and it is not a dead-gate strip
+  of the 91 — all 92 of its gates are live. Every frontier
   statement dated earlier than today therefore reads 92 at depth 4 and is
-  correct as history. **90 @ depth 4 is undecided, not refuted**: the exactness
+  correct as history. **90 @ depth 4 is undecided rather than refuted**: the exactness
   result behind the 91 is relative to a fixed mask vocabulary, so nothing here
   says "optimal at depth 4". The same entry corrects two figures in Section 2 —
   the k = 2 irreducibility sweep finished, so the count is all 139,878 harvested
-  mask sets, not 105,801 of them — and adds the joint-level UNSAT ladder and the
+  mask sets rather than 105,801 of them — and adds the joint-level UNSAT ladder and the
   deletion regularity.
 - **2026-07-30 (note version 3.1).** Adds a third from-scratch 88-gate circuit,
   at depth 5, in Sections 2 and 3. Its root is a randomized XOR tree over the 32
@@ -73,7 +73,7 @@ Dated entries, in the style of the Corrections section of `PRIOR_ART.md`.
   frontiers reported on 2026-07-29 collapse into one**: 97 @ 3, 92 @ 4, 88 @ 5.
   **88 is still not a new count** — it is Jean's (ePrint 2026/1481, posted
   2026-07-23), Jean has priority, and what changed is whose lineage reaches the
-  (88, 5) point, not the count. Two statements of version 3 are corrected: the
+  (88, 5) point rather than the count. Two statements of version 3 are corrected: the
   89 @ depth 5 is no longer the depth-5 point of any frontier reported here, and
   the derived 88 @ depth 5 is no longer the circuit establishing that point.
   Both are retained, unwithdrawn, with their earlier claims intact.
@@ -115,7 +115,7 @@ the 32 unit-input vectors is a complete correctness check.
 | Circuit | Gates | Depth | Published best at that depth | Relation | Lineage |
 |---|---|---|---|---|---|
 | `mixcolumns_97gates_depth3` | 97 | 3 | 99 (Shi, Feng, Xu, ToSC 2023) | improves it by 2 | own |
-| `mixcolumns_91gates_depth4` | 91 | 4 | 97 (Osvik, Canright, ePrint 2024/1076, App. G) | improves it by 6. **Not claimed optimal**: 90 at depth 4 is undecided, not refuted | own, from scratch |
+| `mixcolumns_91gates_depth4` | 91 | 4 | 97 (Osvik, Canright, ePrint 2024/1076, App. G) | improves it by 6. **Not claimed optimal**: 90 at depth 4 is undecided rather than refuted | own, from scratch |
 | `mixcolumns_92gates_depth4` | 92 | 4 | 97 (as above) | improves it by 5; **superseded at its depth** within this repository by the 91 above, and retained. Not a dead-gate strip of it — all 92 gates are live | own |
 | `mixcolumns_88gates_depth5_fromscratch` | 88 | 5 | 94 (Osvik, Canright, ePrint 2024/1076, App. F) | improves it by 6, and dominates the published 88 — same count, two levels shallower. **Not a new count**: 88 is Jean's, who has priority | own, from scratch |
 | `mixcolumns_89gates_depth5` | 89 | 5 | 94 (as above) | improves it by 5; dominated at its depth by the row above | own |
@@ -142,7 +142,7 @@ input-dependency bitsets). It is the only such circuit in this repository, and
 the best cancellation-free circuit known for this map. Its interest is that the
 matching lower bound sits *above* the record: `L_cf(M) ≥ 92`, an integer price
 certificate checkable in a fraction of a second with the standard library
-(`bounds/cf_gte92/` in the method repository), so the honest cancellation-free
+(`bounds/cf_gte92/` in the method repository), so the cancellation-free
 bracket is **92 ≤ L_cf(M) ≤ 102**. Equivalently: **every XOR circuit for
 MixColumns with at most 91 gates contains a cancelling gate**, and the 88-gate
 record is four gates below the cancellation-free floor — the one proved quantity
@@ -152,8 +152,8 @@ Counting it and the three archival circuits, thirteen circuits ship.
 Five points are worth isolating. First, depth 3 is the known minimum depth for
 AES MixColumns (stated e.g. by Shi, Feng, and Xu; an output depending on w
 inputs needs depth at least ⌈log₂ w⌉, and MixColumns has outputs of weight 7),
-so the contribution of the 97-gate circuit is the count at that depth, not the
-depth. Second, the 89-gate depth-5 circuit is shallower than any published
+so the contribution of the 97-gate circuit is the count at that depth rather
+than the depth itself. Second, the 89-gate depth-5 circuit is shallower than any published
 circuit of fewer than 94 gates whose depth is stated; the published sub-89
 point (88, Jean) sits at depth 7. Third, the depth-7 88 was found 2026-07-26 by
 this project's own search along its own logged lineage — from-scratch 97 @ depth
@@ -195,23 +195,31 @@ windows each, zero reducible.
 
 Two further certificate classes, both stronger than the shells above.
 
-**The joint-level ladder.** For the merged 16-dimensional block of our standard
-decomposition — the block structure shared by every known 88-gate circuit — no
-program of 9, 10, 11, 12, 13, or 14 gates exists: all six levels UNSAT, the
-14-level decided 2026-09-01 by a complete single-solver run (kissat 4.0.4,
-356,322 core-seconds, on a hash-asserted instance). The block therefore costs
+**The joint-level ladder.** For the merged 16-dimensional block of **our block
+decomposition** no program of 9, 10, 11, 12, 13, or 14 gates exists: all six
+levels UNSAT, the 14-level decided 2026-09-01 by a complete single-solver run
+(kissat 4.0.4, 356,322 core-seconds, on a hash-asserted instance) and confirmed
+the same day by CaDiCaL 3.0.0 on the same file. The block therefore costs
 exactly 15, merging the two largest levels saves nothing, and **no 87-gate
-circuit exists that shares the block structure of every known 88.** The levels
-at 9, 10 and 11 were re-proved independently with a second CNF encoding, 528 of
-528 cubes UNSAT at each level, zero disagreements, and the encoding's positive
-control fired (a satisfiable cube with a checked witness), so the test can
-fail. Scope: an 87 that does not split into these blocks is not excluded by
-this ladder.
+circuit exists that shares the block structure of the known 88s as that
+decomposition reads them.** The levels at 9, 10 and 11 were re-proved
+independently with a second CNF encoding, 528 of 528 cubes UNSAT at each level,
+zero disagreements, and the encoding's positive control fired (a satisfiable
+cube with a checked witness), so the test can fail.
+
+Scope, and it is the same wherever this result is stated. The decomposition is
+a choice of ours; whether every known 88-gate circuit respects it was not
+verified, and a verified 91-gate depth-6 circuit in this repository has a gate
+whose line support fits no single block of it. An 87 that does not split into
+these blocks is not excluded by this ladder. Neither k = 12, 13 nor 14 carries
+a DRAT proof, so the decisive level rests on two complete solvers agreeing on
+one CNF rather than on a checked certificate.
 
 **Two population-scale negatives.** First, the corpus-wide single-gate deletion
 certificate, now **complete**: let `M` be any of the **1,575,516** distinct
-verified 88-gate mask sets in the corpus — the corpus entire — and `m` any of
-its 56 non-target masks; then `M \ {m}` is not realisable as an XOR
+verified 88-gate **value sets** in the corpus — each a set of 88 intermediate
+values known to be realisable, of which 28,796 carry a full build order — and
+`m` any of its 56 non-target masks; then `M \ {m}` is not realisable as an XOR
 straight-line program over the 32 inputs. **88,228,896 of 88,228,896 candidate
 87-mask sets closed, machine-checked, 0 realisable** (40.0 % of them passed the
 local necessary condition and were then decided the hard way). So **no 87-gate
@@ -225,8 +233,9 @@ certificate, its positive control, its tooling and its interval-coverage proof
 are in `corpus/deletion_certificate/` in the method repository.
 
 *Superseded statement, kept as history.* Versions of this note before 2026-09-01
-reported this negative as complete only for the 28,796 sets that carry a build
-order, with the consumer-less test "undecided for the 1,546,720 mask-only sets".
+reported this negative as complete only for the 28,796 value sets that carry a
+build order, with the consumer-less test "undecided for the 1,546,720
+mask-only sets".
 Those sets were re-streamed from their sources and certified; the covered
 population is now 1,575,516 of 1,575,516, and the two set-identity checks
 (symmetric difference against the corpus index; interval tiling of
@@ -238,15 +247,15 @@ resynthesised from the rest of the circuit even one gate more cheaply. The same
 screen ran to completion on the from-scratch 88 at depth 5.
 
 Windowed SAT (UNSAT to k = 16 and k = 15 on two family anchors, 0 SAT anywhere)
-is evidence, not proof — it is relative to the encoding's fixed slot order, and
+is evidence and not proof — it is relative to the encoding's fixed slot order, and
 the joint-level ladder above is the stronger and independently cross-checked
 object.
 
 **The scope of all of it.** A negative at radius ≤ 4 carries no information
 about whether an 87 exists. These are locality theorems — rigidity statements
-about small, completely enumerated neighbourhoods — not bounds. By this
+about small, completely enumerated neighbourhoods — and not bounds. By this
 instrument an optimal circuit and a four-gates-too-big circuit are
-indistinguishable. The honest bracket is 56 ≤ L(M) ≤ 88. This **extends** the
+indistinguishable. The bracket is 56 ≤ L(M) ≤ 88. This **extends** the
 2026-07-30 scope entry already in this repository; it does not replace it.
 
 Each circuit is verified by two shipped software paths: `verify.py` against a
@@ -307,8 +316,8 @@ when Icarus Verilog is available.
   22 s from shipped seeds, against 592 s for the archived 2026-07-14 run on the
   v1 engine; the 88 @ depth 7 in 19.4 and 31.0 minutes in two single-worker
   re-runs from the ρ²-symmetric 94 seed, against 32.9 minutes in the archived
-  ten-worker run. These are measurements, not promises, and the re-runs are
-  re-runs, not independent confirmations.
+  ten-worker run. These are measurements rather than promises, and a re-run is a re-run rather
+  than an independent confirmation.
 
 ## 3a. The vocabulary in the provenance fields
 
@@ -330,8 +339,8 @@ repository defines the words, so:
 | **tripwire**, **B = 56** | the cheap deletability screen: `B` is the number of consumed non-output gates, which is `gates - 32` exactly when no gate is dead or duplicated. `B != 56` on an 88 means a gate can be deleted. See `corpus/tripwire_demo/` in the method repository |
 
 Wall-clock times in `provenance` fields are **local time, UTC−04:00**, and
-worker run-times `t` are seconds since that worker process started, not since
-the campaign began.
+worker run-times `t` are seconds since that worker process started rather than
+since the campaign began.
 
 ## 4. Reproduce
 
