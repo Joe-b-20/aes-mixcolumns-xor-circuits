@@ -11,6 +11,11 @@ single source, and every point in it is sourced:
     them symmetrically.
   - this project's circuits: bounds.json (97@3, 91@4, 92@4, 89@5, 88@5 derived,
     88@5 from scratch, 88@6, 88@7, 88@8).
+  - twelve of the thirteen shipped circuits appear here. The thirteenth,
+    mixcolumns_102gates_cf at 102 gates, is off the top of the gate axis and is
+    answering a different question (cancellation-freeness, bracketed by
+    92 <= L_cf <= 102); a footnote under the figure says so rather than
+    silently leaving a reader to count 12 against a 13-row CSV.
   - ONE frontier line is drawn, because since 2026-07-30 only one is true:
     97@3, 91@4, 88@5, every point on a lineage with no imported material.
     Earlier versions of this figure drew two, the combined one reaching 88@5
@@ -34,10 +39,12 @@ single source, and every point in it is sourced:
     results, carried over unchanged from the earlier figure.
 """
 
+import argparse
+import sys
 from pathlib import Path
 
 # ---- geometry (unchanged from the earlier figure) --------------------------
-W, H = 670, 390
+W, H = 670, 408
 XL, XR, YT, YB = 70, 630, 30, 330                        # plot box
 DMIN, DMAX = 3, 10                                       # depth axis
 GMIN, GMAX = 86, 100                                     # gate axis
@@ -59,7 +66,8 @@ OURS = [(3, 97, "97", 11, 15, "start"),
         (4, 91, "91", -10, 4, "end"),
         (5, 88, "88", 8, -8, "start")]
 # ours, no imported material, but dominated by a point on the line above
-OURS_OFF = [(5, 89, "89", 8, -8, "start"),
+OURS_OFF = [(4, 92, "92", 9, 15, "start"),
+            (5, 89, "89", 8, -8, "start"),
             (6, 88, "88 @ 6", 9, -8, "start")]
 TIE = (7, 88)                                            # ours == the published point
 # ours, but derived from published work (seed chain through Jean's 88). The
@@ -124,7 +132,7 @@ def main():
          '5 at the same coordinates, which that circuit supersedes; it is not '
          'drawn separately. Solid blue markers off the line are ours and also '
          'free of imported material, but dominated within this work: 89 at '
-         'depth 5, and 88 at depth 6, which still lies four gates below '
+         'depth 5, 92 at depth 4, and 88 at depth 6, which still lies four gates below '
          'Maximov\'s published depth-6 92. The depth-7 point is drawn as a '
          'half-grey half-blue marker because our 88 there ties the published 88 '
          'with an independent circuit (61 of 88 masks shared) rather than '
@@ -134,7 +142,11 @@ def main():
          '(ePrint 2025/1493), off the frontier; that paper states no depth, so '
          'it is placed at depth 9, this project\'s own measurement of its '
          'transcription. Crosses mark this project\'s superseded earlier '
-         'results.</desc>',
+         'results. The repository also ships a thirteenth circuit, 102 gates '
+         'at depth 5 and cancellation-free, which is off the top of this gate '
+         'axis and is measured against a different bound (92 or more gates for '
+         'any cancellation-free circuit); a footnote under the figure records '
+         'that it is not plotted.</desc>',
          f'<rect x="0" y="0" width="{W}" height="{H}" fill="white"/>']
 
     # gridlines + axis ticks
@@ -227,13 +239,36 @@ def main():
             cross(e, lx, ly - 4)
         e.append(f'<text x="{tx}" y="{ly}" font-size="12" fill="#333333">{txt}</text>')
 
+    e.append(f'<text x="{XL}" y="{H-8}" font-size="10.5" fill="#888888">'
+             f'Not plotted: mixcolumns_102gates_cf, 102 gates at depth 5, off '
+             f'this axis \u2014 it is the cancellation-free record, bracketed '
+             f'92 \u2264 L_cf \u2264 102. Twelve of thirteen shipped circuits '
+             f'are above.</text>')
+
     e.append("</svg>")
 
-    out = Path(__file__).resolve().parents[1] / "docs" / "frontier.svg"
+    body = ("\n".join(e) + "\n").encode("utf-8")
+    root = Path(__file__).resolve().parents[1]
+    out = root / "docs" / "frontier.svg"
+    rel = out.relative_to(root).as_posix()
+
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--check", action="store_true",
+                    help="Write nothing; exit nonzero if the file on disk is stale.")
+    args = ap.parse_args()
+
+    if args.check:
+        if out.exists() and out.read_bytes() == body:
+            print(f"[OK] {rel} is byte-identical to what this script generates")
+            return 0
+        print(f"[STALE] {rel} differs from what this script generates")
+        return 1
+
     out.parent.mkdir(exist_ok=True)
-    out.write_text("\n".join(e) + "\n", encoding="utf-8")
-    print(f"wrote {out}")
+    out.write_bytes(body)
+    print(f"wrote {rel}  ({len(body)} bytes)")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

@@ -177,15 +177,17 @@ class VerificationTests(unittest.TestCase):
             self.assertNotIn(path.stem, bounds_ids)
 
     def test_generated_data_files_match_their_generators(self) -> None:
-        """matrix.txt, golden_vectors.txt, wrong_answers.md and
-        circuits_metadata.csv are generated, not typed. Each generator's
-        --check mode must find the shipped file byte-identical, so a file and
-        the script that vouches for it cannot drift apart."""
+        """matrix.txt, golden_vectors.txt, wrong_answers.md,
+        circuits_metadata.csv and docs/frontier.svg are generated, not typed.
+        Each generator's --check mode must find the shipped file
+        byte-identical, so a file and the script that vouches for it cannot
+        drift apart."""
         for script in (
             "build_matrix.py",
             "build_golden_vectors.py",
             "build_wrong_answers.py",
             "build_metadata.py",
+            "generate_frontier_svg.py",
         ):
             with self.subTest(script=script):
                 result = subprocess.run(
