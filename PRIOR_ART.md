@@ -229,9 +229,10 @@ of the order the gates happen to be written in, and computing it over each
 published mask set still returns **9** for Sun–Yang–Li's and **7** for Jean's
 (three of Jean's output bits sit at depth 7). So neither circuit can be
 rescheduled shallower, and no comparison below depends on a transcription choice
-of ours. Reproducible with `engines.py:relax` in the method repository; the run
-and its command are in that repository's
-`evidence/campaign87_imported_prior_art/PROVENANCE.md`. This check was
+of ours. Reproducible with the `relax` function of `pipeline/engines.py` in the method
+repository; the run and its command are in that repository's
+`evidence/campaign87_imported_prior_art/PROVENANCE.md`, and both transcribed
+circuits are shipped here in `prior_art/` so the measurement can be redone. This check was
 suggested and independently performed by an external first-reader of the v3
 release.
 
@@ -456,7 +457,11 @@ it does and does not do, in that order:
   Until it was found, the (88, 5) point in this repository was held only by the
   derived circuit of Claim 6. **This removes this project's dependence on
   Jean's circuit at that point. It does not beat it.** The two frontiers stated
-  here since 2026-07-29 therefore collapse to one: **97 @ 3, 92 @ 4, 88 @ 5**.
+  here since 2026-07-29 therefore collapse to one: **97 @ 3, 92 @ 4, 88 @ 5**
+  *(as of 2026-07-30, the date of this claim. The depth-4 point moved to 91 on
+  2026-08-29 — see the Corrections log — so the current frontier reads 97 @ 3,
+  91 @ 4, 88 @ 5. What this claim was about, the collapse from two frontiers to
+  one, is unaffected.)*
 - **Against published work.** Six gates below the published depth-5 point (94,
   Osvik and Canright, ePrint 2024/1076, Appendix F). It dominates Jean's 88 —
   equal count, two levels shallower — on the depth 7 discussed in the frontier

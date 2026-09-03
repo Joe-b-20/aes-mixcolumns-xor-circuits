@@ -11,7 +11,7 @@ these is a valid MixColumns circuit; do not use them for anything else.
 
 | file | the defect | what would slip through without this test |
 |---|---|---|
-| `bad_removed_gate.json` | one gate deleted | a circuit that no longer computes the map |
+| `bad_removed_gate.json` | one gate deleted, the later indices left alone | a file whose gate list and output bindings disagree. `verify.py` catches it as `output 25: invalid signal index 119` — a dangling reference, not "the map is wrong", which is the honest description of what this mutant is |
 | `bad_modified_parent_pair.json` | gate 0 XORs a signal with itself | a gate computing 0 |
 | `bad_permuted_output_bindings.json` | two output bindings swapped | right gates, wrong wiring to the outputs |
 | `bad_reversed_output_bindings.json` | output bit order reversed | the classic convention mistake — see `wrong_answers.md` |
@@ -23,9 +23,11 @@ these is a valid MixColumns circuit; do not use them for anything else.
 **What is deliberately not here.** A circuit with a gate nothing reads is still
 a *correct* MixColumns circuit, so `verify.py` accepts it and no mutant here
 tests otherwise. That defect is one the record's gate count would be wrong
-about, not one its correctness would be — it is caught by `tools/tripwire.py`
-in the [methods repository](https://github.com/Joe-b-20/slp-plateau-search),
-which reports it in a fraction of a second on any circuit file.
+about, not one its correctness would be — it is caught by `tripwire.py` in the
+[method repository](https://github.com/Joe-b-20/slp-plateau-search), shipped
+there both at `tools/tripwire.py` and, with a worked transcript and two planted
+positives, at `corpus/tripwire_demo/`. It reports the defect in a fraction of a
+second on any circuit file, including one that is not this project's.
 
 The independent recomputation in `audit/cleanroom_verify.py` runs a further 14
 adversarial tests of its own, including four wrong-convention target sets
