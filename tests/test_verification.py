@@ -5,6 +5,7 @@ import json
 import shutil
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -104,6 +105,76 @@ class VerificationTests(unittest.TestCase):
             text=True,
         )
         self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
+
+    def test_adhoc_accepts_a_circuit_with_no_bounds_entry(self) -> None:
+        """A stranger's correct circuit must verify. Default mode requires a
+        bounds.json entry (check 4); --adhoc is the path for everyone else."""
+        artifact = copy.deepcopy(self.base_circuit)
+        artifact["id"] = "mixcolumns_someone_else"
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "newcomer.json"
+            path.write_text(json.dumps(artifact), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "verify.py"), "--adhoc", str(path)],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+            )
+        self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
+        self.assertIn("ALL CIRCUITS CORRECT", result.stdout)
+        self.assertNotIn("bounds.json does not match", result.stdout)
+
+        # ... and the same file in default mode is still refused, because the
+        # shipped set is exactly the set this repository makes claims about.
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "newcomer.json"
+            path.write_text(json.dumps(artifact), encoding="utf-8")
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "verify.py"), str(path)],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+            )
+        self.assertNotEqual(result.returncode, 0)
+
+    def test_adhoc_still_rejects_every_bad_circuit(self) -> None:
+        bad = sorted((ROOT / "tests" / "bad").glob("*.json"))
+        self.assertEqual(len(bad), 8)
+        for path in bad:
+            with self.subTest(mutant=path.name):
+                result = subprocess.run(
+                    [sys.executable, str(ROOT / "verify.py"), "--adhoc", str(path)],
+                    cwd=ROOT,
+                    capture_output=True,
+                    text=True,
+                )
+                self.assertNotEqual(result.returncode, 0, msg=result.stdout)
+                self.assertIn("[FAIL]", result.stdout)
+
+    def test_adhoc_verifies_the_shipped_prior_art(self) -> None:
+        """Jean's and Sun-Yang-Li's transcribed circuits are not records of
+        this project, are absent from bounds.json, and are verified this way."""
+        files = sorted((ROOT / "prior_art").glob("*.json"))
+        self.assertEqual(len(files), 2)
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "verify.py"), "--adhoc"] + [str(f) for f in files],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
+        self.assertIn("ALL CIRCUITS CORRECT", result.stdout)
+
+    def test_prior_art_is_excluded_from_the_records(self) -> None:
+        bounds_ids = {
+            entry["id"]
+            for entry in json.loads((ROOT / "bounds.json").read_text(encoding="utf-8"))["circuits"]
+        }
+        self.assertEqual(len(bounds_ids), len(list((ROOT / "circuits").glob("*.json"))))
+        for path in sorted((ROOT / "prior_art").glob("*.json")):
+            artifact = json.loads(path.read_text(encoding="utf-8"))
+            self.assertNotIn(artifact.get("id"), bounds_ids)
+            self.assertNotIn(path.stem, bounds_ids)
 
     def test_rejects_permuted_outputs(self) -> None:
         artifact = copy.deepcopy(self.base_circuit)
