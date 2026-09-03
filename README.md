@@ -38,6 +38,8 @@ must reject the broken circuits in `tests/bad/`. CI runs all of it.
 
 ## The circuits
 
+![depth–gate-count frontier: this repo's records vs prior published bests](docs/frontier.svg)
+
 | depth | gates | file | prior published best | note |
 |---|---|---|---|---|
 | 3 | **97** | `circuits/mixcolumns_97gates_depth3.json` | 99 (Shi–Feng–Xu, ToSC 2023) | depth 3 is the minimum possible |
