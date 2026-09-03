@@ -114,12 +114,23 @@ HOW TO USE THESE
   A circuit file in this project is a list of 2-input XOR gates over 32
   input signals.  To check it against a vector: set input signal j to bit j
   of the in vector, replay the gates in order, and read output r off the
-  signal whose accumulated input-mask equals row r of matrix.txt.  The
-  transcript in CONTROLS.txt does exactly this against a shipped 88-gate
-  circuit.
+  signal whose accumulated input-mask equals row r of matrix.txt.  That
+  replay is control 2 of scripts/build_golden_vectors.py, which generates
+  this file: it runs every vector below through
+  circuits/mixcolumns_88gates_depth5_fromscratch.json
+  gate by gate, on real bit values rather than masks, and prints the
+  transcript.  Re-run it yourself:
+
+      python3 scripts/build_golden_vectors.py --check
 
   These vectors are a CONVENIENCE, not the proof.  Because the map is
   linear, the 32 basis vectors (unit inputs) already determine it
-  completely; verify_circuit.py checks all 32 at once by comparing masks,
-  which is why it is a proof of correctness and not a sample.  The FIPS-197
-  column is here so an integrator can eyeball agreement with the standard.
+  completely; verify.py compares all 32 output masks at once, which is
+  why it is a proof of correctness and not a sample.  The FIPS-197
+  column is here so an integrator can eyeball agreement with the
+  standard.
+
+  To check a circuit file of your own, including one this repository has
+  never seen:
+
+      python3 verify.py --adhoc <your_file.json>

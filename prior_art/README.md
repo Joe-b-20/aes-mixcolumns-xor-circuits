@@ -20,6 +20,14 @@ file's own `input_permutation_paper_to_repo` field, so the transcription is
 reversible and auditable against the paper. Gate lists are byte-for-byte as
 imported. Jean has **priority on the 88-gate count**; see `PRIOR_ART.md`.
 
+One consequence of "byte-for-byte as imported": each file's `outputConvention`
+text refers to `verify_circuit.py`, the *method* repository's oracle
+([slp-plateau-search](https://github.com/Joe-b-20/slp-plateau-search)), which
+is where these transcriptions were made and first verified. That file is not
+shipped here and the sentence is not about this repository; `verify.py
+--adhoc` is the equivalent here. The files are left untouched rather than
+edited, because an imported artifact that gets tidied is no longer an import.
+
 ## They are not records here
 
 - Neither file appears in `bounds.json`, in the README's records table, in

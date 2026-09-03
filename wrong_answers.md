@@ -4,8 +4,11 @@ You wired one of these circuits into your design, ran a MixColumns column
 through it, and the bytes that came back are not the bytes you expected.
 Find your output in the table and the diagnosis is on the same row.
 
-Every value below was **computed**, not transcribed: see
-`_build_wrong.py` and the transcript in `CONTROLS.txt`.
+Every value below was **computed**, not transcribed. The script that
+computed it is `scripts/build_wrong_answers.py`, which generates this
+file, implements all seven conventions from GF(2^8), and prints its own
+controls; `python3 scripts/build_wrong_answers.py --check` re-runs them
+and fails if a single byte here has drifted.
 
 ## The reference input
 
@@ -94,8 +97,7 @@ Computed collision check over all 7 variants on `db 13 53 45`: 6 distinct output
 ## If your output is on none of these rows
 
 Then it is not a convention mismatch, it is a wiring bug. Run
-`python3 verify_circuit.py <your_file.json>`: it rebuilds MixColumns from
-the GF(2^8) field arithmetic and reports exactly how many of the 32 output
-bits your circuit builds. That number tells you whether you are off by a
-convention (usually 0 or a small number correct) or off by a few gates
-(usually 25-31 correct).
+`python3 verify.py --adhoc <your_file.json>`: it rebuilds MixColumns from
+the GF(2^8) field arithmetic and reports, for each of the 32 output bits,
+whether your circuit builds it. A convention mismatch usually gets none
+or very few of them right; a wiring bug usually gets 25-31 right.

@@ -176,6 +176,56 @@ class VerificationTests(unittest.TestCase):
             self.assertNotIn(artifact.get("id"), bounds_ids)
             self.assertNotIn(path.stem, bounds_ids)
 
+    def test_generated_data_files_match_their_generators(self) -> None:
+        """matrix.txt, golden_vectors.txt, wrong_answers.md and
+        circuits_metadata.csv are generated, not typed. Each generator's
+        --check mode must find the shipped file byte-identical, so a file and
+        the script that vouches for it cannot drift apart."""
+        for script in (
+            "build_matrix.py",
+            "build_golden_vectors.py",
+            "build_wrong_answers.py",
+            "build_metadata.py",
+        ):
+            with self.subTest(script=script):
+                result = subprocess.run(
+                    [sys.executable, str(ROOT / "scripts" / script), "--check"],
+                    cwd=ROOT,
+                    capture_output=True,
+                    text=True,
+                )
+                self.assertEqual(result.returncode, 0, msg=result.stdout + result.stderr)
+                self.assertIn("[OK]", result.stdout)
+                self.assertNotIn("[STALE]", result.stdout)
+
+    def test_no_documentation_cites_a_file_that_does_not_exist(self) -> None:
+        """The audit found three phantom tool references. This closes the door."""
+        phantom = ("_build_wrong.py", "CONTROLS.txt", "verify_circuit.py")
+        checked = 0
+        for path in sorted(ROOT.rglob("*")):
+            if not path.is_file() or path.suffix not in {".md", ".txt", ".json", ".py", ".cff"}:
+                continue
+            if ".git" in path.parts or "__pycache__" in path.parts:
+                continue
+            # prior_art/ holds other people's circuits, kept byte-for-byte as
+            # imported; their own outputConvention text names the *method*
+            # repository's verify_circuit.py, and prior_art/README.md says so.
+            # Editing an imported artifact is not an option.
+            if path.parent.name == "prior_art":
+                continue
+            # ... and this file, which has to name the phantoms to forbid them.
+            if path.resolve() == Path(__file__).resolve():
+                continue
+            text = path.read_text(encoding="utf-8", errors="replace")
+            checked += 1
+            for name in phantom:
+                self.assertNotIn(
+                    name,
+                    text,
+                    msg=f"{path.relative_to(ROOT)} cites {name}, which this repository does not ship",
+                )
+        self.assertGreater(checked, 20)
+
     def test_rejects_permuted_outputs(self) -> None:
         artifact = copy.deepcopy(self.base_circuit)
         artifact["outputSignals"][0], artifact["outputSignals"][1] = artifact["outputSignals"][1], artifact["outputSignals"][0]
