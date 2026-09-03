@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
 """Generate circuits_metadata.csv from the circuit files' own bytes.
 
-Every column is computed by replaying each gate list: nothing is copied out of
-bounds.json, and bounds.json is read only afterwards, as a control, to check
-that the computed gate counts, depths and file hashes agree with what this
-repository already claims.
+Every column but one is computed by replaying each gate list, and bounds.json
+is read afterwards as a control, to check that the computed gate counts, depths
+and file hashes agree with what this repository already claims.
+
+The exception is `provenance_class`, which cannot be computed from a gate list
+because lineage is not a property of the bytes. It is bounds.json's own label,
+reduced to one word by an explicit rule: a `provenance` string beginning
+"DERIVED FROM PUBLISHED WORK" gives `derived-from-published-work`, any other
+`provenance` string gives `own-lineage`, and a circuit with no `provenance`
+field at all gives `not-stated`. bounds.json remains the authority; this column
+exists so that a reader sorting the CSV cannot miss which circuits descend from
+somebody else's published work.
 
 Two of the columns need a definition, since a CSV header has no room for one:
 
@@ -38,7 +46,8 @@ COLS = ["id", "file", "sha256_file", "gates", "inputs", "depth",
         "output_depth_histogram", "level_profile", "max_fanout_gate",
         "max_fanout_input", "fanout_histogram_gates",
         "fanout_histogram_inputs", "duplicate_masks", "dead_gates", "B",
-        "expected_B", "declared_outputSignals", "declared_matches_computed"]
+        "expected_B", "declared_outputSignals", "declared_matches_computed",
+        "provenance_class"]
 
 
 def histogram(values):
@@ -110,6 +119,15 @@ def analyse(raw):
 def main() -> int:
     args = parse_args("circuits_metadata.csv")
 
+    bj = json.loads((ROOT / "bounds.json").read_text(encoding="utf-8"))
+    prov = {}
+    for c in bj["circuits"]:
+        t = c.get("provenance")
+        prov[c["id"]] = ("not-stated" if not t
+                         else "derived-from-published-work"
+                         if t.startswith("DERIVED FROM PUBLISHED WORK")
+                         else "own-lineage")
+
     recs = []
     for path in sorted((ROOT / "circuits").glob("*.json")):
         raw = path.read_bytes()
@@ -117,6 +135,7 @@ def main() -> int:
         r["id"] = path.stem
         r["file"] = path.relative_to(ROOT).as_posix()
         r["sha256_file"] = hashlib.sha256(raw).hexdigest()
+        r["provenance_class"] = prov.get(path.stem, "not-stated")
         recs.append(r)
 
     recs.sort(key=lambda r: (r["gates"], r["depth"]))
@@ -145,7 +164,6 @@ def main() -> int:
 
     print()
     print("CONTROL 2: computed values vs the repository's own bounds.json")
-    bj = json.loads((ROOT / "bounds.json").read_text(encoding="utf-8"))
     by_id = {c["id"]: c for c in bj["circuits"]}
     disagree = []
     covered = 0
