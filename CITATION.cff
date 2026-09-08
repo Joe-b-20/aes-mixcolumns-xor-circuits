@@ -1,6 +1,7 @@
 cff-version: 1.2.0
 message: "If you use these circuits, please cite this repository."
-title: "Small 2-input XOR circuits for AES MixColumns (97 gates at depth 3; 91 at depth 4; 88 at depth 5 and at depth 6, both found from scratch; 88 at depth 7, matching the published count floor held by Jean, ePrint 2026/1481, who has priority on the count)"
+title: "Small 2-input XOR circuits for AES MixColumns"
+abstract: "Verified 2-input XOR circuits for one column of AES MixColumns: 97 gates at depth 3, 91 at depth 4, and 88 gates at depth 5 and at depth 6, both found from scratch. A further 88 at depth 7 matches the published count floor held by Jeremy Jean (ePrint 2026/1481), who has priority on the count. Nothing is claimed optimal."
 authors:
   - family-names: Bachir
     given-names: Joe

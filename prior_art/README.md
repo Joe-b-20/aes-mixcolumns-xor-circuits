@@ -66,6 +66,6 @@ python3 scripts/overlap.py circuits/mixcolumns_88gates_depth5_fromscratch.json \
 ```
 
 Overlap is not evidence of derivation in either direction: any two circuits for
-this map share their 32 forced output masks no matter who found them. The
+this map share their 32 forced output values no matter who found them. The
 calibration line is the point of shipping the second file — 61/0.530 only means
 something next to 63/0.553.

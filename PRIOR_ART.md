@@ -25,21 +25,20 @@ depth 6, or fewer than 88 at any depth — please open an issue.
   read as history. The 92 @ depth 4 circuit is likewise retained, not
   withdrawn: its own claim stands as made, and it is not a dead-gate strip of
   the 91 (all 92 of its gates are live). **90 @ depth 4 is undecided, not
-  refuted** — the exactness result behind the 91 is relative to a fixed mask
+  refuted** — the exactness result behind the 91 is relative to a fixed value
   vocabulary, so no optimality is claimed at depth 4. Nothing else moves: the
   97 @ 3, 88 @ 5 and 88 @ 6 claims and margins are unchanged, 88 remains the
   published count floor, and Jean retains priority on it.
 - **2026-07-30 (scope, not a correction of any figure).** The "87 was not
   found" statements below are unchanged and remain accurate, but they travel in
   this repository next to a family of exhaustive local certificates, and a
-  reader can be forgiven for reading the two together as evidence that 87 is
-  unlikely. **They are not that**, and the method repository now says so
+  reader could easily take the two together as evidence that 87 is unlikely. **They are not that**, and the method repository now says so
   explicitly (`slp-plateau-search`, `METHODS.md` §10a). The control: the same
   decision procedure, run over the same exhaustive remove-≤3 shell, returns
   "irreducible" for **97-, 94-, 92-, 91-, 90- and 89-gate circuits too** — all
   of them provably improvable, since an 88 exists and is published here. Over
   74 distinct verified circuits, the smallest window that could carry one to a
-  strictly smaller *verified* circuit is **median 42 masks (min 3, max 48; 44 of
+  strictly smaller *verified* circuit is **median 42 values (min 3, max 48; 44 of
   45 need ≥ 8)**, so the certified radius k ≤ 3 is smaller than 44 of those 45
   transitions — by a factor of ~2.7 against the closest and ~14 against the
   median. The certificates are exactly
@@ -74,7 +73,7 @@ depth 6, or fewer than 88 at any depth — please open an issue.
     the derived 88 @ depth 5 (superseded at its own point, retained with its
     derived-work disclosure intact), the 89 @ depth 5, and the 88 @ depth 6
     (still four gates below the published depth-6 point, still a different
-    family — 43 shared masks, Jaccard 0.323 — and still the first 88 this
+    family — 43 shared values, Jaccard 0.323 — and still the first 88 this
     project found from scratch). Their earlier claim statements stand as made.
   - One statement made here on 2026-07-29 is now **false and is corrected**:
     that the 89 @ depth 5 "remains the depth-5 point of the no-imported-material
@@ -119,7 +118,7 @@ depth 6, or fewer than 88 at any depth — please open an issue.
     88 (ePrint [2026/1481](https://eprint.iacr.org/2026/1481)): the
     same (depth, count) point, reached independently by this project's own
     search on its own lineage. The two circuits differ — 61 of 88 internal
-    masks shared, Jaccard 0.530, measured in the method repository.
+    values shared, Jaccard 0.530, measured in the method repository.
     **Jean has priority**: that paper was posted 2026-07-23, the circuit here
     was found 2026-07-26. The wording used throughout this repository is
     "matches the published record with an independent circuit" — never "beats",
@@ -223,10 +222,10 @@ mention points here. Neither Sun–Yang–Li (2025/1493) nor Jean (2026/1481) st
 a depth. The 9 and the 7 are what this project's oracle measures on this
 project's own transcriptions of their published listings, and the two papers are
 treated identically in this respect throughout. They are, however, **forced
-rather than merely observed**: the ASAP (least-fixpoint) schedule over a mask
-set is the shallowest depth *any* circuit on that mask set can have, independent
+rather than merely observed**: the ASAP (least-fixpoint) schedule over a value
+set is the shallowest depth *any* circuit on that value set can have, independent
 of the order the gates happen to be written in, and computing it over each
-published mask set still returns **9** for Sun–Yang–Li's and **7** for Jean's
+published value set still returns **9** for Sun–Yang–Li's and **7** for Jean's
 (three of Jean's output bits sit at depth 7). So neither circuit can be
 rescheduled shallower, and no comparison below depends on a transcription choice
 of ours. Reproducible with the `relax` function of `pipeline/engines.py` in the method
@@ -283,8 +282,8 @@ The only published depth-4 AES MixColumns circuit in a comparable model we
 found is Osvik and Canright's **97 XORs at depth 4** (ePrint 2024/1076,
 Appendix G; full straight-line listing in the paper, positioned by the authors
 as "slightly larger but less deep (faster) than the 92-XOR depth 6 result of
-Maximov"). We verified that no depth-4 point hides in the broader low-latency
-literature: SFX23's Table 3 has entries only at depths 3, 6, 7 and 8 (its
+Maximov"). We checked the broader low-latency literature for a further depth-4
+point and found none: SFX23's Table 3 has entries only at depths 3, 6, 7 and 8 (its
 depth-4 rows in Table 5 concern a different involutory matrix, not AES);
 LZW23's full body contains no depth-4 AES entry; LWF+22 reports only 103 @
 depth 3 for AES.
@@ -298,12 +297,12 @@ It is superseded at its depth by the 91 and is **retained, not withdrawn**; its
 claim stands as it was made, and it is not a dead-gate strip of the 91 (all 92
 of its gates are live). Both circuits are on the same from-scratch cascade
 lineage of this project. Two further verified 91-gate depth-4 circuits exist in
-independent lineages (mask-Jaccard 0.433 and 0.358 against the shipped one) and
+independent lineages (value-set Jaccard 0.433 and 0.358 against the shipped one) and
 are not shipped here.
 
 **No optimality claim, and one guard.** **90 gates at depth 4 is undecided, not
-refuted.** The exactness result behind the 91 is relative to a fixed mask
-vocabulary, and the question that would settle 90 was left in flight. Nothing
+refuted.** The exactness result behind the 91 is relative to a fixed value
+vocabulary, and the question that would settle 90 was left open. Nothing
 here says "optimal at depth 4".
 
 ## Claim 3: 89 gates at depth 5 — five fewer than the published depth-5 point
@@ -345,12 +344,12 @@ This is deliberately not phrased as an improvement.
   the same depth. It **ties** that point; it does not beat it, and Jean has
   priority — the paper predates this circuit, found 2026-07-26.
 - The circuits are nevertheless different. The method repository transcribed
-  Jean's circuit and measured the overlap of the two internal mask sets: **61
-  of 88 masks shared, Jaccard 0.530** — far below the 0.7 threshold that
+  Jean's circuit and measured the overlap of the two internal value sets: **61
+  of 88 values shared, Jaccard 0.530** — far below the 0.7 threshold that
   project uses for "same family". For calibration, and *not* as a strengthening
   of that claim: the same measurement between Jean's 88 and Sun–Yang–Li's 89
   (ePrint 2025/1493) — two independently published circuits — gives **63 shared
-  masks, Jaccard 0.553**, slightly *more* overlap than ours has with Jean's. An
+  values, Jaccard 0.553**, slightly *more* overlap than ours has with Jean's. An
   overlap of this size is what independent constructions for this particular map
   look like; it is not evidence of derivation in either direction. The lineage
   here contains no imported
@@ -369,7 +368,7 @@ This is deliberately not phrased as an improvement.
 its seed chain passes through Jean's circuit, which was ρ²-symmetrized and
 peeled to 95 gates, orbit-walked to 92, and unioned with a 91 of this project's
 own lineage before the descent that produced it. It is a third distinct
-construction by mask overlap (Jaccard 0.455 to Jean's 88, 0.544 to the 88 @
+construction by value overlap (Jaccard 0.455 to Jean's 88, 0.544 to the 88 @
 depth 7 here), but it is **dominated by that 88 @ depth 7** — same count,
 greater depth — so it is on nobody's frontier and improves nothing.
 
@@ -399,17 +398,17 @@ against published work:
   the depth–count order: same count, depth 6 against depth 7. That depth 7 is our
   own measurement (frontier-table footnote), but it is **not merely an artifact of
   how we transcribed the listing**: the ASAP least-fixpoint schedule over Jean's
-  own mask set — the shallowest schedule any circuit on that mask set admits —
+  own value set — the shallowest schedule any circuit on that value set admits —
   still puts three of its 32 output bits at depth 7. Jean's circuit therefore
-  cannot be rescheduled to depth 6 or less without changing which internal masks
+  cannot be rescheduled to depth 6 or less without changing which internal values
   it computes, so this domination does not depend on a choice of ours. Should
-  either paper's authors publish a *different* mask set, that is what would
+  either paper's authors publish a *different* value set, that is what would
   change the comparison.
 - **Provenance.** From scratch, on a lineage that contains no imported circuit
   at any step; the audited chain and the checks that closed the contamination
-  routes are in `bounds.json`. Its highest internal-mask overlap with any other
-  circuit in this repository is 47 masks (Jaccard 0.362, against the superseded
-  89 @ depth 10; against any 88 here it is at most 43 masks, Jaccard 0.323), so it
+  routes are in `bounds.json`. Its highest internal-value overlap with any other
+  circuit in this repository is 47 values (Jaccard 0.362, against the superseded
+  89 @ depth 10; against any 88 here it is at most 43 values, Jaccard 0.323), so it
   is also not a re-derivation of one of them.
 
 **Conclusion:** four gates fewer than the published depth-6 point, and one level
@@ -422,7 +421,7 @@ a record, and no optimality claim. **87 was not found.**
 seed chain passes through Jean's published 88 (ePrint 2026/1481), which was
 ρ²-symmetrized and peeled to 95 gates, orbit-walked to 92, and unioned with a 91
 of this project's own lineage before the descent that produced it. The full
-chain, with the mask-identity check at each link, is in `bounds.json`. It is
+chain, with the value-identity check at each link, is in `bounds.json`. It is
 therefore not an independent construction and Jean is credited for the material
 it descends from.
 
@@ -431,7 +430,7 @@ published depth-5 point**
 (94, Osvik and Canright, ePrint 2024/1076, Appendix F), and the shallowest
 88-gate circuit this project holds. What it is not: a new count (88 is Jean's),
 an independent construction (see above), or even a new construction relative to
-this repository — it shares **75 of its 88 internal masks with the 89 @ depth 5**
+this repository — it shares **75 of its 88 internal values with the 89 @ depth 5**
 here (Jaccard 0.735, the highest overlap between any two circuits in this
 repository), so it is best described as that 89's own basin reached at 88 gates.
 
@@ -452,7 +451,7 @@ it does and does not do, in that order:
 - **What it changes is our own provenance.** Its root is
   `constructors.build("naive", 1958)` — a randomized XOR tree over the 32 raw
   inputs, a pure function of an integer seed — and no circuit file, published
-  mask set, or other worker's harvested mask entered the search that produced
+  value set, or other worker's harvested value entered the search that produced
   it; the chain and the audited contamination arguments are in `bounds.json`.
   Until it was found, the (88, 5) point in this repository was held only by the
   derived circuit of Claim 6. **This removes this project's dependence on
@@ -466,19 +465,19 @@ it does and does not do, in that order:
   Osvik and Canright, ePrint 2024/1076, Appendix F). It dominates Jean's 88 —
   equal count, two levels shallower — on the depth 7 discussed in the frontier
   table's footnote and shown forced in Claim 5. Its own depth 5 is forced in
-  the same sense: the ASAP least-fixpoint schedule over its mask set still puts
+  the same sense: the ASAP least-fixpoint schedule over its value set still puts
   11 of its 32 output bits at depth 5, so it cannot be rescheduled to 4.
 - **What "no imported material" does not mean.** Not method independence — the
   engines and knobs were tuned over a campaign that did read published
-  circuits. Not disjointness: it shares 42 of 88 masks with Jean's circuit, of
-  which 32 are the forced output targets, leaving 10 of 56 free masks in
+  circuits. Not disjointness: it shares 42 of 88 values with Jean's circuit, of
+  which 32 are the forced output targets, leaving 10 of 56 free values in
   common; the vocabulary at this size is largely the map's own. Not
   reproducibility of the descent: the root is exactly reproducible, the
   trajectory is not.
-- **Within this repository** it is a distinct construction: the most masks it
+- **Within this repository** it is a distinct construction: the most values it
   shares with any other circuit here is 45, against the superseded 98 @ depth 3
   (Jaccard 0.319), and the largest *Jaccard* it reaches is 0.323, against the
-  88 @ depth 6 (43 masks) — which is also the largest against any other 88. The
+  88 @ depth 6 (43 values) — which is also the largest against any other 88. The
   two maxima fall on different circuits because the 98 is a bigger set; both are
   far below the 0.7 same-family threshold.
 

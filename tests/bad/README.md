@@ -25,9 +25,9 @@ a *correct* MixColumns circuit, so `verify.py` accepts it and no mutant here
 tests otherwise. That defect is one the record's gate count would be wrong
 about, not one its correctness would be — it is caught by `tripwire.py` in the
 [method repository](https://github.com/Joe-b-20/slp-plateau-search), shipped
-there both at `tools/tripwire.py` and, with a worked transcript and two planted
-positives, at `corpus/tripwire_demo/`. It reports the defect in a fraction of a
-second on any circuit file, including one that is not this project's.
+there at `tools/tripwire.py` and, with a worked transcript and two planted
+positives, at `corpus/tripwire_demo/`. It runs on any circuit file, including
+yours.
 
 The independent recomputation in `audit/cleanroom_verify.py` runs a further 14
 adversarial tests of its own, including four wrong-convention target sets

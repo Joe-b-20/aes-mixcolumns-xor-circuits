@@ -7,45 +7,52 @@ the authoritative version; this file is a condensed markdown companion.*
 ## Abstract
 
 We report **thirteen** explicit implementations of the AES MixColumns linear
-transformation as circuits of 2-input XOR gates over GF(2) — the nine
-discussed in the results table of Section 2, three earlier circuits kept for
-the archival record, and one cancellation-free circuit that answers a
-different question (Section 2, "The cancellation-free record"). Four improve the
-published depth–count Pareto frontier at their depth, on lineages that contain
-no imported circuit: (i) a **97-gate** circuit at depth **3**, the known minimum
-depth, improving the 99-gate record of Shi, Feng, and Xu (ToSC 2023); (ii) a
-**91-gate** circuit at depth **4**, six gates below the 97-gate depth-4 point
-of Osvik and Canright (ePrint 2024/1076); (iii) an **88-gate** circuit at depth **5**,
-found from scratch, six gates below Osvik and Canright's 94-gate depth-5 point
-and two levels shallower than the published 88 at the same count; and (iv) an
-**88-gate** circuit at depth **6**, four gates below the published depth-6 point
-(92, Maximov). Those 88s are **not a new gate count**: 88 is the published
-floor, held by Jean (ePrint 2026/1481, posted 2026-07-23), **who has priority**.
-What they improve is the depth at that count. A further circuit, 88 gates at
-depth **7**, **ties** that floor with an independent circuit sharing 61 of 88
-internal masks; it does not beat it. Two more 88s, at depths **5** and **8**,
-are **derived from Jean's circuit** and reported as derived work. An 89 at depth
-5, five gates below the published depth-5 point, is now dominated at its depth
-and kept for the record. **Verified frontier: 97 @ 3, 91 @ 4, 88 @ 5 — one line,
-entirely this project's own lineage, with no imported material.** Until
-2026-07-30 there were two frontiers, the depth-5 point being reachable only
-through derived work; the from-scratch circuit **removes this project's
-dependence on Jean's circuit at that point, and does not beat it**. No 87 was
-found: 47 canonical 88-gate circuits have exhaustively empty remove-≤3
-neighbourhoods, as do both from-scratch 88s here. All circuits are
+transformation as circuits of 2-input XOR gates over GF(2): the nine in the
+results table of Section 2, three earlier circuits kept for the archival
+record, and one cancellation-free circuit that answers a different question
+(Section 2, "The cancellation-free record").
+
+Four improve the published depth–count Pareto frontier at their depth, on
+lineages that contain no imported circuit: (i) a **97-gate** circuit at depth
+**3**, the known minimum depth, improving the 99-gate record of Shi, Feng, and
+Xu (ToSC 2023); (ii) a **91-gate** circuit at depth **4**, six gates below the
+97-gate depth-4 point of Osvik and Canright (ePrint 2024/1076); (iii) an
+**88-gate** circuit at depth **5**, found from scratch, six gates below Osvik
+and Canright's 94-gate depth-5 point and two levels shallower than the
+published 88 at the same count; and (iv) an **88-gate** circuit at depth **6**,
+four gates below the published depth-6 point (92, Maximov).
+
+Those 88s are **not a new gate count**. 88 is the published floor, held by Jean
+(ePrint 2026/1481, posted 2026-07-23), **who has priority**. What they improve
+is the depth at that count. A further circuit, 88 gates at depth **7**,
+**ties** that floor with an independent circuit sharing 61 of its 88
+intermediate values; it does not beat it. Two more 88s, at depths **5** and
+**8**, are **derived from Jean's circuit** and reported as derived work. An 89
+at depth 5, five gates below the published depth-5 point, is now dominated at
+its depth and kept for the record.
+
+**Verified frontier: 97 @ 3, 91 @ 4, 88 @ 5 — one line, entirely this project's
+own lineage, with no imported material.** Until 2026-07-30 there were two
+frontiers, the depth-5 point being reachable only through derived work; the
+from-scratch circuit **removes this project's dependence on Jean's circuit at
+that point, and does not beat it**.
+
+No 87 was found: 47 canonical 88-gate circuits have exhaustively empty
+remove-≤3 neighbourhoods, as do both from-scratch 88s here. All circuits are
 machine-checkable artifacts with a pure-Python verifier that rebuilds the
 MixColumns specification from scratch. We make no optimality claim on gate
 counts.
 
 ## Corrections
 
-Dated entries, in the style of the Corrections section of `PRIOR_ART.md`.
+Dated changes to this note's claims. `PRIOR_ART.md` keeps a separate log for
+the comparison claims.
 
 - **2026-09-03 (note version 3.2).** Two corrections, both in Section 2. (i) The
   **corpus-wide deletion negative is now complete**. This note previously
-  reported it as decided for the 28,796 mask sets that carry a build order and
+  reported it as decided for the 28,796 value sets that carry a build order and
   explicitly *undecided* for the other 1,546,720; the whole corpus has since
-  been streamed and certified, **88,228,896 of 88,228,896 candidate 87-mask sets
+  been streamed and certified, **88,228,896 of 88,228,896 candidate 87-value sets
   closed, 0 realisable**, over all 1,575,516 verified 88-gate value sets. The earlier, weaker statement
   is retained beside the new one as history. (ii) The **census is reconciled**:
   the abstract said "nine explicit implementations" while thirteen circuits
@@ -62,11 +69,11 @@ Dated entries, in the style of the Corrections section of `PRIOR_ART.md`.
   of the 91 — all 92 of its gates are live. Every frontier
   statement dated earlier than today therefore reads 92 at depth 4 and is
   correct as history. **90 @ depth 4 is undecided rather than refuted**: the exactness
-  result behind the 91 is relative to a fixed mask vocabulary, so nothing here
-  says "optimal at depth 4". The same entry corrects two figures in Section 2 —
+  result behind the 91 is relative to a fixed value vocabulary, so nothing here
+  says "optimal at depth 4". This entry also corrects two figures in Section 2:
   the k = 2 irreducibility sweep finished, so the count is all 139,878 harvested
-  mask sets rather than 105,801 of them — and adds the joint-level UNSAT ladder and the
-  deletion regularity.
+  value sets rather than 105,801 of them. It adds the joint-level UNSAT ladder
+  and the deletion regularity.
 - **2026-07-30 (note version 3.1).** Adds a third from-scratch 88-gate circuit,
   at depth 5, in Sections 2 and 3. Its root is a randomized XOR tree over the 32
   raw inputs and no imported material is anywhere in its chain, so the **two
@@ -82,7 +89,7 @@ Dated entries, in the style of the Corrections section of `PRIOR_ART.md`.
   depth-5 one is **derived from Jean's published 88** and is labelled so wherever
   it appears. No claim of version 1 or 2 is withdrawn, but one **observation** of
   version 2 is now refuted by these circuits and is corrected here and in
-  Section 2: version 2 recorded that "no 88-gate mask set of minimum build depth
+  Section 2: version 2 recorded that "no 88-gate value set of minimum build depth
   ≤ 6 has been seen in this harvesting". Two have now been seen, at depths 6 and
   5. It was reported as an observation and not as a certified claim, and the
   certified negative result nearby is a narrower one that still stands: no 88 at
@@ -103,7 +110,15 @@ Dated entries, in the style of the Corrections section of `PRIOR_ART.md`.
 A circuit is an ordered list of 2-input XOR gates. Signals `0..31` are the input
 bits; gate `k` produces signal `32+k = signal[a] XOR signal[b]` with `a,b` both
 strictly smaller than `32+k`. Depth counts gates on the longest input-to-signal
-path, with inputs at depth 0. The AES state, MixColumns matrix, and exact
+path, with inputs at depth 0.
+
+The **value** of a signal is the set of input bits it XORs together, written as
+a 32-bit vector; a circuit's **value set** is the set of values its gates
+compute, 32 of them the required outputs. Parts of the literature call this a
+signal's *mask*; this note says *value*, because *mask* also names an unrelated
+side-channel countermeasure.
+
+The AES state, MixColumns matrix, and exact
 bit/byte convention are fixed in `README.md` and, definitively, in
 `verify.py`, which reconstructs the 32×32 GF(2) target map from the GF(2⁸)
 definition (polynomial `0x11b`, column `[2,3,1,1]`) following NIST FIPS
@@ -121,7 +136,7 @@ the 32 unit-input vectors is a complete correctness check.
 | `mixcolumns_89gates_depth5` | 89 | 5 | 94 (as above) | improves it by 5; dominated at its depth by the row above | own |
 | `mixcolumns_88gates_depth5` | 88 | 5 | 94 (as above) | improves it by 6, but **derived**, and not a new count; superseded at its point by the from-scratch 88 @ 5 | **derived from Jean's 88** |
 | `mixcolumns_88gates_depth6` | 88 | 6 | 92 (Maximov, ePrint 2019/833; also Xiang et al., ToSC 2020, s-XOR) | improves it by 4, and dominates the published 88 — same count, one level shallower. **Not a new count**, same reason. Dominated here by the from-scratch 88 @ 5, a different family (Jaccard 0.323) | own, from scratch |
-| `mixcolumns_88gates_depth7` | 88 | 7 | 88 (Jean, ePrint 2026/1481) | **ties it, does not beat it** — an independent circuit at the same point (61/88 masks shared, Jaccard 0.530); Jean has priority. Dominated by the two rows above | own |
+| `mixcolumns_88gates_depth7` | 88 | 7 | 88 (Jean, ePrint 2026/1481) | **ties it, does not beat it** — an independent circuit at the same point (61/88 values shared, Jaccard 0.530); Jean has priority. Dominated by the two rows above | own |
 | `mixcolumns_88gates_depth8` | 88 | 8 | — | **derived from Jean's 88** (its seed chain passes through it); dominated, so not a frontier point | **derived from Jean's 88** |
 
 One frontier follows: **97 @ 3, 91 @ 4, 88 @ 5**, every point of it on this
@@ -136,7 +151,7 @@ dominated by a circuit above.
 **The cancellation-free record.** One further circuit is shipped and is not in
 the table above, because it is not competing on the same axis:
 `mixcolumns_102gates_cf`, 102 gates at depth 5, **cancellation-free** — every
-gate's two operand masks have disjoint support, so no gate ever destroys a bit
+gate's two operand values have disjoint support, so no gate ever destroys a bit
 an earlier gate produced (κ = 0, verified by replaying the gate list over
 input-dependency bitsets). It is the only such circuit in this repository, and
 the best cancellation-free circuit known for this map. Its interest is that the
@@ -149,49 +164,62 @@ record is four gates below the cancellation-free floor — the one proved quanti
 in this programme that lies above 88. It says nothing about whether 87 exists.
 Counting it and the three archival circuits, thirteen circuits ship.
 
-Five points are worth isolating. First, depth 3 is the known minimum depth for
-AES MixColumns (stated e.g. by Shi, Feng, and Xu; an output depending on w
-inputs needs depth at least ⌈log₂ w⌉, and MixColumns has outputs of weight 7),
-so the contribution of the 97-gate circuit is the count at that depth rather
-than the depth itself. Second, the 89-gate depth-5 circuit is shallower than any published
-circuit of fewer than 94 gates whose depth is stated; the published sub-89
-point (88, Jean) sits at depth 7. Third, the depth-7 88 was found 2026-07-26 by
-this project's own search along its own logged lineage — from-scratch 97 @ depth
-3 → 89 @ depth 6 → 89 @ depth 5 → a ρ²-symmetric 94 @ depth 5 → 88 @ depth 7 —
-with no imported circuit anywhere in the chain. Fourth, the depth-6 88 (found
-2026-07-28) is the first 88 this project reached from scratch, on an independently
-rooted lineage (randomized XOR trees over the raw inputs → 89 → 88 @ depth 7 →
-88 @ depth 6 by the Pareto depth tie-break, with the cross-pollination routes
-audited closed), while the derived depth-5 88 (found 2026-07-29) — reached
-through a seed chain that passes through Jean's published circuit — is reported
-as derived work and claims nothing about independence. Fifth, the from-scratch
-depth-5 88 (found 2026-07-30) is what collapses the two frontiers into one:
-worker `c_naive`, session 5, restart 16, root `constructors.build("naive",
-1958)` — a randomized XOR tree over the 32 raw inputs, rebuilt and confirmed at
-146 gates and depth 3 — then 88 @ depth 6 at iteration 33,873 → 88 @ depth 5 at
-iteration 37,155 six seconds later on the same depth tie-break, both from walk
-chunks of an engine with no disk read path. It **removes this project's
-dependence on Jean's circuit at the depth-5 point; it does not beat it**, and 88
-remains Jean's count. Its depth 5 is forced: the ASAP least-fixpoint schedule
-over its own mask set still places 11 of its 32 output bits at depth 5, a third
-distinct depth-obstruction pattern (rows 1, 7, 12, 13, 17, 18, 21, 25, 27, 28,
-31) alongside the old plateau's rows 3/27 and the depth-6 88's rows 1/11/17/25.
-It shares 42 of 88 masks with Jean's circuit, 32 of them the forced output
-targets, so 10 of 56 free masks coincide; over all four column rotations its
-largest similarity to anything measured is Jaccard 0.386, at ρ³ of Jean's 88.
+Five points are worth isolating.
+
+**Depth 3 is the known minimum depth** for AES MixColumns (stated e.g. by Shi,
+Feng, and Xu; an output depending on w inputs needs depth at least ⌈log₂ w⌉,
+and MixColumns has outputs of weight 7). The contribution of the 97-gate
+circuit is therefore the count at that depth, not the depth itself.
+
+**The 89-gate depth-5 circuit** is shallower than any published circuit of
+fewer than 94 gates whose depth is stated; the published sub-89 point (88,
+Jean) sits at depth 7.
+
+**The depth-7 88** was found 2026-07-26 by this project's own search along its
+own logged lineage — from-scratch 97 @ depth 3 → 89 @ depth 6 → 89 @ depth 5 →
+a ρ²-symmetric 94 @ depth 5 → 88 @ depth 7 — with no imported circuit anywhere
+in the chain.
+
+**The depth-6 88** (found 2026-07-28) is the first 88 this project reached from
+scratch, on an independently rooted lineage: randomized XOR trees over the raw
+inputs → 89 → 88 @ depth 7 → 88 @ depth 6 by the Pareto depth tie-break, with
+the cross-pollination routes audited closed. The derived depth-5 88 (found
+2026-07-29) instead came through a seed chain that passes through Jean's
+published circuit; it is reported as derived work and claims nothing about
+independence.
+
+**The from-scratch depth-5 88** (found 2026-07-30) is what collapses the two
+frontiers into one. Its root is `constructors.build("naive", 1958)`, a
+randomized XOR tree over the 32 raw inputs, rebuilt and confirmed at 146 gates
+and depth 3, in an engine with no disk read path. It **removes this project's
+dependence on Jean's circuit at the depth-5 point; it does not beat it**, and
+88 remains Jean's count. Its depth 5 is forced: the ASAP least-fixpoint
+schedule over its own value set still places 11 of its 32 output bits at depth
+5, a third distinct depth-obstruction pattern (rows 1, 7, 12, 13, 17, 18, 21,
+25, 27, 28, 31) alongside the old plateau's rows 3/27 and the depth-6 88's rows
+1/11/17/25. It shares 42 of 88 values with Jean's circuit, 32 of them the
+forced output targets, so 10 of 56 free values coincide; over all four column
+rotations its largest similarity to anything measured is Jaccard 0.386, at ρ³
+of Jean's 88.
 
 Beyond the circuits, the note reports machine-checked *local* certificates for
-the 88-gate plateau: 47 canonical 88-gate circuits have exhaustively empty
-remove-≤3 shells (so any 87 differs from each of them by ≥ 4 masks — this
-project's own 88 @ depth 7 is *not* one of the 47); the two from-scratch 88s, at
-depths 6 and 5, each have an exhaustively empty remove-≤3 shell of their own (all
-1,540 k = 2 and all 27,720 k = 3 windows, both), so any 87 differs from each of
-them by ≥ 4 masks as well, and the derived 88 @ depth 5
-has an empty k = 2 shell (≥ 3 masks) but its k = 3 shell was **never swept**, so
-with the 88 @ depth 7 it is one of the two least-certified circuits here;
-all 139,878 harvested distinct 88-gate mask sets
-are proven irreducible at k = 2 — 215,412,120 exact window decisions, 1,540
-windows each, zero reducible.
+the 88-gate plateau. A **remove-≤ k shell** is what you reach by deleting any k
+of a circuit's values — one such choice is a *window* — and resynthesising the
+rest; the shell is **empty** when no such rebuild yields a smaller circuit.
+
+47 canonical 88-gate circuits have exhaustively empty remove-≤3 shells, so any
+87 differs from each of them by ≥ 4 values. This project's own 88 @ depth 7 is
+*not* one of the 47.
+
+The two from-scratch 88s, at depths 6 and 5, each have an exhaustively empty
+remove-≤3 shell of their own (all 1,540 k = 2 and all 27,720 k = 3 windows,
+both), so any 87 differs from each of them by ≥ 4 values as well. The derived
+88 @ depth 5 has an empty k = 2 shell (≥ 3 values), but its k = 3 shell was
+**never swept**; with the 88 @ depth 7 it is one of the two least-certified
+circuits here.
+
+All 139,878 harvested distinct 88-gate value sets are proven irreducible at
+k = 2 — 215,412,120 exact window decisions, 1,540 windows each, zero reducible.
 
 Two further certificate classes, both stronger than the shells above.
 
@@ -205,12 +233,13 @@ circuit exists that shares the block structure of the known 88s as that
 decomposition reads them.** The levels at 9, 10 and 11 were re-proved
 independently with a second CNF encoding, 528 of 528 cubes UNSAT at each level,
 zero disagreements, and the encoding's positive control fired (a satisfiable
-cube with a checked witness), so the test can fail.
+cube with a checked witness), so the encoding can still return SAT and the test
+is not vacuous.
 
-Scope, and it is the same wherever this result is stated. The decomposition is
-a choice of ours; whether every known 88-gate circuit respects it was not
+**Scope**, and it is the same wherever this result is stated. The decomposition
+is a choice of ours. Whether every known 88-gate circuit respects it was not
 verified, and a verified 91-gate depth-6 circuit in this repository has a gate
-whose line support fits no single block of it. An 87 that does not split into
+whose support fits inside no single block of it. An 87 that does not split into
 these blocks is not excluded by this ladder. Neither k = 12, 13 nor 14 carries
 a DRAT proof, so the decisive level rests on two complete solvers agreeing on
 one CNF rather than on a checked certificate.
@@ -219,23 +248,22 @@ one CNF rather than on a checked certificate.
 certificate, now **complete**: let `M` be any of the **1,575,516** distinct
 verified 88-gate **value sets** in the corpus — each a set of 88 intermediate
 values known to be realisable, of which 28,796 carry a full build order — and
-`m` any of its 56 non-target masks; then `M \ {m}` is not realisable as an XOR
+`m` any of its 56 non-target values; then `M \ {m}` is not realisable as an XOR
 straight-line program over the 32 inputs. **88,228,896 of 88,228,896 candidate
-87-mask sets closed, machine-checked, 0 realisable** (40.0 % of them passed the
+87-value sets closed, machine-checked, 0 realisable** (40.0 % of them passed the
 local necessary condition and were then decided the hard way). So **no 87-gate
 MixColumns circuit is obtainable from any known 88 by deleting one gate**, and
-the statement allows the surviving 87 masks to be rebuilt in any order
+the statement allows the surviving 87 values to be rebuilt in any order
 whatsoever — it is strictly stronger than the `B = 56` tripwire, which only asks
 whether a middle gate has *a consumer* and not whether that consumer has an
 alternative derivation. Two byproducts over the same population: no set has a
-duplicated mask, and every set has exactly 56 consumed non-output gates. The
+duplicated value, and every set has exactly 56 consumed non-output gates. The
 certificate, its positive control, its tooling and its interval-coverage proof
 are in `corpus/deletion_certificate/` in the method repository.
 
 *Superseded statement, kept as history.* Versions of this note before 2026-09-01
 reported this negative as complete only for the 28,796 value sets that carry a
-build order, with the consumer-less test "undecided for the 1,546,720
-mask-only sets".
+build order, and undecided by the consumer-less test for the other 1,546,720.
 Those sets were re-streamed from their sources and certified; the covered
 population is now 1,575,516 of 1,575,516, and the two set-identity checks
 (symmetric difference against the corpus index; interval tiling of
@@ -284,7 +312,7 @@ when Icarus Verilog is available.
   invariant under bit relabeling, so no comparison depends on convention. The
   depths quoted for Jean (7) and for Sun–Yang–Li (9) are this project's own
   measurements of its own transcriptions; neither paper states a depth. Both are
-  *forced*: the ASAP least-fixpoint schedule over each published mask set — the
+  *forced*: the ASAP least-fixpoint schedule over each published value set — the
   shallowest either admits — still gives 7 and 9, so neither can be rescheduled
   shallower (`PRIOR_ART.md`, frontier-table footnote).
 - **Provenance.** 97 @ 3 and 91 @ 4 are from scratch; 89 @ 5 and 88 @ 7 are on
@@ -293,7 +321,7 @@ when Icarus Verilog is available.
   lineages; **the derived 88 @ 5 and the 88 @ 8 are
   derived from published work** — both seed chains pass through Jean's 88, which
   is credited wherever those circuits appear. **All five 88s** were found by
-  author-directed LLM-agent campaigns, in two chapters: 88 @ 7 and 88 @ 8 by a
+  author-directed LLM-agent campaigns, in two phases: 88 @ 7 and 88 @ 8 by a
   24-agent campaign over 2026-07-26/27, and the three depth-5/6 ones by a later
   multi-day sixteen-process fleet of the same engine, built and operated by the
   same agents, on 2026-07-28, 2026-07-29 and 2026-07-30. The published method is
@@ -301,7 +329,7 @@ when Icarus Verilog is available.
   single-worker re-run of 88 @ 7 — with no AI system in the loop; **neither
   from-scratch 88 has a single-command reproduction**, and for each the root
   constructor, seed and full worker log are published in its place (see the
-  note's Method section and the method repository).
+  method repository).
 - **One convention.** All counts hold for the single executable convention in
   `verify.py`. A different bit order or a transposed matrix is a different
   problem; re-derive the targets under your convention before comparing.
@@ -316,15 +344,14 @@ when Icarus Verilog is available.
   22 s from shipped seeds, against 592 s for the archived 2026-07-14 run on the
   v1 engine; the 88 @ depth 7 in 19.4 and 31.0 minutes in two single-worker
   re-runs from the ρ²-symmetric 94 seed, against 32.9 minutes in the archived
-  ten-worker run. These are measurements rather than promises, and a re-run is a re-run rather
-  than an independent confirmation.
+  ten-worker run. These are measurements, not promises, and a re-run by us is
+  not an independent confirmation.
 
 ## 3a. The vocabulary in the provenance fields
 
-`bounds.json`'s `provenance` fields, and the lineage sentences in Section 2,
-name internal machinery. The detail is deliberate — it is what lets a skeptic
-follow a circuit back to the run that produced it — but nothing else in this
-repository defines the words, so:
+`bounds.json`'s `provenance` fields name internal machinery. The detail is
+deliberate — it is what lets a skeptic follow a circuit back to the run that
+produced it — but nothing else in this repository defines the words, so:
 
 | term | what it means |
 |---|---|
@@ -333,7 +360,7 @@ repository defines the words, so:
 | **worker** | one search process in a fleet. Names like `c_naive`, `o1`, `o_polish`, `w10_sym94`, `d3_orb90a` are just its configuration label, logged so a result can be traced to the exact process that emitted it |
 | **session** | one contiguous execution of a worker; a worker restarted after an interruption begins a new session, and its log numbering continues |
 | **restart** | within a session, a reset of the local search back to a stored incumbent after a stall. "Restart 71" is the 71st such reset |
-| **walk iteration** | one step of the local search's mask-set walk — one accepted or rejected mutation of the current circuit's mask set. It is the finest-grained timestamp in the logs, which is why two circuits found seconds apart differ by a few thousand iterations |
+| **walk iteration** | one step of the local search's value-set walk — one accepted or rejected mutation of the current circuit's value set. It is the finest-grained timestamp in the logs, which is why two circuits found seconds apart differ by a few thousand iterations |
 | **hunt87**, **hunt-deeper** | named configurations of a campaign-87 fleet: `hunt87` searched for 87 gates at any depth, `hunt-deeper` searched for smaller circuits at greater depth |
 | **orbit** | a search restricted to circuits invariant under a column rotation (ρ or ρ², the AES column shift), so a 32-bit target is worked as a smaller symmetric one |
 | **tripwire**, **B = 56** | the cheap deletability screen: `B` is the number of consumed non-output gates, which is `gates - 32` exactly when no gate is dead or duplicated. `B != 56` on an 88 means a gate can be deleted. See `corpus/tripwire_demo/` in the method repository |

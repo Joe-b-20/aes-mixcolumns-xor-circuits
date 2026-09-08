@@ -7,7 +7,7 @@ paper or from another file in this repository.
 CONTROL 1 (matrix path): each output is recomputed by multiplying the input
     vector by the 32 rows of matrix.txt.
 CONTROL 2 (circuit path): each output is recomputed by replaying a shipped
-    88-gate circuit gate by gate over real bit values -- not masks -- and
+    88-gate circuit gate by gate over concrete bits -- not values -- and
     reading the signal that carries each output. This is the transcript the
     file's "HOW TO USE THESE" section describes.
 
@@ -181,20 +181,22 @@ def main() -> int:
     A("  A circuit file in this project is a list of 2-input XOR gates over 32")
     A("  input signals.  To check it against a vector: set input signal j to bit j")
     A("  of the in vector, replay the gates in order, and read output r off the")
-    A("  signal whose accumulated input-mask equals row r of matrix.txt.  That")
-    A("  replay is control 2 of scripts/build_golden_vectors.py, which generates")
-    A("  this file: it runs every vector below through")
+    A("  signal whose value -- the set of input bits it XORs together -- equals")
+    A("  row r of matrix.txt.")
+    A("")
+    A("  That replay is control 2 of scripts/build_golden_vectors.py, which")
+    A("  generates this file: it runs every vector below through")
     A(f"  {CIRCUIT}")
-    A("  gate by gate, on real bit values rather than masks, and prints the")
-    A("  transcript.  Re-run it yourself:")
+    A("  gate by gate, on concrete bits rather than symbolic values, and prints")
+    A("  the transcript.  Re-run it yourself:")
     A("")
     A("      python3 scripts/build_golden_vectors.py --check")
     A("")
     A("  These vectors are a CONVENIENCE, not the proof.  Because the map is")
     A("  linear, the 32 basis vectors (unit inputs) already determine it")
-    A("  completely; verify.py compares all 32 output masks at once, which is")
+    A("  completely; verify.py compares all 32 output values at once, which is")
     A("  why it is a proof of correctness and not a sample.  The FIPS-197")
-    A("  column is here so an integrator can eyeball agreement with the")
+    A("  column is here so an integrator can check agreement with the")
     A("  standard.")
     A("")
     A("  To check a circuit file of your own, including one this repository has")

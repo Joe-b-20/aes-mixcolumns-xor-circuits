@@ -200,7 +200,8 @@ def main() -> int:
         first.setdefault(outs[0], []).append(name)
     coll = {k: v for k, v in first.items() if len(v) > 1}
     A("Computed collision check over all %d variants on `db 13 53 45`: %d "
-      "distinct outputs, %d colliding group(s)." % (len(rows), len(first), len(coll)))
+      "distinct outputs, %d colliding group%s."
+      % (len(rows), len(first), len(coll), "" if len(coll) == 1 else "s"))
     A("")
     A("## If your output is on none of these rows")
     A("")

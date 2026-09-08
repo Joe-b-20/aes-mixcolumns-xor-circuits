@@ -38,6 +38,9 @@ Verilog path (`verify_verilog.py`) needs Icarus Verilog.
 - Bit `i` of the 32 = bit `i mod 8` of byte `i div 8`, least-significant bit
   first. Signals 0–31 are inputs; gate `k` = XOR of two earlier signals and
   becomes signal `32+k`. Depth of a signal = longest path from an input.
+- The **value** of a signal is the set of input bits it XORs together, written
+  as a 32-bit vector. A circuit's **value set** is the set of values its gates
+  compute: 88 values for an 88-gate circuit, 32 of them the required outputs.
 - The matrix itself, as data: [`matrix.txt`](matrix.txt) (32 rows × 32 bits,
   SHA-256 in [`matrix.sha256`](matrix.sha256)).
 - Byte-level test vectors, including the FIPS-197 worked example
@@ -46,8 +49,9 @@ Verilog path (`verify_verilog.py`) needs Icarus Verilog.
   common mistakes (transposed matrix, reversed bit order, …) to the outputs
   they produce, one lookup each.
 
-These three files are generated from the specification by
-`scripts/build_*.py` (each has `--check`; the test suite runs them).
+`matrix.txt`, `golden_vectors.txt` and `wrong_answers.md` are generated from
+the specification by `scripts/build_*.py` (each has `--check`; the test suite
+runs them).
 
 ## The circuits
 
@@ -60,19 +64,23 @@ These three files are generated from the specification by
 | 5 | **88** | `circuits/mixcolumns_88gates_depth5_fromscratch.json` | 94 (Osvik–Canright) | fewest gates known at any depth — a **tie** with Jean's 88 (ePrint 2026/1481), who found it first; this one is two levels shallower. **Note the `_fromscratch` suffix**: a second 88 at depth 5 also ships, as `circuits/mixcolumns_88gates_depth5.json`, and that one is **derived from Jean's circuit** |
 
 Which row do I want? Round-based design → the 88 at depth 5. Heavily
-pipelined / latency-critical → the 97 at depth 3. Everything else shipped
-(further 88s at depths 6–8, superseded and archival circuits, the best known
-cancellation-free circuit at 102) is in
-[`circuits_metadata.csv`](circuits_metadata.csv): per-circuit depth,
-per-output depth, fan-out histogram, SHA-256 — 21 computed columns, plus a
+pipelined or latency-critical → the 97 at depth 3.
+
+Everything else shipped — further 88s at depths 6–8, superseded and archival
+circuits, and the best known cancellation-free circuit at 102 — is listed in
+[`circuits_metadata.csv`](circuits_metadata.csv): 21 computed columns per
+circuit (depth, per-output depth, fan-out histogram, SHA-256), plus a
 `provenance_class` column reduced from `bounds.json` so that
-`derived-from-published-work` is one sort away. Fan-out and per-output depth
-are reported because in a masked or threshold implementation they, rather than
-gate count, drive glitch-extended probing behaviour and the cost of the
-refresh network: the 97 @ 3 has a maximum fan-out of 5. No area or latency
-figures are offered; gate count is not one. A circuit file's contents never
-change under a stable name, which is why the derived 88 keeps the plain
-`_depth5` name it was published under.
+`derived-from-published-work` is one sort away.
+
+Fan-out and per-output depth are reported because in a masked or threshold
+implementation they, rather than gate count, drive glitch-extended probing
+behaviour and the cost of the refresh network: the 97 @ 3 has a maximum fan-out
+of 5. No area or latency figures are offered here, and gate count is not a
+substitute for either.
+
+A circuit file's contents never change under a stable name. That is why the
+derived 88 keeps the plain `_depth5` name it was published under.
 
 ## File format
 
@@ -80,13 +88,16 @@ One JSON object: `"gates": [[a,b], ...]` (gate k = signal a XOR signal b, both
 indices < 32+k), `"outputSignals": [...]` naming which signal carries each
 output bit, plus `id`, `inputCount`, `gateCount`, `depth`, `model`,
 `outputConvention`. That is all — no hashes, no provenance, so the bytes never
-change. Everything *about* a circuit lives in [`bounds.json`](bounds.json),
-keyed by `id`: both SHA-256 hashes, the verification record, the exact claim,
-and the provenance (including which circuits descend from published work).
-`listings/` has the same circuits as plain text; `verilog/` a netlist +
-testbench each, bit convention in the header — `dont_touch`/`keep` the module
-or synthesis will restructure it, and re-association can invalidate masking
-arguments.
+change.
+
+Everything *about* a circuit lives in [`bounds.json`](bounds.json), keyed by
+`id`: both SHA-256 hashes, the verification record, the exact claim, and the
+provenance (including which circuits descend from published work).
+
+`listings/` has the same circuits as plain text. `verilog/` has a netlist and a
+testbench for each, with the bit convention in the header; mark the module
+`dont_touch`/`keep`, or synthesis will restructure it, and re-association can
+invalidate masking arguments.
 
 ## What else is here
 
@@ -95,7 +106,7 @@ arguments.
 | [`bounds.json`](bounds.json) | hashes, verification record, exact claim, provenance per circuit |
 | [`PAPER.md`](PAPER.md) | the note: results, scope, what the negatives do and do not say (typeset in [`paper/`](paper/)) |
 | [`PRIOR_ART.md`](PRIOR_ART.md) | who published what, claim by claim, with a dated corrections log |
-| [`prior_art/`](prior_art/) | other people's circuits, transcribed, so the overlap numbers below recompute |
+| [`prior_art/`](prior_art/) | other people's circuits, transcribed, so a reader can recompute the overlap numbers below |
 | [`audit/`](audit/) | a second, independently written verifier and its recomputed metrics |
 | [`scripts/`](scripts/) · [`tests/`](tests/) | generators for every derived file (all with `--check`), `overlap.py`; the regression suite |
 
@@ -154,7 +165,5 @@ name.
 ## Cite / license
 
 MIT. Cite via <https://doi.org/10.5281/zenodo.21299092> (`CITATION.cff`).
-Sole-author work by Joe; no employer IP. The search behind these circuits was
-carried out with heavy use of AI agents directed by the author, and "we" on
-these pages means that collaboration. Report verification failures as issues
-with your Python version and the full output.
+The search behind these circuits was carried out with heavy use of AI agents
+directed by the author, and "we" on these pages means that collaboration.

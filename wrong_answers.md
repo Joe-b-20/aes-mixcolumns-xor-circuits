@@ -92,7 +92,7 @@ you started.
 Every other pair of rows in the table is distinguishable on the first
 probe alone.
 
-Computed collision check over all 7 variants on `db 13 53 45`: 6 distinct outputs, 1 colliding group(s).
+Computed collision check over all 7 variants on `db 13 53 45`: 6 distinct outputs, 1 colliding group.
 
 ## If your output is on none of these rows
 
