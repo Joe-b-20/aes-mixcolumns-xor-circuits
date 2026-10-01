@@ -14,6 +14,9 @@ identifiers:
     value: 10.5281/zenodo.21299092
     description: "Concept DOI for all versions; resolves to the latest release. Cite this one unless you need a specific version."
   - type: doi
+    value: 10.5281/zenodo.23091495
+    description: "Version DOI of the v4.0.0 deposit: adds lower_bounds/, the computer-assisted 75-gate lower-bound proof note (review draft v1.0). Cite this one for the lower bound."
+  - type: doi
     value: 10.5281/zenodo.21696105
     description: "Version DOI of the v3.0.0 deposit."
   - type: doi

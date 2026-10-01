@@ -65,6 +65,12 @@ and it is what a reviewer must read.
   WEIGHTED_ADJOINT, PROOF70, DOUBLE_TRANSPOSE, PROOF72, PROOF73, PROOF74, PROOF75 and their lemma files into
   one argument. Nothing in the argument is new relative to the bundle; the consolidation is the author's.
 
+## Cite
+
+This folder was first published as release v4.0.0 of the repository (2026-10-01, commit `4e12c2a`), archived on
+Zenodo as version DOI [10.5281/zenodo.23091495](https://doi.org/10.5281/zenodo.23091495). Cite that version DOI for
+the review draft; the concept DOI 10.5281/zenodo.21299092 always resolves to the latest release.
+
 ## Versions
 
 | version | date | content |
