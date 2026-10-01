@@ -6,7 +6,8 @@
 Small 2-input-XOR circuits for one column of AES MixColumns (a fixed linear map
 of 32 bits to 32 bits; four copies make one round's MixColumns). The circuits
 are plain functions — any masking/side-channel analysis is yours. Nothing is
-claimed optimal; the best known lower bound is 56 gates.
+claimed optimal; a computer-assisted proof of the lower bound 75 (review draft)
+is in [`lower_bounds/`](lower_bounds/), so `75 ≤ L(M) ≤ 88`.
 
 ## Verify (Python 3 standard library, under a second)
 
@@ -137,8 +138,10 @@ whose chain reads no circuit at all.
 One line each. The proofs, instruments, negative results and open leads are in
 [slp-plateau-search](https://github.com/Joe-b-20/slp-plateau-search):
 
-- Any circuit needs **≥ 56** gates — the best unconditional bound we are aware
-  of for this matrix. So `56 ≤ L(M) ≤ 88`.
+- Any circuit needs **≥ 75** gates — a computer-assisted proof, offered as a
+  review draft with its checkers in [`lower_bounds/`](lower_bounds/) (it
+  supersedes the earlier ≥ 56). So `75 ≤ L(M) ≤ 88`. A certified but less
+  reviewed extension to **≥ 76** is described there as well.
 - Any depth-3 circuit needs **≥ 80** (checkable certificate) and **≥ 81** by a
   time-limited solver bound.
 - Any circuit where no gate's inputs share a bit needs **≥ 92**; the 102 here is
