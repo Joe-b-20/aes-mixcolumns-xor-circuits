@@ -283,7 +283,7 @@ object.
 about whether an 87 exists. These are locality theorems — rigidity statements
 about small, completely enumerated neighbourhoods — and not bounds. By this
 instrument an optimal circuit and a four-gates-too-big circuit are
-indistinguishable. The bracket is 56 ≤ L(M) ≤ 88. This **extends** the
+indistinguishable. The bracket was 56 ≤ L(M) ≤ 88 when this was written; it is now 75 ≤ L(M) ≤ 88 (see `lower_bounds/`). This **extends** the
 2026-07-30 scope entry already in this repository; it does not replace it.
 
 Each circuit is verified by two shipped software paths: `verify.py` against a
