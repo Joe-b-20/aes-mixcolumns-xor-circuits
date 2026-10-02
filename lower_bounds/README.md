@@ -70,8 +70,9 @@ and it is what a reviewer must read.
 
 ## Cite
 
-This folder was first published as release v4.0.0 of the repository (2026-10-01, commit `4e12c2a`), archived on
-Zenodo as version DOI [10.5281/zenodo.23091495](https://doi.org/10.5281/zenodo.23091495). Cite that version DOI for
+This folder was first published as release v4.0.0 of the repository (2026-10-01, commit `4e12c2a`, Zenodo version
+DOI 10.5281/zenodo.23091495) and corrected in release v4.0.1 (2026-10-02, note version 1.1, fail-loud runner), archived
+as version DOI [10.5281/zenodo.23104188](https://doi.org/10.5281/zenodo.23104188). Cite the v4.0.1 version DOI for
 the review draft; the concept DOI 10.5281/zenodo.21299092 always resolves to the latest release.
 
 ## Versions

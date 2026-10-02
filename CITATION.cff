@@ -14,8 +14,11 @@ identifiers:
     value: 10.5281/zenodo.21299092
     description: "Concept DOI for all versions; resolves to the latest release. Cite this one unless you need a specific version."
   - type: doi
+    value: 10.5281/zenodo.23104188
+    description: "Version DOI of the v4.0.1 deposit: the corrected verification runner and proof note version 1.1. Cite this one for the lower-bound review draft."
+  - type: doi
     value: 10.5281/zenodo.23091495
-    description: "Version DOI of the v4.0.0 deposit: adds lower_bounds/, the computer-assisted 75-gate lower-bound proof note (review draft v1.0). Cite this one for the lower bound."
+    description: "Version DOI of the v4.0.0 deposit: adds lower_bounds/, the computer-assisted 75-gate lower-bound proof note (review draft v1.0; its runner could not report a failure, fixed in v4.0.1)."
   - type: doi
     value: 10.5281/zenodo.21696105
     description: "Version DOI of the v3.0.0 deposit."
