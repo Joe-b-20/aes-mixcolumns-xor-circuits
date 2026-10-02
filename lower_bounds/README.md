@@ -4,10 +4,10 @@ This folder holds a computer-assisted proof that every circuit of two-input XOR 
 column of AES MixColumns has at least **75** gates, and a description of a certified extension to **76**.
 With the verified 88-gate circuits of this repository:
 
-    75 <= L(M) <= 88        proof note in this folder (review draft, version 1.0, 2026-10-01)
-    76 <= L(M) <= 88        certified extension, less reviewed (see bound_76/)
+    75 <= L(M) <= 88        the claim of this folder: proof note (review draft, version 1.1, 2026-10-02)
 
-Neither says that 88 is optimal, and neither gives an 87-gate circuit.
+A certified extension to 76 exists but is not published and not claimed here; `bound_76/README.md` states the
+facts about it. Nothing here says that 88 is optimal or gives an 87-gate circuit.
 
 ## Status, stated plainly
 
@@ -27,16 +27,19 @@ reviewed once by machine, not yet published".
 
 ## Read
 
-- `PROOF_NOTE_75.md` (also `PROOF_NOTE_75.pdf`): the theorem, the circuit model, the argument (sections 1-11),
+- `PROOF_NOTE_75.md` (also `PROOF_NOTE_75.pdf`, version 1.1): the theorem, the circuit model, the argument (sections 1-11),
   the finite facts (12), what the programs check versus what the argument must establish (12), the review
   record (13), and the commands (14).
 - `bound_76/README.md`: the facts about the 76 extension and its status.
 
-## Verify (Python 3, standard library; `lp_regen.py` also needs numpy and scipy)
+## Verify (Python 3, standard library)
 
-    cd lower_bounds/checks && ./run_all.sh
+    sh lower_bounds/checks/run_all.sh              # about 2 minutes; stops at the first failure, ends with ALL CHECKS PASSED
+    sh lower_bounds/checks/run_all.sh --with-lp    # also the optional LP cross-check (needs numpy and scipy)
 
-or script by script (expected outputs in `checks/EXPECTED_RESULTS.md`):
+The runner exits nonzero if any script fails or if the stress report lists a failure or no circuits (version
+1.0's runner piped each script into `tail` and could not report a failure; fixed 2026-10-02 after an external
+review). Script by script (expected outputs in `checks/EXPECTED_RESULTS.md`; every script exits nonzero on failure):
 
 | script | what it establishes | runtime |
 |---|---|---|
@@ -45,8 +48,8 @@ or script by script (expected outputs in `checks/EXPECTED_RESULTS.md`):
 | `check_dark_source.py` | the weight <= 12 zero-sum subsets behind fact F13 (84, 276, 1300, 8112; rho_10 = 29; 736 words) | 10 s |
 | `certify74.py`, `independent74.py` | G = 73: 262 profiles, 524 oriented claims, 484 exact certificates, complete coverage (two independent implementations) | 5 s |
 | `certify75.py`, `independent75.py` | G = 74: 1,102 profiles, 2,204 oriented claims, 4,057 exact certificates, 9,604 references, 927 direct exclusions, largest weighted right-hand side -1 (two independent implementations) | 30 s |
-| `stress.py` | optional cross-check: every identity and every inequality row of the note on the circuits of this repository and their canonical transposes (0 failures); `stress.py <corpus> [limit]` runs a corpus file too | 2 s |
-| `lp_regen.py` | optional cross-check: an LP model written from the note regenerates all 2,204 oriented claims at G = 74 with the same bounds | 20 s |
+| `stress.py` | cross-check: every identity and every inequality row of the note on the circuits of this repository and their canonical transposes (0 failures); `stress.py <corpus> [limit]` runs a corpus file too | 2 s |
+| `lp_regen.py` | optional (numpy, scipy; `--with-lp`): an LP model written from the note regenerates all 2,204 oriented claims at G = 74 with the same bounds | 20 s |
 
 What the programs cannot check: that the inequalities are necessary conditions for circuits, that the
 two-step potential argument is sound, and that the steady tail exists. That is sections 1-11 of the note,
@@ -75,4 +78,5 @@ the review draft; the concept DOI 10.5281/zenodo.21299092 always resolves to the
 
 | version | date | content |
 |---|---|---|
-| 1.0 | 2026-10-01 | first review draft of the 75 note; 76 described |
+| 1.0 | 2026-10-01 | first review draft of the 75 note; 76 described (release v4.0.0, DOI 10.5281/zenodo.23091495) |
+| 1.1 | 2026-10-02 | after an external review: the runner now fails loudly (no pipe into `tail`; stress and LP scripts exit nonzero; LP cross-check optional), one cross-reference in the note fixed (Lemma 10.2 / F9), the 76 no longer displayed as a bracket here, CI runs the package |

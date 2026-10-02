@@ -147,11 +147,13 @@ One line each. The proofs, instruments, negative results and open leads are in
 - Any circuit where no gate's inputs share a bit needs **≥ 92**; the 102 here is
   the best such circuit known — so every circuit of ≤ 91 gates contains a
   cancelling gate.
-- **Under that project's block decomposition**, no 87-gate circuit shares the
-  internal block structure of every known 88 (a SAT result, six UNSAT levels).
-  The decomposition is a choice; whether every known 88 respects it was not
-  verified, and the decisive level carries no DRAT proof, so it rests on two
-  solvers agreeing on one CNF.
+- **Under that project's block decomposition**, the merged pair of its two
+  largest blocks costs exactly 15 gates (a SAT result, six UNSAT levels). This
+  is a statement about the fixed encoded block subproblem, not a lower bound
+  on circuits: whether it excludes an 87 that respects the decomposition is an
+  open step (the block prices sum to an upper bound on the class). The
+  decomposition is a choice, and the decisive level carries no DRAT proof, so
+  it rests on two solvers agreeing on one CNF.
 - No 87 is one gate-deletion away from any of **1,575,516 distinct verified
   88-gate value sets** — each a set of 88 intermediate values known to be
   realisable, of which 28,796 carry a full build order — with all 88,228,896

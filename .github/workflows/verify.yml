@@ -22,3 +22,7 @@ jobs:
         run: python verify_all.py
       - name: Run regression tests
         run: python -m unittest discover -s tests -v
+      # The lower-bound package (lower_bounds/): finite facts, exact certificates, stress test. Standard
+      # library, about 2 minutes. The runner exits nonzero on any failure; a green badge here means it passed.
+      - name: Lower-bound package checks (75 <= L(M), review draft)
+        run: sh lower_bounds/checks/run_all.sh
