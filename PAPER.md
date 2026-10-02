@@ -228,9 +228,12 @@ decomposition** no program of 9, 10, 11, 12, 13, or 14 gates exists: all six
 levels UNSAT, the 14-level decided 2026-09-01 by a complete single-solver run
 (kissat 4.0.4, 356,322 core-seconds, on a hash-asserted instance) and confirmed
 the same day by CaDiCaL 3.0.0 on the same file. The block therefore costs
-exactly 15, merging the two largest levels saves nothing, and **no 87-gate
-circuit exists that shares the block structure of the known 88s as that
-decomposition reads them.** The levels at 9, 10 and 11 were re-proved
+exactly 15 and merging the two largest levels saves nothing. **This is a
+statement about the fixed encoded block subproblem, not a lower bound on
+circuits:** the block prices sum to an upper bound on the class, and turning
+that sum into "no 87-gate circuit shares the block structure of the known 88s
+as that decomposition reads them" is an open step (the method repository's
+README, block-structure theorem). The levels at 9, 10 and 11 were re-proved
 independently with a second CNF encoding, 528 of 528 cubes UNSAT at each level,
 zero disagreements, and the encoding's positive control fired (a satisfiable
 cube with a checked witness), so the encoding can still return SAT and the test
@@ -240,7 +243,8 @@ is not vacuous.
 is a choice of ours. Whether every known 88-gate circuit respects it was not
 verified, and a verified 91-gate depth-6 circuit in this repository has a gate
 whose support fits inside no single block of it. An 87 that does not split into
-these blocks is not excluded by this ladder. Neither k = 12, 13 nor 14 carries
+these blocks is not excluded by this ladder, and an 87 that does split into them
+is not excluded by it either until the open step above is closed. Neither k = 12, 13 nor 14 carries
 a DRAT proof, so the decisive level rests on two complete solvers agreeing on
 one CNF rather than on a checked certificate.
 

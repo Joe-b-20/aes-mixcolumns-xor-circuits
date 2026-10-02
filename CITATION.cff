@@ -5,14 +5,17 @@ abstract: "Verified 2-input XOR circuits for one column of AES MixColumns: 97 ga
 authors:
   - family-names: Bachir
     given-names: Joe
-version: "4.0.0"
-date-released: 2026-10-01
+version: "4.0.1"
+date-released: 2026-10-02
 repository-code: "https://github.com/Joe-b-20/aes-mixcolumns-xor-circuits"
 doi: 10.5281/zenodo.21299092
 identifiers:
   - type: doi
     value: 10.5281/zenodo.21299092
     description: "Concept DOI for all versions; resolves to the latest release. Cite this one unless you need a specific version."
+  - type: doi
+    value: 10.5281/zenodo.23091495
+    description: "Version DOI of the v4.0.0 deposit: adds lower_bounds/, the computer-assisted 75-gate lower-bound proof note (review draft v1.0). Cite this one for the lower bound."
   - type: doi
     value: 10.5281/zenodo.21696105
     description: "Version DOI of the v3.0.0 deposit."
