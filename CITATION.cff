@@ -5,8 +5,8 @@ abstract: "Verified 2-input XOR circuits for one column of AES MixColumns: 97 ga
 authors:
   - family-names: Bachir
     given-names: Joe
-version: "4.0.0"
-date-released: 2026-10-01
+version: "4.0.1"
+date-released: 2026-10-02
 repository-code: "https://github.com/Joe-b-20/aes-mixcolumns-xor-circuits"
 doi: 10.5281/zenodo.21299092
 identifiers:
